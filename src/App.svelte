@@ -125,13 +125,13 @@
     <div class="space-y-8 font-light">
       <div class="text-stone-950 space-y-2">
         <p>
-          🌱 <strong>Interests:</strong> Honors Computer Science @ Texas A&M University
-          with minor in Embedded Systems, interested in Graphics, Machine Learning,
-          and Computer Architecture.
+          🌱 <strong>Interests:</strong> Honors Computer Science student at Texas
+          A&M University, minoring in Embedded Systems. Passionate about Graphics,
+          Machine Learning, and Computer Architecture.
         </p>
         <p>
           🏋️‍♀️ <strong>Previous Work:</strong> Developed a BIOS debugging chatbot using
-          GenAI and RAG at Dell.
+          Generative AI (GenAI) and Retrieval-Augmented Generation (RAG) at Dell.
         </p>
         <p>
           🎖️ <strong>Achievements:</strong>

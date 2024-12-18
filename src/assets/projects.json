@@ -6,7 +6,7 @@
   },
   {
     "name": "MiniOS",
-    "description": "A rudimentary operating system built on QEMU with virtual memory, multithreading, hardware drivers, and a file system. Required knowledge of memory paging, thread scheduling, device I/O, storage, and x86 Assembly.",
+    "description": "A basic operating system built on QEMU with virtual memory, multithreading, hardware drivers, and a file system. Required knowledge of memory paging, thread scheduling, device I/O, storage, and x86 Assembly.",
     "link": "https://github.com/NitishM2022/MiniOS"
   },
   {
