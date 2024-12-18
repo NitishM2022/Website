@@ -1,13 +1,16 @@
 <script>
   import Project from "./lib/Project.svelte";
-  import projects from "./assets/projects.json";
+  import projects from "./static/projects.json";
+
+  import nitishImg from "./static/n_med.jpeg";
+  import resume from "./static/resume.pdf";
 </script>
 
 <main class="mx-auto mt-6 px-4 py-8 w-180 font-sans">
   <!-- Header Section -->
   <section class="flex flex-row gap-6 mb-10">
     <img
-      src="src/assets/n.jpeg"
+      src={nitishImg}
       alt="Nitish"
       class="w-48 h-48 object-cover rounded-lg"
     />
@@ -18,7 +21,7 @@
       <div class="flex flex-row gap-3 text-stone-500 items-center">
         <div
           role="button"
-          on:click={window.open("/public/resume.pdf", "_blank")}
+          on:click={window.open(resume, "_blank")}
           class="flex flex-row gap-1 items-center hover:opacity-70 hover:duration-100 cursor-pointer"
         >
           <svg
@@ -149,8 +152,8 @@
   <section class="mb-10">
     <h2 class="text-xl text-stone-950 pb-2 mb-2">Projects</h2>
     <div class="space-y-2 font-light">
-      {#each projects as { name, description, link }}
-        <Project {name} {description} {link} />
+      {#each projects as { name, description, link, date }}
+        <Project {name} {description} {link} {date} />
       {/each}
     </div>
   </section>

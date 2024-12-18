@@ -2,6 +2,7 @@
   export let name;
   export let description;
   export let link;
+  export let date;
 </script>
 
 <div
@@ -12,7 +13,7 @@
   <div class="flex items-center justify-between space-x-4">
     <h3 class="text-stone-950">{name}</h3>
     <p class="text-xs text-stone-500 font-mono italic">
-      {link ? "PRESENT" : ""}
+      {date}
     </p>
   </div>
   <p class="text-sm text-stone-500">{description}</p>
