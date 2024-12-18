@@ -1,10 +1,6 @@
 <script>
-  export let githubLink = "https://github.com/AidenBeresford/FeGBA";
-
-  function redirect(event, link) {
-    event.preventDefault(); // Prevent default link behavior
-    window.open(link, "_blank", "noopener,noreferrer");
-  }
+  import Project from "./lib/Project.svelte";
+  import projects from "./assets/projects.json";
 </script>
 
 <main class="mx-auto mt-6 px-4 py-8 w-180 font-sans">
@@ -153,128 +149,9 @@
   <section class="mb-10">
     <h2 class="text-xl text-stone-950 pb-2 mb-2">Projects</h2>
     <div class="space-y-2 font-light">
-      <div
-        role="button"
-        on:click={window.open(
-          "https://github.com/AidenBeresford/FeGBA",
-          "_blank"
-        )}
-        class="hover:opacity-70 hover:duration-100 cursor-pointer"
-      >
-        <div class="flex items-center justify-between space-x-4">
-          <h3 class="text-stone-950">FeGBA</h3>
-          <p class="text-xs text-stone-500 font-mono italic">PRESENT</p>
-        </div>
-        <p class="text-sm text-stone-500 text-left">
-          A Game Boy Advance emulator written in Rust, designed to replicate the
-          hardware and gameplay of the original console. Implements CPU, memory,
-          graphics, and audio to run GBA games accurately.
-        </p>
-      </div>
-      <div
-        role="button"
-        on:click={window.open(
-          "https://github.com/NitishM2022/MiniOS",
-          "_blank"
-        )}
-        class="hover:opacity-70 hover:duration-100 cursor-pointer"
-      >
-        <div class="flex items-center justify-between space-x-4">
-          <h3 class="text-stone-950">MiniOS</h3>
-          <p class="text-xs text-stone-500 font-mono italic">12/2024</p>
-        </div>
-        <p class="text-sm text-stone-500">
-          A rudimentary operating system built on QEMU with virtual memory,
-          multithreading, hardware drivers, and a file system. Required
-          knowledge of memory paging, thread scheduling, device I/O, storage,
-          and x86 Assembly.
-        </p>
-      </div>
-      <div
-        role="button"
-        on:click={window.open(
-          "https://github.com/NitishM2022/Networking/tree/main/tcp_over_udp",
-          "_blank"
-        )}
-        class="hover:opacity-70 hover:duration-100 cursor-pointer"
-      >
-        <div class="flex items-center justify-between space-x-4">
-          <h3 class="text-stone-950">TCP over UDP</h3>
-          <p class="text-xs text-stone-500 font-mono italic">11/2024</p>
-        </div>
-        <p class="text-sm text-stone-500">
-          Application-layer implementation of a connection-oriented protocol
-          over a connectionless one. Emulates flow control, congestion control,
-          RTT estimation, fast retransmits, and more, achieving over 1 Gbps
-          throughput with threading.
-        </p>
-      </div>
-      <div
-        role="button"
-        on:click={window.open(
-          "https://github.com/NitishM2022/Graphics/tree/main/ray_tracer",
-          "_blank"
-        )}
-        class="hover:opacity-70 hover:duration-100 cursor-pointer"
-      >
-        <div class="flex items-center justify-between space-x-4">
-          <h3 class="text-stone-950">A Simple Ray Tracer</h3>
-          <p class="text-xs text-stone-500 font-mono italic">04/2024</p>
-        </div>
-        <p class="text-sm text-stone-500">
-          Simulates light behavior to accurately reproduce shadows, reflections,
-          and material interactions. Built with C++, the program calculates
-          light paths for each pixel to create lifelike visuals.
-        </p>
-      </div>
-      <!---
-      <div class="hover:opacity-70 hover:duration-100">
-        <div class="flex items-center justify-between space-x-4">
-          <h3 class="text-stone-950">ArborWorx</h3>
-          <p class="text-xs text-stone-500 font-mono italic">01/2024</p>
-        </div>
-        <p class="text-sm text-stone-500">
-          Software solutions built for small businesses to manage customer
-          credit info. Focused on data collection and processing using Python
-          and Java. These tools led to efficienty gains of 2000%.
-        </p>
-      </div>-->
-      <div
-        role="button"
-        on:click={window.open(
-          "https://github.com/NitishM2022/NandtoTetris/tree/main/cpu_16bit",
-          "_blank"
-        )}
-        class="hover:opacity-70 hover:duration-100 cursor-pointer"
-      >
-        <div class="flex items-center justify-between space-x-4">
-          <h3 class="text-stone-950">16 Bit CPU</h3>
-          <p class="text-xs text-stone-500 font-mono italic">10/2023</p>
-        </div>
-        <p class="text-sm text-stone-500">
-          Designed a 16-bit CPU in with a custom instruction set using HDL and
-          Nand2Tetris. Built ALU, program counter, dissasembler, registers, and
-          memory with basic AND, OR, NOT gates.
-        </p>
-      </div>
-      <div
-        role="button"
-        on:click={window.open(
-          "https://github.com/NitishM2022/PocketVAX",
-          "_blank"
-        )}
-        class="hover:opacity-70 hover:duration-100 cursor-pointer"
-      >
-        <div class="flex items-center justify-between space-x-4">
-          <h3 class="text-stone-950">PocketVAX</h3>
-          <p class="text-xs text-stone-500 font-mono italic">07/2022</p>
-        </div>
-        <p class="text-sm text-stone-500">
-          An immunization record-keeping app built with React Native. Offers
-          user-friendly design, secure data storage, vaccine reminders, detailed
-          vaccine info, and record-sharing with healthcare providers.
-        </p>
-      </div>
+      {#each projects as { name, description, link }}
+        <Project {name} {description} {link} />
+      {/each}
     </div>
   </section>
 
