@@ -1,13 +1,17 @@
-<link
-  rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,300,0,-25&icon_names=contact_page"
-/>
+<script>
+  export let githubLink = "https://github.com/AidenBeresford/FeGBA";
+
+  function redirect(event, link) {
+    event.preventDefault(); // Prevent default link behavior
+    window.open(link, "_blank", "noopener,noreferrer");
+  }
+</script>
 
 <main class="mx-auto mt-6 px-4 py-8 w-180 font-sans">
   <!-- Header Section -->
   <section class="flex flex-row gap-6 mb-10">
     <img
-      src="src/assets/nitish.jpg"
+      src="src/assets/n.jpeg"
       alt="Nitish"
       class="w-48 h-48 object-cover rounded-lg"
     />
@@ -17,7 +21,9 @@
       </h1>
       <div class="flex flex-row gap-3 text-stone-500 items-center">
         <div
-          class="flex flex-row gap-1 items-center hover:opacity-70 hover:duration-100"
+          role="button"
+          on:click={window.open("/public/resume.pdf", "_blank")}
+          class="flex flex-row gap-1 items-center hover:opacity-70 hover:duration-100 cursor-pointer"
         >
           <svg
             width="16"
@@ -34,11 +40,13 @@
               clip-rule="evenodd"
             ></path></svg
           >
-          <a href="/public/resume.pdf" target="_blank">RESUME</a>
+          <p>RESUME</p>
         </div>
 
         <div
-          class="flex flex-row gap-1 items-center hover:opacity-70 hover:duration-100"
+          role="button"
+          on:click={window.open("https://github.com/NitishM2022", "_blank")}
+          class="flex flex-row gap-1 items-center hover:opacity-70 hover:duration-100 cursor-pointer"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -56,11 +64,16 @@
               d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
             ></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg
           >
-          <a href="https://github.com/NitishM2022" target="_blank">GITHUB</a>
+          <p>GITHUB</p>
         </div>
 
         <div
-          class="flex flex-row gap-1.5 items-center hover:opacity-70 hover:duration-100"
+          role="button"
+          on:click={window.open(
+            "https://bitbucket.org/nitishethan/workspace/repositories/",
+            "_blank"
+          )}
+          class="flex flex-row gap-1 items-center hover:opacity-70 hover:duration-100 cursor-pointer"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -73,15 +86,16 @@
               fill="currentColor"
             /></svg
           >
-          <a
-            href="https://bitbucket.org/nitishethan/workspace/repositories/"
-            class="hover:opacity-70"
-            target="_blank">BITBUCKET</a
-          >
+          <p>BITBUCKET</p>
         </div>
 
         <div
-          class="flex flex-row gap-1.5 items-center hover:opacity-70 hover:duration-100"
+          role="button"
+          on:click={window.open(
+            "https://www.linkedin.com/in/nitishmalluru/",
+            "_blank"
+          )}
+          class="flex flex-row gap-1 items-center hover:opacity-70 hover:duration-100 cursor-pointer"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -103,14 +117,9 @@
               r="2"
             ></circle></svg
           >
-          <a href="https://www.linkedin.com/in/nitishmalluru/" target="_blank"
-            >LINKEDIN</a
-          >
+          <p>LINKEDIN</p>
         </div>
       </div>
-      <!-- <p class="text-stone-500 text-sm font-semilight">
-        Honor's CS @ TAMU. Prev. SWE Intern @ Dell.
-      </p> -->
     </div>
   </section>
 
@@ -120,13 +129,21 @@
     <div class="space-y-8 font-light">
       <div class="text-stone-950 space-y-2">
         <p>
-          Howdy! I am an Honors Computer Science student at Texas A&M
-          University, pursuing a minor in Embedded Systems. My interests include
-          Graphics, Machine Learning, and Computer Architecture. I am part of
-          the USA Computing Olympiad Gold Division, an Eagle Scout, and a
-          President’s Endowed Scholar. Outside academics, I aspire to become a
-          founder. I am always eager to connect and collaborate—feel free to
-          reach out if you have ideas to discuss or opportunities to explore!
+          🌱 <strong>Interests:</strong> Honors Computer Science @ Texas A&M University
+          with minor in Embedded Systems, interested in Graphics, Machine Learning,
+          and Computer Architecture.
+        </p>
+        <p>
+          🏋️‍♀️ <strong>Previous Work:</strong> Developed a BIOS debugging chatbot using
+          GenAI and RAG at Dell.
+        </p>
+        <p>
+          🎖️ <strong>Achievements:</strong>
+          Eagle Scout, President’s Endowed Scholar, and USA Computing Olympiad Gold
+          Division.
+        </p>
+        <p>
+          🚀 <strong>Goals:</strong> Aspiring founder, youtuber, and guitarist.
         </p>
       </div>
     </div>
@@ -136,20 +153,34 @@
   <section class="mb-10">
     <h2 class="text-xl text-stone-950 pb-2 mb-2">Projects</h2>
     <div class="space-y-2 font-light">
-      <div class="hover:opacity-70 hover:duration-100">
+      <div
+        role="button"
+        on:click={window.open(
+          "https://github.com/AidenBeresford/FeGBA",
+          "_blank"
+        )}
+        class="hover:opacity-70 hover:duration-100 cursor-pointer"
+      >
         <div class="flex items-center justify-between space-x-4">
           <h3 class="text-stone-950">FeGBA</h3>
           <p class="text-xs text-stone-500 font-mono italic">PRESENT</p>
         </div>
-        <p class="text-sm text-stone-500">
+        <p class="text-sm text-stone-500 text-left">
           A Game Boy Advance emulator written in Rust, designed to replicate the
           hardware and gameplay of the original console. Implements CPU, memory,
           graphics, and audio to run GBA games accurately.
         </p>
       </div>
-      <div class="hover:opacity-70 hover:duration-100">
+      <div
+        role="button"
+        on:click={window.open(
+          "https://github.com/NitishM2022/MiniOS",
+          "_blank"
+        )}
+        class="hover:opacity-70 hover:duration-100 cursor-pointer"
+      >
         <div class="flex items-center justify-between space-x-4">
-          <h3 class="text-stone-950">BasicOS</h3>
+          <h3 class="text-stone-950">MiniOS</h3>
           <p class="text-xs text-stone-500 font-mono italic">12/2024</p>
         </div>
         <p class="text-sm text-stone-500">
@@ -159,7 +190,14 @@
           and x86 Assembly.
         </p>
       </div>
-      <div class="hover:opacity-70 hover:duration-100">
+      <div
+        role="button"
+        on:click={window.open(
+          "https://github.com/NitishM2022/Networking/tree/main/tcp_over_udp",
+          "_blank"
+        )}
+        class="hover:opacity-70 hover:duration-100 cursor-pointer"
+      >
         <div class="flex items-center justify-between space-x-4">
           <h3 class="text-stone-950">TCP over UDP</h3>
           <p class="text-xs text-stone-500 font-mono italic">11/2024</p>
@@ -171,7 +209,14 @@
           throughput with threading.
         </p>
       </div>
-      <div class="hover:opacity-70 hover:duration-100">
+      <div
+        role="button"
+        on:click={window.open(
+          "https://github.com/NitishM2022/Graphics/tree/main/ray_tracer",
+          "_blank"
+        )}
+        class="hover:opacity-70 hover:duration-100 cursor-pointer"
+      >
         <div class="flex items-center justify-between space-x-4">
           <h3 class="text-stone-950">A Simple Ray Tracer</h3>
           <p class="text-xs text-stone-500 font-mono italic">04/2024</p>
@@ -194,7 +239,14 @@
           and Java. These tools led to efficienty gains of 2000%.
         </p>
       </div>-->
-      <div class="hover:opacity-70 hover:duration-100">
+      <div
+        role="button"
+        on:click={window.open(
+          "https://github.com/NitishM2022/NandtoTetris/tree/main/cpu_16bit",
+          "_blank"
+        )}
+        class="hover:opacity-70 hover:duration-100 cursor-pointer"
+      >
         <div class="flex items-center justify-between space-x-4">
           <h3 class="text-stone-950">16 Bit CPU</h3>
           <p class="text-xs text-stone-500 font-mono italic">10/2023</p>
@@ -205,7 +257,14 @@
           memory with basic AND, OR, NOT gates.
         </p>
       </div>
-      <div class="hover:opacity-70 hover:duration-100">
+      <div
+        role="button"
+        on:click={window.open(
+          "https://github.com/NitishM2022/PocketVAX",
+          "_blank"
+        )}
+        class="hover:opacity-70 hover:duration-100 cursor-pointer"
+      >
         <div class="flex items-center justify-between space-x-4">
           <h3 class="text-stone-950">PocketVAX</h3>
           <p class="text-xs text-stone-500 font-mono italic">07/2022</p>
@@ -221,7 +280,7 @@
 
   <!-- Reading List -->
   <section class="mb-10">
-    <h2 class="text-xl text-stone-950 pb-2 mb-2">Reading List</h2>
+    <h2 class="text-xl text-stone-950 pb-2 mb-2">Reading</h2>
     <div class="font-light">
       <h3 class=" text-stone-950">Conclave</h3>
       <h3 class=" text-stone-950">Speaker For the Dead</h3>
