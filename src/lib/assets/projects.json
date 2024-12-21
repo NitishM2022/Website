@@ -24,7 +24,7 @@
       "github": "https://github.com/NitishM2022/Networking/tree/main/tcp_over_udp#tcp-over-udp"
     },
     "date": "11/2024",
-    "tech": ["Winapi", "Winsock2", "C++"]
+    "tech": ["C++", "Winapi", "Winsock2"]
   },
   {
     "name": "A Simple Ray Tracer",
