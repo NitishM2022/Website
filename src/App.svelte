@@ -1,9 +1,10 @@
 <script>
   import Project from "./lib/Project.svelte";
   import Book from "./lib/Book.svelte";
-  import Rotext from "./lib/rotext.svelte";
-  import projects from "./static/projects.json";
+  import Rotext from "./lib/Rotext.svelte";
+  import Toggle from "./lib/Toggle.svelte";
 
+  import projects from "./static/projects.json";
   import nitishImg from "./static/n_med.jpeg";
   import resume from "./static/resume.pdf";
 
@@ -28,17 +29,17 @@
   }
 </script>
 
-<button on:click={toggleDarkMode}> Toggle Dark Mode </button>
-
 <main class="mx-auto px-4 pb-8 w-180 font-rope flex flex-col gap-12 mb-2">
-  <div class="flex flex-row justify-between items-center">
+  <!-- header -->
+  <div class="flex flex-row items-center mt-4">
     <h1
       class="text-2xl font-rope font-extralight text-stone-950 dark:text-stone-100"
     >
       nitish malluru
     </h1>
+    <div class="flex-grow"></div>
     <div
-      class="flex flex-row gap-3 text-stone-950 dark:text-stone-100 items-center"
+      class="flex flex-row gap-3 text-stone-950 dark:text-stone-100 items-center mr-2"
     >
       <div
         role="button"
@@ -140,6 +141,7 @@
         <p>LINKEDIN</p>
       </div>
     </div>
+    <Toggle />
   </div>
 
   <section class="  flex flex-row">

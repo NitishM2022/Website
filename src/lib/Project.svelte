@@ -51,11 +51,11 @@
         </button>
       {/if}
     </div>
-    <div class="tile relative overflow-hidden rounded-lg bg-amber-100">
+    <div class="tile relative overflow-hidden rounded-lg bg-amber-50">
       <img
         src={cpu}
         alt="Nitish"
-        class="w-70 h-50 object-cover rounded-lg transition-transform duration-300 transform hover:scale-110 -rotate-z-8 translate-x-10 translate-y-8 drop-shadow-2xl"
+        class="w-70 h-50 object-cover rounded-lg transition-transform duration-300 transform hover:scale-110 -rotate-z-6 translate-x-10 translate-y-8 drop-shadow-2xl"
       />
     </div>
   </div>
