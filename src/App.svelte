@@ -4,9 +4,9 @@
   import Rotext from "./lib/Rotext.svelte";
   import Toggle from "./lib/Toggle.svelte";
 
-  import projects from "./static/projects.json";
-  import nitishImg from "./static/n_med.jpeg";
-  import resume from "./static/resume.pdf";
+  import projects from "./lib/assets/projects.json";
+  import nitishImg from "./lib/assets/n_med.jpeg";
+  import resume from "./lib/assets/resume.pdf";
 
   let isDarkMode =
     window.matchMedia &&

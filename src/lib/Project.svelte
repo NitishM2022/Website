@@ -6,7 +6,7 @@
   export let tech = [];
 
   import Github from "./Github.svelte";
-  import cpu from "../static/cpu.png";
+  import cpu from "./assets/cpu.png";
   console.log(link.github);
 </script>
 
