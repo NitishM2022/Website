@@ -2,37 +2,55 @@
   {
     "name": "FeGBA",
     "description": "A Game Boy Advance emulator written in Rust, designed to replicate the hardware and gameplay of the original console. Implements CPU, memory, graphics, and audio to run GBA games accurately.",
-    "link": "https://github.com/AidenBeresford/FeGBA",
-    "date": "PRESENT"
+    "link": {
+      "github": "https://github.com/AidenBeresford/FeGBA?tab=readme-ov-file#fegba"
+    },
+    "date": "PRESENT",
+    "tech": ["Rust", "WASM"]
   },
   {
     "name": "MiniOS",
     "description": "A basic operating system built on QEMU with virtual memory, multithreading, hardware drivers, and a file system. Required knowledge of memory paging, thread scheduling, device I/O, storage, and x86 Assembly.",
-    "link": "https://github.com/NitishM2022/MiniOS",
-    "date": "12/2024"
+    "link": {
+      "github": "https://github.com/NitishM2022/MiniOS?tab=readme-ov-file#mini-os"
+    },
+    "date": "12/2024",
+    "tech": ["C", "C++", "QEMU", "x86 Assembly"]
   },
   {
     "name": "TCP over UDP",
     "description": "Application-layer implementation of a connection-oriented protocol over a connectionless one. Emulates flow control, congestion control, RTT estimation, fast retransmits, and more, achieving over 1 Gbps throughput with threading.",
-    "link": "https://github.com/NitishM2022/Networking/tree/main/tcp_over_udp",
-    "date": "11/2024"
+    "link": {
+      "github": "https://github.com/NitishM2022/Networking/tree/main/tcp_over_udp#tcp-over-udp"
+    },
+    "date": "11/2024",
+    "tech": ["Winapi", "Winsock2", "C++"]
   },
   {
     "name": "A Simple Ray Tracer",
     "description": "Simulates light behavior to accurately reproduce shadows, reflections, and material interactions. Built with C++, the program calculates light paths for each pixel to create lifelike visuals.",
-    "link": "https://github.com/NitishM2022/Graphics/tree/main/ray_tracer",
-    "date": "04/2024"
+    "link": {
+      "github": "https://github.com/NitishM2022/Graphics/tree/main/ray_tracer#ray-tracer"
+    },
+    "date": "04/2024",
+    "tech": ["C++"]
   },
   {
     "name": "16 Bit CPU",
     "description": "Designed a 16-bit CPU in with a custom instruction set using HDL and Nand2Tetris. Built ALU, program counter, dissasembler, registers, and memory with basic AND, OR, NOT gates.",
-    "link": "https://github.com/NitishM2022/NandtoTetris/tree/main/cpu_16bit",
-    "date": "10/2023"
+    "link": {
+      "github": "https://github.com/NitishM2022/NandtoTetris/tree/main/cpu_16bit#custom-16-bit-cpu"
+    },
+    "date": "10/2023",
+    "tech": ["HDL", "Assembly", "Nand2Tetris"]
   },
   {
     "name": "PocketVAX",
     "description": "An immunization record-keeping app built with React Native. Offers user-friendly design, secure data storage, vaccine reminders, detailed vaccine info, and record-sharing with healthcare providers.",
-    "link": "https://github.com/NitishM2022/PocketVAX",
-    "date": "07/2022"
+    "link": {
+      "github": "https://github.com/NitishM2022/PocketVAX?tab=readme-ov-file#pocketvax"
+    },
+    "date": "07/2022",
+    "tech": ["React Native"]
   }
 ]
