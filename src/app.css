@@ -11,4 +11,5 @@
 @theme {
   --font-rope: "Manrope", sans-serif;
   --font-inter: "Inter", sans-serif;
+  --breakpoint-sm: 720px;
 }
