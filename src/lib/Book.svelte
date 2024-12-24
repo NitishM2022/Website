@@ -3,6 +3,7 @@
   export let author;
   export let image;
   export let length;
+  export let link;
 </script>
 
 <a href="/" class="bookPerspectiveContainerStyles bookPerspectiveContainer">
@@ -18,10 +19,7 @@
       <img src={image} alt={name} class="bookImage" />
     </div>
     <div class="bookExternalLink bookMetaText">
-      <span
-        class="bookExternalLinkSpan"
-        on:click={window.open("https://www.goodreads.com", "_blank")}
-      >
+      <span class="bookExternalLinkSpan" on:click={window.open(link, "_blank")}>
         View on Amazon
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -97,8 +95,8 @@
     display: block;
     cursor: pointer;
     border-radius: 16px;
-    background-color: #f6f6f6;
-    border: 1px solid #eaeaed;
+    background-color: rgb(245, 245, 244);
+    border: 1px solid rgb(229, 229, 229);
     padding: 48px;
     transition: background-color 0.5s;
     width: 100%;
@@ -109,8 +107,8 @@
   }
 
   :global(.dark) .bookPerspectiveContainerStyles {
-    background-color: rgb(34, 34, 34);
-    border: 1px solid rgb(44, 45, 46);
+    background-color: rgb(38, 38, 38);
+    border: 1px solid rgb(64, 64, 64);
   }
 
   :global(.dark) .bookPerspectiveContainerStyles:hover {

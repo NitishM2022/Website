@@ -10,54 +10,54 @@
   console.log(link.github);
 </script>
 
-<div>
+<div class="flex flex-col rounded-lg">
   <div
-    class="flex flex-row items-center justify-between space-x-4 border-t-1 dark:border-stone-100 pt-2 mb-2"
+    class="tile relative overflow-hidden rounded-t-lg bg-stone-100 border-1 border-neutral-200 dark:bg-neutral-800 dark:border-neutral-700"
   >
-    <div class="flex flex-row gap-2">
-      <h3 class="text-xl font-medium text-stone-950 dark:text-stone-300">
-        {name}
-      </h3>
-    </div>
+    <img
+      src={cpu}
+      alt="Nitish"
+      class="h-50 object-cover rounded-lg transition-transform duration-300 transform hover:scale-110 -rotate-z-4 translate-x-9 translate-y-8 shadow dark:shadow-white"
+    />
+  </div>
+  <div
+    class="h-66 p-3 border-b-1 border-l-1 border-r-1 border-neutral-200 dark:border-neutral-700 rounded-b-lg flex flex-col"
+  >
+    <h3 class="text-xl font-medium text-stone-950 dark:text-stone-300">
+      {name}
+    </h3>
 
     <p
-      class="text-sm text-thin text-stone-500 dark:text-stone-400 font-mono italic"
+      class="text-xs text-thin text-stone-500 dark:text-stone-400 font-mono mb-1.5"
     >
       {date}
     </p>
-  </div>
-  <div class="flex flex-row justify-between">
-    <div class="flex flex-col gap-2 w-100">
-      <div class="flex flex-row gap-1 items-">
-        {#each tech as tech}
-          <p
-            class="border-1 px-2 rounded-2xl text-sm text-stone-950 dark:text-stone-300 dark:border-stone-100"
-          >
-            {tech}
-          </p>
-        {/each}
-      </div>
-      <p class="text-sm text-stone-500 dark:text-stone-400 mb-2">
-        {description}
-      </p>
-      <div class="flex-grow"></div>
-      {#if link.github}
-        <button
-          style="width: fit-content;"
-          class="hover:opacity-70 hover:cursor-pointer flex flex-row items-center gap-1.5 bg-stone-950 dark:bg-stone-100 text-stone-100 dark:text-stone-950 px-1.5 py-0.5 rounded-lg"
-          on:click={window.open(link.github, "_blank")}
+
+    <div class="flex flex-row gap-1 items-center mb-1.5">
+      {#each tech as tech}
+        <p
+          class="border-1 px-2 rounded-2xl text-sm text-stone-950 dark:text-stone-300 dark:border-stone-100"
         >
-          <Github /> Github
-        </button>
-      {/if}
+          {tech}
+        </p>
+      {/each}
     </div>
-    <div class="tile relative overflow-hidden rounded-lg bg-amber-50">
-      <img
-        src={cpu}
-        alt="Nitish"
-        class="w-70 h-50 object-cover rounded-lg transition-transform duration-300 transform hover:scale-110 -rotate-z-6 translate-x-10 translate-y-8 drop-shadow-2xl"
-      />
-    </div>
+
+    <p class="text-sm text-stone-500 dark:text-stone-400">
+      {description}
+    </p>
+
+    <div class="grow"></div>
+
+    {#if link.github}
+      <button
+        style="width: fit-content;"
+        class="hover:opacity-70 hover:cursor-pointer flex flex-row items-center gap-1.5 bg-stone-950 dark:bg-stone-100 text-stone-100 dark:text-stone-950 px-1.5 py-0.5 rounded-md"
+        on:click={window.open(link.github, "_blank")}
+      >
+        <Github /> Github
+      </button>
+    {/if}
   </div>
 </div>
 

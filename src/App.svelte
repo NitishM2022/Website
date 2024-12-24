@@ -167,7 +167,7 @@
     >
       Projects
     </h2>
-    <div class="space-y-5">
+    <div class="grid grid-cols-2 gap-5">
       {#each projects as { name, description, link, date, tech }}
         <Project {name} {description} {link} {date} {tech} />
       {/each}
@@ -187,18 +187,21 @@
         author="Richard Harris"
         image="https://m.media-amazon.com/images/I/413ALrTho5L._SY445_SX342_.jpg"
         length="304"
+        link="https://www.amazon.com/Conclave-novel-Robert-Harris/dp/0593689585"
       />
       <Book
         name="Speaker For the Dead"
         author="Orson Scott Card"
         image="https://m.media-amazon.com/images/I/51IhjJZ98DL._SY445_SX342_.jpg"
         length="382"
+        link="https://www.amazon.com/Speaker-Dead-Ender-Quartet-Book-ebook/dp/B003H4I4JU?dib=eyJ2IjoiMSJ9.NHvd5oxu3pHjqiddqIMUGqr-B2YDr0n63GkXq_PV2KvSjiIAGsrLVuWzHkCPdfIj57tI9gzSfO-Qu7-wa4Bg0uoFzot_omQATdxVLod11h4md3hJ0iKsg-MLR56BQ_BAcin568-Y483mT0HtMviXOy3r7n3Kk5MXNDTmpSCT-fZ8xyxxgeljtnzSs2H9WAGyMaIYZmqwhv2quyz2m_yogjrOvTVKpaa1G4fD6SBYY5Y.FBTJlO1ututPH-WSme9YvojbJGyVuO17aYnfTR3APL8&dib_tag=AUTHOR"
       />
       <Book
         name="Deep Learning with Python"
         author="Francois Chollet"
         image="https://m.media-amazon.com/images/I/71sQM8kzchL._SY522_.jpg"
         length="504"
+        link="https://www.amazon.com/Learning-Python-Second-Fran%C3%A7ois-Chollet-ebook/dp/B09K81XLN1?crid=2HERLLYS0DJKQ&dib=eyJ2IjoiMSJ9.wUWaDqCxCxhGwuAIYPlTIqPnY4aI6cIKjF4PcarFwOh9UqFniFF3nvgxyjryaGUBTYacPzbVfgFQFkZqqi1LFBPFJ0p4FURKAlOvEWDCo7EKpvg2Zjm2pI-1FltwxY6nGLJJg3pLYCraPySl3QIEc3NoTeHAqSag8I1k1t0jYC0GMETvor10laZYsP7n24TBSDdSeIIDdZcGdIxA0YPO-QDlXeF0ib21duGJRUnhmZc.8nGLn6_GYWd1n_z3b7BOO72mlJxBRNSMfKQzEfljux0&dib_tag=se&keywords=deep+learning+with+python&qid=1735014329&s=digital-text&sprefix=deep+learning+w,digital-text,111&sr=1-1"
       />
     </div>
   </section>
