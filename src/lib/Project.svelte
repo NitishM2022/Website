@@ -17,7 +17,7 @@
     <img
       src={cpu}
       alt="Nitish"
-      class="h-70 sm:h-50 object-cover rounded-lg transition-transform duration-300 transform hover:scale-110 sm:-rotate-z-4 translate-x-9 translate-y-10 sm:translate-y-8 shadow dark:shadow-white"
+      class="w-7/8 sm:w-66 object-cover rounded-lg transition-transform duration-300 transform hover:scale-110 sm:-rotate-z-4 sm:translate-x-9 translate-y-8 shadow dark:shadow-white block mx-auto sm:mx-0"
     />
   </div>
   <div
@@ -33,7 +33,7 @@
       {date}
     </p>
 
-    <div class="flex flex-row gap-1 items-center mb-1.5">
+    <div class="flex flex-wrap gap-1 items-center mb-1.5">
       {#each tech as tech}
         <p
           class="border-1 px-2 rounded-2xl text-sm text-stone-950 dark:text-stone-300 dark:border-stone-100"
