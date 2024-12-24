@@ -7,7 +7,6 @@
 
   import Github from "./Github.svelte";
   import cpu from "./assets/cpu.png";
-  console.log(link.github);
 </script>
 
 <div class="flex flex-col rounded-lg">
