@@ -6,11 +6,14 @@
   import Link from "./lib/Link.svelte";
 
   import projects from "./lib/assets/projects.json";
+  import books from "./lib/assets/books.json";
   import nitishImg from "./lib/assets/n_med.jpeg";
   import resume from "./lib/assets/resume.pdf";
 </script>
 
-<main class="mx-auto px-4 pb-8 w-180 font-rope flex flex-col gap-12 mb-2">
+<main
+  class="mx-auto px-6 sm:px-4 pb-8 w-full sm:w-180 font-rope flex flex-col gap-12 mb-2"
+>
   <!-- header -->
   <div class="flex flex-row items-center mt-4">
     <h1
@@ -102,13 +105,13 @@
     <Toggle />
   </div>
 
-  <section class="  flex flex-row">
+  <section class="flex flex-col sm:flex-row">
     <img
       src={nitishImg}
       alt="Nitish"
-      class="w-54 h-54 object-cover rounded-lg mr-6"
+      class="w-54 h-54 object-cover rounded-lg mr-6 mb-4 sm:mb-0"
     />
-    <div class="w-full">
+    <div class="w-full mb-27 sm:mb-0">
       <h1
         class="text-stone-950 dark:text-stone-100 text-5xl font-medium mb-4 font-serif italic"
       >
@@ -125,7 +128,7 @@
     >
       Projects
     </h2>
-    <div class="grid grid-cols-2 gap-5">
+    <div class="grid sm:grid-cols-2 gap-5">
       {#each projects as { name, description, link, date, tech }}
         <Project {name} {description} {link} {date} {tech} />
       {/each}
@@ -139,28 +142,12 @@
     >
       Reading
     </h2>
-    <div class="font-light flex flex-row gap-4">
-      <Book
-        name="Conclave"
-        author="Richard Harris"
-        image="https://upload.wikimedia.org/wikipedia/en/4/42/Conclave_%28novel%29.jpg"
-        length="304"
-        link="https://www.amazon.com/Conclave-novel-Robert-Harris/dp/0593689585"
-      />
-      <Book
-        name="Speaker For the Dead"
-        author="Orson Scott Card"
-        image="https://m.media-amazon.com/images/I/51dy+hyokZS._SY445_SX342_.jpg"
-        length="382"
-        link="https://www.amazon.com/Speaker-Dead-Ender-Quartet-Book-ebook/dp/B003H4I4JU?dib=eyJ2IjoiMSJ9.NHvd5oxu3pHjqiddqIMUGqr-B2YDr0n63GkXq_PV2KvSjiIAGsrLVuWzHkCPdfIj57tI9gzSfO-Qu7-wa4Bg0uoFzot_omQATdxVLod11h4md3hJ0iKsg-MLR56BQ_BAcin568-Y483mT0HtMviXOy3r7n3Kk5MXNDTmpSCT-fZ8xyxxgeljtnzSs2H9WAGyMaIYZmqwhv2quyz2m_yogjrOvTVKpaa1G4fD6SBYY5Y.FBTJlO1ututPH-WSme9YvojbJGyVuO17aYnfTR3APL8&dib_tag=AUTHOR"
-      />
-      <Book
-        name="Deep Learning with Python"
-        author="Francois Chollet"
-        image="https://m.media-amazon.com/images/I/71sQM8kzchL._SY522_.jpg"
-        length="504"
-        link="https://www.amazon.com/Learning-Python-Second-Fran%C3%A7ois-Chollet-ebook/dp/B09K81XLN1?crid=2HERLLYS0DJKQ&dib=eyJ2IjoiMSJ9.wUWaDqCxCxhGwuAIYPlTIqPnY4aI6cIKjF4PcarFwOh9UqFniFF3nvgxyjryaGUBTYacPzbVfgFQFkZqqi1LFBPFJ0p4FURKAlOvEWDCo7EKpvg2Zjm2pI-1FltwxY6nGLJJg3pLYCraPySl3QIEc3NoTeHAqSag8I1k1t0jYC0GMETvor10laZYsP7n24TBSDdSeIIDdZcGdIxA0YPO-QDlXeF0ib21duGJRUnhmZc.8nGLn6_GYWd1n_z3b7BOO72mlJxBRNSMfKQzEfljux0&dib_tag=se&keywords=deep+learning+with+python&qid=1735014329&s=digital-text&sprefix=deep+learning+w,digital-text,111&sr=1-1"
-      />
+    <div class="font-light grid grid-cols-2 sm:grid-cols-3 gap-4">
+      {#each books as { name, author, image, length, link }, index}
+        <div class={index >= 2 ? "hidden sm:block sm:h-full" : ""}>
+          <Book {name} {author} {image} {length} {link} />
+        </div>
+      {/each}
     </div>
   </section>
 

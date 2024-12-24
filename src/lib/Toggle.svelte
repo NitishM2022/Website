@@ -50,16 +50,12 @@
   >
     <img
       loading="lazy"
-      width="18"
-      height="18"
       src={moon}
       alt="Enable Light Mode"
       class="icon-moon w-4.5 sm:5"
     />
     <img
       loading="lazy"
-      width="18"
-      height="18"
       src={sun}
       alt="Enable Dark Mode"
       class="icon-sun w-4.5 sm:5"

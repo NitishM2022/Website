@@ -6,7 +6,7 @@
   export let link;
 </script>
 
-<div class="bookPerspectiveContainerStyles bookPerspectiveContainer">
+<div class="bookPerspectiveContainerStyles bookPerspectiveContainer h-68">
   <div class="bookPerspectiveStyles bookPerspective">
     <div class="bookMetaTextStyles bookMetaText">
       <h3 class="bookMetaTextStylesTitle">{name}</h3>

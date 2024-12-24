@@ -12,12 +12,12 @@
 
 <div class="flex flex-col rounded-lg">
   <div
-    class="tile relative overflow-hidden rounded-t-lg bg-neutral-200 dark:bg-neutral-800"
+    class="h-66 sm:h-auto overflow-hidden rounded-t-lg bg-neutral-200 dark:bg-neutral-800"
   >
     <img
       src={cpu}
       alt="Nitish"
-      class="h-50 object-cover rounded-lg transition-transform duration-300 transform hover:scale-110 -rotate-z-4 translate-x-9 translate-y-8 shadow dark:shadow-white"
+      class="h-70 sm:h-50 object-cover rounded-lg transition-transform duration-300 transform hover:scale-110 sm:-rotate-z-4 translate-x-9 translate-y-10 sm:translate-y-8 shadow dark:shadow-white"
     />
   </div>
   <div
@@ -60,13 +60,3 @@
     {/if}
   </div>
 </div>
-
-<style>
-  .arrow {
-    font-family:
-      JetBrains Mono,
-      sans-serif;
-    font-size: 1.3rem;
-    line-height: 1;
-  }
-</style>
