@@ -3,30 +3,11 @@
   import Book from "./lib/Book.svelte";
   import Rotext from "./lib/Rotext.svelte";
   import Toggle from "./lib/Toggle.svelte";
+  import Link from "./lib/Link.svelte";
 
   import projects from "./lib/assets/projects.json";
   import nitishImg from "./lib/assets/n_med.jpeg";
   import resume from "./lib/assets/resume.pdf";
-
-  let isDarkMode =
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches;
-
-  // Apply the initial dark mode state
-  if (isDarkMode) {
-    document.documentElement.classList.add("dark");
-  } else {
-    document.documentElement.classList.remove("dark");
-  }
-
-  function toggleDarkMode() {
-    isDarkMode = !isDarkMode;
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }
 </script>
 
 <main class="mx-auto px-4 pb-8 w-180 font-rope flex flex-col gap-12 mb-2">
@@ -41,11 +22,7 @@
     <div
       class="flex flex-row gap-3 text-stone-950 dark:text-stone-100 items-center mr-2"
     >
-      <div
-        role="button"
-        on:click={window.open(resume, "_blank")}
-        class="flex flex-row gap-1 items-center hover:opacity-70 hover:duration-100 cursor-pointer border-b-1"
-      >
+      <Link href={resume} name="RESUME">
         <svg
           width="16"
           height="16"
@@ -61,14 +38,9 @@
             clip-rule="evenodd"
           ></path></svg
         >
-        <p>RESUME</p>
-      </div>
+      </Link>
 
-      <div
-        role="button"
-        on:click={window.open("https://github.com/NitishM2022", "_blank")}
-        class="flex flex-row gap-1 items-center hover:opacity-70 hover:duration-100 cursor-pointer border-b-1"
-      >
+      <Link href={"https://github.com/NitishM2022"} name="GITHUB">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -85,16 +57,11 @@
             d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
           ></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg
         >
-        <p>GITHUB</p>
-      </div>
+      </Link>
 
-      <div
-        role="button"
-        on:click={window.open(
-          "https://bitbucket.org/nitishethan/workspace/repositories/",
-          "_blank"
-        )}
-        class="flex flex-row gap-1 items-center hover:opacity-70 hover:duration-100 cursor-pointer border-b-1"
+      <Link
+        href={"https://bitbucket.org/nitishethan/workspace/repositories/"}
+        name="BITBUCKET"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -107,17 +74,9 @@
             fill="currentColor"
           /></svg
         >
-        <p>BITBUCKET</p>
-      </div>
+      </Link>
 
-      <div
-        role="button"
-        on:click={window.open(
-          "https://www.linkedin.com/in/nitishmalluru/",
-          "_blank"
-        )}
-        class="flex flex-row gap-1 items-center hover:opacity-70 hover:duration-100 cursor-pointer border-b-1 -pb-1"
-      >
+      <Link href={"https://www.linkedin.com/in/nitishmalluru/"} name="LINKEDIN">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -138,8 +97,7 @@
             r="2"
           ></circle></svg
         >
-        <p>LINKEDIN</p>
-      </div>
+      </Link>
     </div>
     <Toggle />
   </div>

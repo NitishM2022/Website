@@ -5,39 +5,38 @@
   let spinDirection: "left" | "right" = "right";
   let spin = false;
 
-  let darkMode =
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches;
+  let darkMode = localStorage.getItem("darkMode")
+    ? localStorage.getItem("darkMode") === "true"
+    : window.matchMedia?.("(prefers-color-scheme: dark)").matches || false;
 
-  // Apply the initial dark mode state
+  // Apply dark mode to both html and body elements
   if (darkMode) {
     document.documentElement.classList.add("dark");
+    document.body.classList.add("dark");
   } else {
     document.documentElement.classList.remove("dark");
+    document.body.classList.remove("dark");
   }
 
-  function triggerSpin(duration: number) {
-    spin = true;
-    setTimeout(() => (spin = false), duration);
-
-    // Alternate spin direction on each click
-    spinDirection = spinDirection === "right" ? "left" : "right";
-  }
-
-  // Apply the initial dark mode state
   function toggleDarkMode() {
     darkMode = !darkMode;
     if (darkMode) {
       document.documentElement.classList.add("dark");
-      document.body.classList.remove("light");
+      document.body.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
-      document.body.classList.add("light");
+      document.body.classList.remove("dark");
     }
 
-    triggerSpin(650);
+    localStorage.setItem("darkMode", darkMode.toString());
+
+    spin = true;
+    setTimeout(() => (spin = false), 650);
+    spinDirection = spinDirection === "right" ? "left" : "right";
   }
 </script>
+
+<!-- Rest of the code stays the same -->
 
 <button
   on:click={toggleDarkMode}
@@ -51,19 +50,19 @@
   >
     <img
       loading="lazy"
-      width="22"
-      height="22"
+      width="18"
+      height="18"
       src={moon}
       alt="Enable Light Mode"
-      class="icon-moon"
+      class="icon-moon w-4.5 sm:5"
     />
     <img
       loading="lazy"
-      width="22"
-      height="22"
+      width="18"
+      height="18"
       src={sun}
       alt="Enable Dark Mode"
-      class="icon-sun"
+      class="icon-sun w-4.5 sm:5"
     />
   </div>
 </button>
@@ -111,11 +110,11 @@
     display: none;
   }
 
-  :global(.dark) .icon-moon {
+  :global(body.dark) .icon-moon {
     display: block;
   }
 
-  :global(.light) .icon-sun {
+  :global(body:not(.dark)) .icon-sun {
     display: block;
   }
 </style>

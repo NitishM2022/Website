@@ -6,7 +6,7 @@
   export let link;
 </script>
 
-<a href="/" class="bookPerspectiveContainerStyles bookPerspectiveContainer">
+<div class="bookPerspectiveContainerStyles bookPerspectiveContainer">
   <div class="bookPerspectiveStyles bookPerspective">
     <div class="bookMetaTextStyles bookMetaText">
       <h3 class="bookMetaTextStylesTitle">{name}</h3>
@@ -36,7 +36,7 @@
       </span>
     </div>
   </div>
-</a>
+</div>
 
 <style>
   .bookPerspective {
