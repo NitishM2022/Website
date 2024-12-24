@@ -12,16 +12,16 @@
 
 <div class="flex flex-col rounded-lg">
   <div
-    class="h-66 sm:h-auto overflow-hidden rounded-t-lg bg-neutral-200 dark:bg-neutral-800"
+    class="h-50 sm:h-auto overflow-hidden rounded-t-lg bg-neutral-200 dark:bg-neutral-800"
   >
     <img
       src={cpu}
       alt="Nitish"
-      class="w-7/8 sm:w-66 object-cover rounded-lg transition-transform duration-300 transform hover:scale-110 sm:-rotate-z-4 sm:translate-x-9 translate-y-8 shadow dark:shadow-white block mx-auto sm:mx-0"
+      class="w-4/5 sm:w-66 object-cover rounded-lg transition-transform duration-300 transform hover:scale-110 sm:-rotate-z-4 sm:translate-x-9 translate-y-8 shadow dark:shadow-white block mx-auto sm:mx-0"
     />
   </div>
   <div
-    class="h-66 p-3 border-b-1 border-l-1 border-r-1 border-neutral-200 dark:border-neutral-800 rounded-b-lg flex flex-col"
+    class="h-auto sm:h-66 p-3 border-b-1 border-l-1 border-r-1 border-neutral-200 dark:border-neutral-800 rounded-b-lg flex flex-col"
   >
     <h3 class="text-xl font-medium text-stone-950 dark:text-stone-300">
       {name}
@@ -43,7 +43,7 @@
       {/each}
     </div>
 
-    <p class="text-sm text-stone-500 dark:text-stone-400">
+    <p class="text-sm text-stone-500 dark:text-stone-400 mb-8 sm:mb-0">
       {description}
     </p>
 

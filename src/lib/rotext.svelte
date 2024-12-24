@@ -30,7 +30,7 @@
   });
 </script>
 
-<div class="font-light text-3xl text-stone-950 dark:text-stone-300">
+<div class="font-light text-2xl sm:text-3xl text-stone-950 dark:text-stone-300">
   {#if currentStep == 3}
     <p>
       I'm Nitish, an aspiring <a

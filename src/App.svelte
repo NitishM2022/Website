@@ -111,7 +111,7 @@
       alt="Nitish"
       class="w-54 h-54 object-cover rounded-lg mr-6 mb-4 sm:mb-0"
     />
-    <div class="w-full mb-27 sm:mb-0">
+    <div class="w-full mb-24 sm:mb-0">
       <h1
         class="text-stone-950 dark:text-stone-100 text-5xl font-medium mb-4 font-serif italic"
       >

@@ -176,7 +176,7 @@
   }
 
   .bookMetaTextStylesTitle {
-    font-size: 18px !important;
+    font-size: 18px;
     font-weight: bold;
     line-height: 1.2em;
     margin: 0 !important;
@@ -233,6 +233,20 @@
     text-decoration: underline dotted rgb(0, 0, 0);
     text-underline-offset: 6px;
     text-decoration-thickness: 2px;
+  }
+
+  @media (max-width: 640px) {
+    .bookMetaTextStylesTitle {
+      font-size: 0.95rem;
+    }
+
+    .bookMetaTextStylesAuthor {
+      font-size: 0.85rem;
+    }
+
+    .bookExternalLink {
+      font-size: 0.75rem; /* Decreased font size for small screens */
+    }
   }
 
   :global(.dark) .bookExternalLinkSpan {
