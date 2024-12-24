@@ -17,7 +17,7 @@
     <img
       src={cpu}
       alt="Nitish"
-      class="w-4/5 sm:w-66 object-cover rounded-lg transition-transform duration-300 transform hover:scale-110 sm:-rotate-z-4 sm:translate-x-9 translate-y-8 shadow dark:shadow-white block mx-auto sm:mx-0"
+      class="w-4/5 sm:w-66 object-cover rounded-lg transition-transform duration-300 transform hover:scale-105 sm:-rotate-4 sm:translate-x-8.5 translate-y-8 shadow dark:shadow-white block mx-auto sm:mx-0"
     />
   </div>
   <div
