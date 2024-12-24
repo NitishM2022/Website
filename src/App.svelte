@@ -185,14 +185,14 @@
       <Book
         name="Conclave"
         author="Richard Harris"
-        image="https://m.media-amazon.com/images/I/413ALrTho5L._SY445_SX342_.jpg"
+        image="https://upload.wikimedia.org/wikipedia/en/4/42/Conclave_%28novel%29.jpg"
         length="304"
         link="https://www.amazon.com/Conclave-novel-Robert-Harris/dp/0593689585"
       />
       <Book
         name="Speaker For the Dead"
         author="Orson Scott Card"
-        image="https://m.media-amazon.com/images/I/51IhjJZ98DL._SY445_SX342_.jpg"
+        image="https://m.media-amazon.com/images/I/51dy+hyokZS._SY445_SX342_.jpg"
         length="382"
         link="https://www.amazon.com/Speaker-Dead-Ender-Quartet-Book-ebook/dp/B003H4I4JU?dib=eyJ2IjoiMSJ9.NHvd5oxu3pHjqiddqIMUGqr-B2YDr0n63GkXq_PV2KvSjiIAGsrLVuWzHkCPdfIj57tI9gzSfO-Qu7-wa4Bg0uoFzot_omQATdxVLod11h4md3hJ0iKsg-MLR56BQ_BAcin568-Y483mT0HtMviXOy3r7n3Kk5MXNDTmpSCT-fZ8xyxxgeljtnzSs2H9WAGyMaIYZmqwhv2quyz2m_yogjrOvTVKpaa1G4fD6SBYY5Y.FBTJlO1ututPH-WSme9YvojbJGyVuO17aYnfTR3APL8&dib_tag=AUTHOR"
       />

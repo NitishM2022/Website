@@ -12,7 +12,7 @@
 
 <div class="flex flex-col rounded-lg">
   <div
-    class="tile relative overflow-hidden rounded-t-lg bg-stone-100 border-1 border-neutral-200 dark:bg-neutral-800 dark:border-neutral-700"
+    class="tile relative overflow-hidden rounded-t-lg bg-neutral-200 dark:bg-neutral-800"
   >
     <img
       src={cpu}
@@ -21,7 +21,7 @@
     />
   </div>
   <div
-    class="h-66 p-3 border-b-1 border-l-1 border-r-1 border-neutral-200 dark:border-neutral-700 rounded-b-lg flex flex-col"
+    class="h-66 p-3 border-b-1 border-l-1 border-r-1 border-neutral-200 dark:border-neutral-800 rounded-b-lg flex flex-col"
   >
     <h3 class="text-xl font-medium text-stone-950 dark:text-stone-300">
       {name}

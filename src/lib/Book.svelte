@@ -103,7 +103,7 @@
   }
 
   .bookPerspectiveContainerStyles:hover {
-    background-color: #eaeaed;
+    background-color: rgb(229, 229, 229);
   }
 
   :global(.dark) .bookPerspectiveContainerStyles {
@@ -112,7 +112,7 @@
   }
 
   :global(.dark) .bookPerspectiveContainerStyles:hover {
-    background-color: rgb(55, 56, 58);
+    background-color: rgb(64, 64, 64);
   }
 
   .bookPerspectiveStyles {
