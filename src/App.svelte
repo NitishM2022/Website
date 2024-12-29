@@ -105,7 +105,7 @@
     <Toggle />
   </div>
 
-  <section class="flex flex-col sm:flex-row">
+  <section class="fade-in-bottom-first flex flex-col sm:flex-row">
     <img
       src={nitishImg}
       alt="Nitish"
@@ -122,7 +122,7 @@
   </section>
 
   <!-- Projects Section -->
-  <section class="">
+  <section class=" fade-in-bottom-second">
     <h2
       class=" font-medium text-2xl text-stone-950 dark:text-stone-100 pb-2 mb-2"
     >
@@ -136,7 +136,7 @@
   </section>
 
   <!-- Reading List -->
-  <section>
+  <section class="fade-in-bottom-third">
     <h2
       class="text-2xl font-medium text-stone-950 dark:text-stone-100 pb-2 mb-2"
     >
@@ -152,7 +152,7 @@
   </section>
 
   <!-- Contact Section -->
-  <section>
+  <section class="fade-in-bottom-fourth">
     <h2
       class="font-medium text-2xl text-stone-950 dark:text-stone-100 pb-2 mb-2"
     >
@@ -167,3 +167,39 @@
     </p>
   </section>
 </main>
+
+<style>
+  @keyframes fadeInBottom {
+    from {
+      opacity: 0;
+      transform: translateY(40px); /* Changed from -30px to 30px */
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fade-in-bottom-first {
+    animation: fadeInBottom 0.4s ease-out;
+    animation-fill-mode: both;
+  }
+
+  .fade-in-bottom-second {
+    animation: fadeInBottom 0.4s ease-out;
+    animation-fill-mode: both;
+    animation-delay: 0.2s; /* Add a delay of 0.5 seconds */
+  }
+
+  .fade-in-bottom-third {
+    animation: fadeInBottom 0.4s ease-out;
+    animation-fill-mode: both;
+    animation-delay: 0.3s; /* Add a delay of 0.5 seconds */
+  }
+
+  .fade-in-bottom-fourth {
+    animation: fadeInBottom 0.4s ease-out;
+    animation-fill-mode: both;
+    animation-delay: 0.4s; /* Add a delay of 0.5 seconds */
+  }
+</style>
