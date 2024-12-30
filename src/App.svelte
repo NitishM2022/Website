@@ -172,7 +172,7 @@
   @keyframes fadeInBottom {
     from {
       opacity: 0;
-      transform: translateY(40px); /* Changed from -30px to 30px */
+      transform: translateY(60px); /* Reduced from 80px for subtler movement */
     }
     to {
       opacity: 1;
@@ -181,25 +181,25 @@
   }
 
   .fade-in-bottom-first {
-    animation: fadeInBottom 0.4s ease-out;
+    animation: fadeInBottom 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     animation-fill-mode: both;
   }
 
   .fade-in-bottom-second {
-    animation: fadeInBottom 0.3s ease-out;
+    animation: fadeInBottom 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     animation-fill-mode: both;
-    animation-delay: 0.2s; /* Add a delay of 0.5 seconds */
+    animation-delay: 0.1s; /* Shorter delay for tighter sequence */
   }
 
   .fade-in-bottom-third {
-    animation: fadeInBottom 0.3s ease-out;
+    animation: fadeInBottom 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     animation-fill-mode: both;
-    animation-delay: 0.3s; /* Add a delay of 0.5 seconds */
+    animation-delay: 0.2s;
   }
 
   .fade-in-bottom-fourth {
-    animation: fadeInBottom 0.3s ease-out;
+    animation: fadeInBottom 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     animation-fill-mode: both;
-    animation-delay: 0.4s; /* Add a delay of 0.5 seconds */
+    animation-delay: 0.3s;
   }
 </style>
