@@ -186,19 +186,19 @@
   }
 
   .fade-in-bottom-second {
-    animation: fadeInBottom 0.4s ease-out;
+    animation: fadeInBottom 0.3s ease-out;
     animation-fill-mode: both;
     animation-delay: 0.2s; /* Add a delay of 0.5 seconds */
   }
 
   .fade-in-bottom-third {
-    animation: fadeInBottom 0.4s ease-out;
+    animation: fadeInBottom 0.3s ease-out;
     animation-fill-mode: both;
     animation-delay: 0.3s; /* Add a delay of 0.5 seconds */
   }
 
   .fade-in-bottom-fourth {
-    animation: fadeInBottom 0.4s ease-out;
+    animation: fadeInBottom 0.3s ease-out;
     animation-fill-mode: both;
     animation-delay: 0.4s; /* Add a delay of 0.5 seconds */
   }
