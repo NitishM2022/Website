@@ -9,19 +9,10 @@
   import cpu from "./assets/cpu.png";
 </script>
 
-<div class="flex flex-col rounded-lg">
-  <div
-    class="h-50 sm:h-auto overflow-hidden rounded-t-lg bg-neutral-200 dark:bg-neutral-800"
-  >
-    <img
-      src={cpu}
-      alt="Nitish"
-      class="w-4/5 sm:w-66 object-cover rounded-lg transition-transform duration-300 transform hover:scale-105 sm:-rotate-4 sm:translate-x-8.5 translate-y-8 shadow dark:shadow-white block mx-auto sm:mx-0"
-    />
-  </div>
-  <div
-    class="h-auto sm:h-66 p-3 border-b-1 border-l-1 border-r-1 border-neutral-200 dark:border-neutral-800 rounded-b-lg flex flex-col"
-  >
+<div
+  class="flex flex-col bg-stone-100 dark:bg-neutral-800 rounded-2xl border-1 border-neutral-200 dark:border-neutral-700 overflow-hidden"
+>
+  <div class="h-auto sm:h-66 px-6 pt-4 flex flex-col">
     <h3 class="text-xl font-medium text-stone-950 dark:text-stone-300">
       {name}
     </h3>
@@ -57,5 +48,12 @@
         <Github /> Github
       </button>
     {/if}
+  </div>
+  <div class="h-45 px-6 sm:px-0">
+    <img
+      src={cpu}
+      alt="Nitish"
+      class="rounded-lg sm:translate-x-9.5 sm:-rotate-8 translate-y-6 drop-shadow-md dark:shadow-white transition duration-300 ease-in-out hover:scale-104"
+    />
   </div>
 </div>

@@ -122,9 +122,9 @@
   </section>
 
   <!-- Projects Section -->
-  <section class=" fade-in-bottom-second">
+  <section class="fade-in-bottom-second">
     <h2
-      class=" font-medium text-2xl text-stone-950 dark:text-stone-100 pb-2 mb-2"
+      class="font-medium text-2xl text-stone-950 dark:text-stone-100 pb-2 mb-2"
     >
       Projects
     </h2>
@@ -142,7 +142,7 @@
     >
       Reading
     </h2>
-    <div class="font-light grid grid-cols-2 sm:grid-cols-3 gap-4">
+    <div class="font-light grid grid-cols-2 sm:grid-cols-3 gap-5">
       {#each books as { name, author, image, length, link }, index}
         <div class={index >= 2 ? "hidden sm:block sm:h-full" : ""}>
           <Book {name} {author} {image} {length} {link} />
