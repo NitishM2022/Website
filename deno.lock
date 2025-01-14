@@ -1,6 +1,8 @@
 {
   "version": "4",
   "specifiers": {
+    "jsr:@3d/three@*": "0.166.0",
+    "jsr:@3d/three@0.166": "0.166.0",
     "npm:@deno/vite-plugin@1": "1.0.2_vite@6.0.3",
     "npm:@sveltejs/vite-plugin-svelte@^5.0.1": "5.0.1_svelte@5.10.0__acorn@8.14.0_vite@6.0.3",
     "npm:@tailwindcss/vite@^4.0.0-beta.6": "4.0.0-beta.6_vite@6.0.3_lightningcss@1.28.2",
@@ -8,6 +10,11 @@
     "npm:tailwindcss@^4.0.0-beta.6": "4.0.0-beta.6",
     "npm:vite@*": "6.0.3",
     "npm:vite@^6.0.1": "6.0.3"
+  },
+  "jsr": {
+    "@3d/three@0.166.0": {
+      "integrity": "c73f5f736965d3b8d06b66542d1471004b4fd998fd06426245a0a7fea9bdfde9"
+    }
   },
   "npm": {
     "@ampproject/remapping@2.3.0": {
@@ -515,6 +522,7 @@
   },
   "workspace": {
     "dependencies": [
+      "jsr:@3d/three@0.166",
       "npm:@deno/vite-plugin@1",
       "npm:@sveltejs/vite-plugin-svelte@^5.0.1",
       "npm:@tailwindcss/vite@^4.0.0-beta.6",

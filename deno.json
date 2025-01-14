@@ -3,13 +3,14 @@
     "dev": "deno run -A --node-modules-dir npm:vite",
     "build": "deno run -A --node-modules-dir npm:vite build",
     "preview": "deno run -A --node-modules-dir npm:vite preview",
-    "serve": "deno run --allow-net --allow-read jsr:@std/http@1/file-server dist/"
+    "serve": "deno run --allow-net --allow-read jsr:@std/http@1/file-server dist/",
     "deploy": "swa deploy ./dist --app-name website --env production"
   },
   "compilerOptions": {
     "lib": ["ES2020", "DOM", "DOM.Iterable"]
   },
   "imports": {
+    "@3d/three": "jsr:@3d/three@^0.166.0",
     "@deno/vite-plugin": "npm:@deno/vite-plugin@^1.0.0",
     "@sveltejs/vite-plugin-svelte": "npm:@sveltejs/vite-plugin-svelte@^5.0.1",
     "@tailwindcss/vite": "npm:@tailwindcss/vite@^4.0.0-beta.6",

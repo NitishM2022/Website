@@ -7,7 +7,7 @@
   role="button"
   {href}
   target="_blank"
-  class="flex flex-row gap-1 items-center hover:opacity-70 hover:duration-100 cursor-pointer sm:border-b-1"
+  class="flex flex-row gap-1 items-center hover:opacity-70 hover:duration-100 cursor-pointer"
 >
   <slot />
   <span class="hidden sm:inline">{name}</span>

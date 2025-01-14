@@ -17,8 +17,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nitish</title>
   </head>
-  <body class="bg-stone-50 dark:bg-neutral-900">
+  <body>
+    <div class="gradient-overlay"></div>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
+
+<script>
+  // document.addEventListener("DOMContentLoaded", () => {
+  //   const gradient = document.querySelector(".gradient-overlay");
+  //   const fadeStart = 0;
+  //   const fadeEnd = 200;
+
+  //   window.addEventListener("scroll", () => {
+  //     const scrolled = window.pageYOffset;
+  //     const opacity =
+  //       1 -
+  //       Math.min(
+  //         Math.max((scrolled - fadeStart) / (fadeEnd - fadeStart), 0),
+  //         1
+  //       );
+  //     gradient.style.opacity = opacity;
+  //   });
+  // });
+</script>

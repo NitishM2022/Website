@@ -3,7 +3,7 @@
 
   const bioTexts = [
     'studying <span class="rotext"> CS </span> with a minor in <span class="rotext">Embedded Systems</span> at <span class="tamu">Texas A&M</span>.',
-    'interested in <span class="rotext"> Graphics </span>, <span class="rotext">ML</span>, and <span class="rotext">Computer Architecture</span>.',
+    'interested in <span class="rotext"> Graphics</span>, <span class="rotext">Computer Architecture</span>, and <span class="rotext">ML</span>.',
     'who worked at <span class="rotext">Dell</span> where I developed a <span class="rotext">BIOS</span> debugger using <span class="rotext">GenAI</span> and <span class="rotext">RAG</span>.',
     '<span class="silver">Eagle Scout</span>, <span class="rotext"> President\'s Endowed  Scholar</span>, and <span class="gold">USACO Gold</span> divison member.',
   ];
@@ -30,7 +30,9 @@
   });
 </script>
 
-<div class="font-light text-2xl xs:text-3xl text-stone-950 dark:text-stone-300">
+<div
+  class="font-light text-2xl xs:text-[30px] text-stone-950 dark:text-stone-300"
+>
   {#if currentStep == 3}
     <p>
       I'm Nitish, an aspiring <a
@@ -60,6 +62,22 @@
 </div>
 
 <style>
+  :global(.hero-heading) {
+    background: radial-gradient(
+        40% 64% at 13% 100%,
+        hsla(79, 59%, 81%, 0.8),
+        #fff
+      )
+      text;
+    -webkit-box-decoration-break: clone;
+    -webkit-text-fill-color: transparent;
+    color: unset;
+    padding-bottom: 0.13em;
+    line-height: 0.9;
+    letter-spacing: -0.01em;
+    font-weight: 450;
+  }
+
   :global(.silver) {
     font-weight: 900;
     background: radial-gradient(

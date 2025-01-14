@@ -6,7 +6,9 @@
   export let link;
 </script>
 
-<div class="bookPerspectiveContainerStyles bookPerspectiveContainer h-68">
+<div
+  class="bookPerspectiveContainerStyles bookPerspectiveContainer h-68 shadow-lg dark:shadow-neutral-800"
+>
   <div class="bookPerspectiveStyles bookPerspective">
     <div class="bookMetaTextStyles bookMetaText">
       <h3 class="bookMetaTextStylesTitle">{name}</h3>
@@ -94,7 +96,7 @@
   .bookPerspectiveContainerStyles {
     display: block;
     cursor: pointer;
-    border-radius: 16px;
+    /* border-radius: 16px; */
     background-color: rgb(245, 245, 244);
     border: 1px solid rgb(229, 229, 229);
     padding: 48px;
