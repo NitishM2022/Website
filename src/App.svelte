@@ -124,7 +124,7 @@
     <section
       class="fade-in-bottom-first flex flex-col-reverse sm:flex-row sm:pl-2"
     >
-      <div class="sm:w-100 mb-26 xs:mb-30 mt-5 sm:mt-2 sm:mb-0">
+      <div class="sm:w-100 mb-26 xs:mb-30 mt-5 sm:mt-2.5 sm:mb-0">
         <h1
           class="text-stone-950 dark:text-stone-100 text-7xl sm:text-8xl font-medium mb-3 font-serif italic"
         >

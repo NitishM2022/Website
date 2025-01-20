@@ -53,6 +53,7 @@
     "name": "PocketVAX",
     "description": "An immunization record-keeping app built with React Native. Offers user-friendly design, secure data storage, vaccine reminders, detailed vaccine info, and record-sharing with healthcare providers.",
     "link": {
+      "apple": "https://apps.apple.com/us/app/pocket-vax/id1512174278",
       "github": "https://github.com/NitishM2022/PocketVAX?tab=readme-ov-file#pocketvax"
     },
     "date": "07/2022",
