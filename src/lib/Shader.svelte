@@ -1,5 +1,4 @@
 <script>
-  import nimg from "./assets/n_med.jpeg";
   import * as THREE from "jsr:@3d/three";
   import { onMount } from "svelte";
 
@@ -181,7 +180,7 @@
 </script>
 
 <div id="imageContainer" bind:this={imageContainer}>
-  <img src={nimg} alt="Nitish" id="myImage" bind:this={imageElement} />
+  <img src="./n_med.jpeg" alt="Nitish" id="myImage" bind:this={imageElement} />
   <!-- <img src={nimg} /> -->
 </div>
 

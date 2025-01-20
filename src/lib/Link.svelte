@@ -10,5 +10,5 @@
   class="flex flex-row gap-1 items-center hover:opacity-70 hover:duration-100 cursor-pointer"
 >
   <slot />
-  <span class="hidden sm:inline">{name}</span>
+  <!-- <span class="hidden sm:inline">{name}</span> -->
 </a>

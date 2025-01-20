@@ -4,15 +4,15 @@
   export let link = {};
   export let date;
   export let tech = [];
+  export let images = [];
 
   import Github from "./Github.svelte";
-  import cpu from "./assets/cpu.png";
 </script>
 
 <div
   class="sm:h-100 flex flex-col bg-stone-100 dark:bg-neutral-800 border-1 border-neutral-200 dark:border-neutral-700 overflow-hidden shadow-lg dark:shadow-neutral-800"
 >
-  <div class="px-6 pt-5 flex flex-col mb-8">
+  <div class="px-6 pt-5 flex flex-col mb-6">
     <div class="flex flex-row items-center">
       <h3 class="text-xl font-medium text-stone-950 dark:text-stone-300">
         {name}
@@ -51,16 +51,24 @@
     </p>
   </div>
   <div class="flex flex-row gap-2 px-10">
-    <img
-      src={cpu}
-      alt="Nitish"
-      class="z-10 double drop-shadow-sm dark:shadow-lg dark:shadow-neutral-700 w-7/12 object-cover -rotate-3 -translate-x-1 translate-y-5 rounded-lg transition duration-300 ease-in-out hover:scale-102 border-4 border-white"
-    />
-    <img
-      src={cpu}
-      alt="Nitish"
-      class="double drop-shadow-sm dark:shadow-lg dark:shadow-neutral-700 w-5/12 object-cover rotate-2 -translate-x-1 translate-y-4 rounded-lg transition duration-300 ease-in-out hover:scale-102"
-    />
+    {#if images.length == 2}
+      <img
+        src={images[0]}
+        alt="Nitish"
+        class="hover:z-10 double drop-shadow-sm dark:shadow-lg dark:shadow-neutral-700 w-7/12 object-cover object-left-top -rotate-3 -translate-x-1 translate-y-5 rounded-lg transition duration-300 ease-in-out hover:scale-102 border-4 border-white"
+      />
+      <img
+        src={images[1]}
+        alt="Nitish"
+        class="hover:z-10 double drop-shadow-sm dark:shadow-lg dark:shadow-neutral-700 w-5/12 object-cover object-left-top rotate-2 -translate-x-1 translate-y-4 rounded-lg transition duration-300 ease-in-out hover:scale-102"
+      />
+    {:else if images.length == 1}
+      <img
+        src={images[0]}
+        alt="Nitish"
+        class="mx-auto scale-104 double drop-shadow-sm dark:shadow-lg dark:shadow-neutral-700 object-cover object-left-top translate-y-4 rounded-lg transition duration-300 ease-in-out hover:scale-106 border-4 border-white"
+      />
+    {/if}
   </div>
 </div>
 

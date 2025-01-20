@@ -31,7 +31,7 @@
 </script>
 
 <div
-  class="font-light text-2xl xs:text-[30px] text-stone-950 dark:text-stone-300"
+  class="font-light text-2xl xs:leading-10 xs:text-[28px] text-stone-950 dark:text-stone-300"
 >
   {#if currentStep == 3}
     <p>

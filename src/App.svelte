@@ -8,13 +8,12 @@
 
   import projects from "./lib/assets/projects.json";
   import books from "./lib/assets/books.json";
-  import resume from "./lib/assets/resume.pdf";
 </script>
 
 <main
-  class="mx-auto px-8 sm:px-0 w-full sm:w-190 font-rope flex flex-col gap-8"
+  class="mx-auto my-6 px-8 sm:px-0 w-full sm:w-190 font-rope flex flex-col gap-8"
 >
-  <section class="mt-6 flex flex-col gap-6 rounded-3xl">
+  <section class="flex flex-col gap-6 rounded-3xl">
     <div class="flex flex-row items-center">
       <h1
         class="text-2xl font-rope font-extralight text-stone-950 dark:text-stone-100"
@@ -25,7 +24,7 @@
       <div
         class="flex flex-row gap-3 text-stone-950 dark:text-stone-100 items-center mr-2"
       >
-        <Link href={resume} name="RESUME">
+        <Link href="./resume.pdf" name="RESUME">
           <svg
             width="16"
             height="16"
@@ -42,7 +41,21 @@
             ></path></svg
           >
         </Link>
-
+        <Link href="mailto:nitishethan@gmail.com" name="email">
+          <svg
+            width="19"
+            height="19"
+            class="text-2xl text-black dark:text-neutral-100"
+            data-icon="mdi:email-outline"
+          >
+            <symbol id="ai:mdi:email-outline" viewBox="0 0 24 24"
+              ><path
+                fill="currentColor"
+                d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2zm-2 0l-8 5l-8-5zm0 12H4V8l8 5l8-5z"
+              ></path></symbol
+            ><use href="#ai:mdi:email-outline"></use>
+          </svg>
+        </Link>
         <Link href={"https://github.com/NitishM2022"} name="GITHUB">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +64,7 @@
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
+            stroke-width="2.5"
             stroke-linecap="round"
             stroke-linejoin="round"
             class="w-4 h-4"
@@ -111,9 +124,9 @@
     <section
       class="fade-in-bottom-first flex flex-col-reverse sm:flex-row sm:pl-2"
     >
-      <div class="sm:w-100 mb-26 xs:mb-30 mt-5 sm:mt-1.5 sm:mb-0">
+      <div class="sm:w-100 mb-26 xs:mb-30 mt-5 sm:mt-2 sm:mb-0">
         <h1
-          class="text-stone-950 dark:text-stone-100 text-7xl sm:text-8xl font-medium mb-4 font-serif italic"
+          class="text-stone-950 dark:text-stone-100 text-7xl sm:text-8xl font-medium mb-3 font-serif italic"
         >
           Howdy
         </h1>
@@ -132,8 +145,8 @@
       Projects
     </h2>
     <div class="grid sm:grid-cols-1 gap-10">
-      {#each projects as { name, description, link, date, tech }}
-        <Project {name} {description} {link} {date} {tech} />
+      {#each projects as { name, description, link, date, tech, images }}
+        <Project {name} {description} {link} {date} {tech} {images} />
       {/each}
     </div>
   </section>
@@ -155,7 +168,7 @@
   </section>
 
   <!-- Contact Section -->
-  <section class="fade-in-bottom-fourth mb-6">
+  <section class="fade-in-bottom-fourth">
     <h2
       class="font-medium text-2xl text-stone-950 dark:text-stone-100 pb-2 mb-2"
     >
