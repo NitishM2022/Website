@@ -5,7 +5,7 @@
     'studying <span class="rotext"> CS </span> with a minor in <span class="rotext">Embedded Systems</span> at <span class="tamu">Texas A&M</span>.',
     'interested in <span class="rotext"> Graphics</span>, <span class="rotext">Computer Architecture</span>, and <span class="rotext">ML</span>.',
     'who worked at <span class="rotext">Dell</span> where I developed a <span class="rotext">BIOS</span> debugger using <span class="rotext">GenAI</span> and <span class="rotext">RAG</span>.',
-    '<span class="silver">Eagle Scout</span>, <span class="rotext"> President\'s Endowed  Scholar</span>, and <span class="gold">USACO Gold</span> divison member.',
+    '<span class="silver">Eagle Scout</span>, <span class="rotext"> President\'s  Scholar</span>, and <span class="gold">USACO Gold</span> divison member.',
   ];
 
   let currentStep = $state(0);
@@ -31,7 +31,7 @@
 </script>
 
 <div
-  class="font-light text-2xl xs:leading-10 xs:text-[28px] text-stone-950 dark:text-stone-300"
+  class="font-light text-2xl xs:leading-10 xs:text-[30px] text-stone-950 dark:text-stone-300"
 >
   {#if currentStep == 3}
     <p>
