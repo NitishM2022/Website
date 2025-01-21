@@ -93,12 +93,12 @@
       <img
         src={images[0]}
         alt="Nitish"
-        class="hover:z-10 double drop-shadow-sm w-7/12 object-cover object-left-top -rotate-3 -translate-x-1 translate-y-5 rounded-lg transition duration-300 ease-in-out hover:scale-102 border-4 border-white"
+        class="hover:z-10 double drop-shadow-sm w-7/12 sm:h-64 object-cover object-left-top -rotate-3 -translate-x-1 translate-y-5 rounded-lg transition duration-300 ease-in-out hover:scale-102 border-4 border-white"
       />
       <img
         src={images[1]}
         alt="Nitish"
-        class="hover:z-10 double drop-shadow-sm w-5/12 object-cover object-left-top rotate-2 -translate-x-1 translate-y-4 rounded-lg transition duration-300 ease-in-out hover:scale-102"
+        class="hover:z-10 double drop-shadow-sm w-5/12 sm:h-64 object-cover object-left-top rotate-2 -translate-x-1 translate-y-4 rounded-lg transition duration-300 ease-in-out hover:scale-102"
       />
     {:else if images.length == 1}
       <img
@@ -145,6 +145,6 @@
 
   :global(.dark) .double {
     border: 0px solid #eaeaea;
-    outline: 4.5px solid rgb(50, 50, 50);
+    outline: 4.5px solid rgb(60, 60, 60);
   }
 </style>
