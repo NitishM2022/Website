@@ -17,7 +17,7 @@
     },
     "date": "12/2024",
     "tech": ["C++", "Winapi", "Winsock2"],
-    "images": ["./net/net.gif"]
+    "images": ["./net/net.webp"]
   },
   {
     "name": "MiniOS",

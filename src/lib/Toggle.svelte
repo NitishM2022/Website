@@ -1,4 +1,7 @@
 <script lang="ts">
+  import moon from "./assets/moon.svg";
+  import sun from "./assets/sun.svg";
+
   let spinDirection: "left" | "right" = "right";
   let spin = false;
 
@@ -47,13 +50,13 @@
   >
     <img
       loading="lazy"
-      src="./moon.svg"
+      src={moon}
       alt="Enable Light Mode"
       class="icon-moon w-4.5 sm:5"
     />
     <img
       loading="lazy"
-      src="./sun.svg"
+      src={sun}
       alt="Enable Dark Mode"
       class="icon-sun w-4.5 sm:5"
     />
