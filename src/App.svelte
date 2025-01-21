@@ -158,14 +158,12 @@
     >
       Reading
     </h2>
-    <div class="relative">
-      <div class="font-light flex flex-row gap-5 overflow-scroll">
-        {#each books as { name, author, image, length, link }, index}
-          <div class="min-w-60">
-            <Book {name} {author} {image} {length} {link} />
-          </div>
-        {/each}
-      </div>
+    <div class="font-light flex flex-row gap-5 overflow-scroll">
+      {#each books as { name, author, image, length, link }, index}
+        <div class="min-w-60">
+          <Book {name} {author} {image} {length} {link} />
+        </div>
+      {/each}
     </div>
   </section>
 
