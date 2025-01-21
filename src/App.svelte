@@ -158,12 +158,14 @@
     >
       Reading
     </h2>
-    <div class="font-light grid grid-cols-2 sm:grid-cols-3 gap-5">
-      {#each books as { name, author, image, length, link }, index}
-        <div class={index >= 2 ? "hidden sm:block sm:h-full" : ""}>
-          <Book {name} {author} {image} {length} {link} />
-        </div>
-      {/each}
+    <div class="relative">
+      <div class="font-light flex flex-row gap-5 overflow-scroll">
+        {#each books as { name, author, image, length, link }, index}
+          <div class="min-w-60">
+            <Book {name} {author} {image} {length} {link} />
+          </div>
+        {/each}
+      </div>
     </div>
   </section>
 

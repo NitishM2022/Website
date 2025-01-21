@@ -102,6 +102,7 @@
     padding: 48px;
     transition: background-color 0.5s;
     width: 100%;
+    height: 280px;
   }
 
   .bookPerspectiveContainerStyles:hover {

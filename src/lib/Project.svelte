@@ -88,26 +88,28 @@
       {description}
     </p>
   </div>
-  <div class="flex flex-row gap-2 px-10">
-    {#if images.length == 2}
+  {#if images.length == 2}
+    <div class="flex flex-row gap-2 px-7 xsm:px-10">
       <img
         src={images[0]}
         alt="Nitish"
-        class="hover:z-10 double drop-shadow-sm xsm:w-7/12 sm:h-64 object-cover object-left-top xsm:-rotate-3 xsm:-translate-x-1 translate-y-8 scale-104 xsm:scale-100 rounded-lg transition duration-300 ease-in-out hover:scale-106 xsm:hover:scale-102 border-4 border-white"
+        class="hover:z-10 double drop-shadow-sm xsm:w-7/12 sm:h-64 object-cover object-left-top xsm:-rotate-3 xsm:-translate-x-1 translate-y-5 rounded-lg transition duration-300 ease-in-out hover:scale-102 border-4 border-white"
       />
       <img
         src={images[1]}
         alt="Nitish"
-        class="hover:z-10 hidden xsm:inline double drop-shadow-sm w-5/12 sm:h-64 object-cover object-left-top rotate-2 -translate-x-1 translate-y-7 rounded-lg transition duration-300 ease-in-out hover:scale-102"
+        class="hover:z-10 hidden xsm:inline double drop-shadow-sm w-5/12 sm:h-64 object-cover object-left-top rotate-2 -translate-x-1 translate-y-4 rounded-lg transition duration-300 ease-in-out hover:scale-102"
       />
-    {:else if images.length == 1}
+    </div>
+  {:else if images.length == 1}
+    <div class="flex flex-row gap-2 px-7">
       <img
         src={images[0]}
         alt="Nitish"
-        class="mx-auto double drop-shadow-sm object-cover object-left-top translate-y-8 scale-104 rounded-lg transition duration-300 ease-in-out hover:scale-106 border-4 border-white"
+        class="mx-auto double drop-shadow-sm object-cover object-left-top translate-y-5 rounded-lg transition duration-300 ease-in-out hover:scale-102 border-4 border-white"
       />
-    {/if}
-  </div>
+    </div>
+  {/if}
 </div>
 
 <style>
