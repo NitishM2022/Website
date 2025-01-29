@@ -11,7 +11,7 @@
 </script>
 
 <main
-  class="mx-auto my-6 px-8 sm:px-0 w-full sm:w-190 font-rope flex flex-col gap-8"
+  class="mx-auto mt-6 mb-10 px-8 sm:px-0 w-full sm:w-190 font-rope flex flex-col gap-5"
 >
   <section class="flex flex-col gap-6 rounded-3xl">
     <div class="flex flex-row items-center">
@@ -140,7 +140,7 @@
   <!-- Projects Section -->
   <section class="fade-in-bottom-second">
     <h2
-      class=" font-medium text-2xl text-stone-950 dark:text-stone-100 pb-2 mb-2"
+      class="font-medium text-2xl leading-10 text-stone-950 dark:text-stone-100 mb-5"
     >
       Projects
     </h2>
@@ -154,11 +154,13 @@
   <!-- Reading List -->
   <section class="fade-in-bottom-third">
     <h2
-      class="text-2xl font-medium text-stone-950 dark:text-stone-100 pb-2 mb-2"
+      class=" font-medium text-2xl leading-10 text-stone-950 dark:text-stone-100 mt-10 mb-5"
     >
       Reading
     </h2>
-    <div class="font-light flex flex-row gap-5 overflow-scroll">
+    <div
+      class="font-light flex flex-row gap-5 overflow-scroll scrollbar-hidden"
+    >
       {#each books as { name, author, image, length, link }, index}
         <div class="min-w-60">
           <Book {name} {author} {image} {length} {link} />
@@ -170,16 +172,17 @@
   <!-- Contact Section -->
   <section class="fade-in-bottom-fourth">
     <h2
-      class="font-medium text-2xl text-stone-950 dark:text-stone-100 pb-2 mb-2"
+      class="font-medium text-2xl leading-10 text-stone-950 dark:text-stone-100 mt-10 mb-5"
     >
       Contact
     </h2>
-    <p>
-      <a
-        href="mailto:nitishethan@gmail.com"
-        class="text-stone-950 dark:text-stone-300 font-light underline"
+    <p class="text-stone-950 dark:text-stone-300 font-light leading-10 text-lg">
+      Reach me at <a href="mailto:nitishethan@gmail.com" class="underline"
         >nitishethan@gmail.com</a
       >
+    </p>
+    <p class="text-stone-950 dark:text-stone-300 font-light leading-10 text-lg">
+      Made with ❤️‍🔥 by Nitish Malluru
     </p>
   </section>
 </main>

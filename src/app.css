@@ -8,6 +8,17 @@
   }
 }
 
+@layer utilities {
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hidden {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+}
+
 @theme {
   --font-rope: "Manrope", sans-serif;
   --font-inter: "Inter", sans-serif;
