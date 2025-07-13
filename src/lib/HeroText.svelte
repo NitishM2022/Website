@@ -2,12 +2,11 @@
     import { onMount } from "svelte";
     import TextScramble from "./TextScramble.svelte";
 
-    // Bio texts for cycling example
     const bioTexts = [
-        'studying <span class="emph">CS</span> with a minor in <span class="emph">Embedded Systems</span> at <span class="tamu">Texas A&M</span>',
-        'interested in <span class="emph">Graphics,</span> <span class="emph">Computer Architecture,</span> and <span class="emph">ML</span>',
-        'who worked at <span class="emph">Dell</span> where I developed a <span class="emph">BIOS</span> debugger using <span class="emph">GenAI</span> and <span class="emph">RAG</span>',
-        '<span class="emph">Eagle Scout,</span> <span class="emph">President\'s Scholar,</span> and <span class="gold">USACO Gold</span> division member',
+        'studying CS with a minor in Embedded Systems at Texas A&M',
+        'interested in Graphics, Comp Arch, and ML',
+        'who worked at Dell where I developed a BIOS debugger using GenAI and RAG',
+        'Eagle Scout, President\'s Scholar, and USACO Gold division member',
     ];
 
     // Simple demo texts
@@ -62,39 +61,3 @@
     />
 </div>
 
-<style>
-    :global(.emph) {
-        color: #78716c;
-    }
-
-    :global(.tamu) {
-        color: #750000;
-        background-image: linear-gradient(315deg, #750000 21%, #c14444 81%);
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    :global(.gold) {
-        background:
-            radial-gradient(
-                ellipse farthest-corner at right bottom,
-                #fedb37 0%,
-                #fdb931 8%,
-                #9f7928 30%,
-                #8a6e2f 40%,
-                transparent 130%
-            ),
-            radial-gradient(
-                ellipse farthest-corner at left top,
-                #ffffff 0%,
-                #ffffac 8%,
-                #d1b464 25%,
-                #5d4a1f 62.5%,
-                #5d4a1f 100%
-            );
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-    }
-</style>

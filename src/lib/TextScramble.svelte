@@ -21,7 +21,7 @@
 
     // Scramble configuration
     const chars =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:',./<>?";
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 
     // Methods
     function parseHtml(html) {
@@ -175,7 +175,6 @@
     }
 
     :global(.scramble-char) {
-        opacity: 70%;
         display: inline-block;
     }
 </style>
