@@ -4,7 +4,7 @@
     "build": "deno run -A --node-modules-dir npm:vite build",
     "preview": "deno run -A --node-modules-dir npm:vite preview",
     "serve": "deno run --allow-net --allow-read jsr:@std/http@1/file-server dist/",
-    "deploy": "swa deploy ./dist --app-name website --env production"
+    "deploy": "npx wrangler pages deploy dist"
   },
   "compilerOptions": {
     "lib": ["ES2020", "DOM", "DOM.Iterable"]

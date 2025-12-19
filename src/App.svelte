@@ -180,11 +180,6 @@
                 >nitishethan@gmail.com</a
             >
         </p>
-        <p
-            class="text-stone-950 dark:text-stone-300 font-light leading-10 text-lg"
-        >
-            Made with ❤️‍🔥 by Nitish Malluru
-        </p>
     </section>
 </main>
 
