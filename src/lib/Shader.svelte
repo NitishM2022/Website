@@ -1,5 +1,5 @@
 <script>
-  import * as THREE from "jsr:@3d/three";
+  import * as THREE from "three";
   import { onMount } from "svelte";
 
   // variables
