@@ -4,266 +4,68 @@
   export let image;
   export let length;
   export let link;
+  export let color = "#1f2937";
+
+  // Dynamic thickness based on length (pages) or a default
+  $: thickness = 50;
 </script>
 
 <div
-  class="bookPerspectiveContainerStyles bookPerspectiveContainer h-68 shadow-lg dark:shadow-neutral-800"
+  class="group relative h-96 flex flex-col justify-end items-center transition-all duration-500 ease-out w-32 hover:w-56 perspective-midrange"
+  style="--thickness: {thickness}px; --spine-color: {color};"
 >
-  <div class="bookPerspectiveStyles bookPerspective">
-    <div class="bookMetaTextStyles bookMetaText">
-      <h3 class="bookMetaTextStylesTitle">{name}</h3>
-      <p class="bookMetaTextStylesAuthor">{author}</p>
-    </div>
+  <div
+    class="relative w-full h-80 cursor-pointer"
+    style="transform-style: preserve-3d;"
+  >
     <div
-      class="bookThreeDStyles bookThreeD"
-      style="--book-height: {Math.floor(parseInt(length) / 18)}px"
+      class="absolute left-0 bottom-0 h-full origin-right transition-all duration-500 ease-out text-white rounded-l-sm z-20"
+      style="width: var(--thickness); background-color: var(--spine-color); backface-visibility: hidden; transform: rotateY(-45deg) translateZ(0px);"
     >
-      <img src={image} alt={name} class="bookImage" />
-    </div>
-    <div class="bookExternalLink bookMetaText">
-      <span class="bookExternalLinkSpan" on:click={window.open(link, "_blank")}>
-        View on Amazon
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="1em"
-          height="1em"
-          fill="currentColor"
-          viewBox="0 0 13 13"
-          class="bookExternalLinkArrow"
+      <div
+        class="w-full h-full flex items-center justify-center overflow-hidden relative"
+      >
+        <span class="absolute inset-0 opacity-20 pointer-events-none z-10"
+        ></span>
+
+        <h2
+          class="m-0 text-[10px] font-black tracking-widest uppercase whitespace-nowrap"
+          style="writing-mode: vertical-rl; text-orientation: mixed;"
         >
-          <path
-            d="M13 1.05a1 1 0 0 0-1-1L4 0a1 1 0 0 0 0 2h5.56l-8.27 8.29a1 1 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219L11 3.42V9a1 1 0 0 0 2 0V1.05Z"
-          ></path>
-        </svg>
-      </span>
+          {name}
+        </h2>
+      </div>
     </div>
+
+    <div
+      class="absolute bottom-0 w-52 h-full origin-left transition-all duration-500 ease-out bg-stone-200 z-10 shadow-md group-hover:shadow-2xl"
+      style="left: var(--thickness); backface-visibility: hidden; transform: rotateY(45deg);"
+    >
+      <div class="w-full h-full relative overflow-hidden">
+        <span class="absolute inset-0 opacity-30 pointer-events-none z-10"
+        ></span>
+        <span
+          class="absolute inset-0 pointer-events-none z-20 bg-gradient-to-br from-white/10 to-black/5"
+        ></span>
+        <img src={image} alt={name} class="w-full h-full object-cover block" />
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="translate-x-7 absolute -bottom-14 w-52 text-center transition-opacity duration-300 ease-out opacity-0 pointer-events-none z-50 group-hover:opacity-100"
+  >
+    <h3 class="text-sm font-bold text-stone-900 dark:text-stone-100">{name}</h3>
+    <p class="text-xs text-stone-600 dark:text-stone-400 mt-0.5">{author}</p>
   </div>
 </div>
 
 <style>
-  .bookPerspective {
-    perspective: 500px;
+  .group:hover .absolute.left-0 {
+    transform: rotateY(-70deg) translateZ(0px) !important;
   }
 
-  .bookThreeD {
-    transform-style: preserve-3d;
-    transform-origin: center;
-  }
-
-  .bookThreeD:before {
-    background-image: linear-gradient(
-      90deg,
-      #fff 40%,
-      #f6f6f6 0,
-      #f6f6f6 50%,
-      #fff 0,
-      #fff 90%,
-      #f6f6f6 0,
-      #f6f6f6
-    );
-    background-size: 3px 3px;
-    transform: translateY(0) translateX(0) translateZ(0) rotateY(-90deg);
-    transform-origin: right;
-    width: var(--book-height, 30px);
-  }
-
-  .bookThreeD:after {
-    background-image: linear-gradient(
-      0deg,
-      #f6f6f6 40%,
-      #eaeaed 0,
-      #eaeaed 50%,
-      #f6f6f6 0,
-      #f6f6f6 90%,
-      #eaeaed 0,
-      #eaeaed
-    );
-    background-size: 4px 4px;
-    transform: translateY(0) translateX(0) translateZ(0) rotateX(-90deg);
-    transform-origin: top;
-    height: var(--book-height, 30px);
-  }
-
-  .bookPerspectiveContainer:hover .bookThreeD {
-    transform: rotateX(80deg) rotate(45deg) scale(0.75);
-  }
-
-  .bookPerspectiveContainer:hover .bookMetaText {
-    opacity: 100;
-    transform: translateY(0);
-  }
-
-  .bookPerspectiveContainerStyles {
-    display: block;
-    cursor: pointer;
-    /* border-radius: 16px; */
-    background-color: rgb(245, 245, 244);
-    border: 1px solid rgb(229, 229, 229);
-    padding: 48px;
-    transition: background-color 0.5s;
-    width: 100%;
-    height: 280px;
-  }
-
-  .bookPerspectiveContainerStyles:hover {
-    background-color: rgb(229, 229, 229);
-  }
-
-  :global(.dark) .bookPerspectiveContainerStyles {
-    background-color: rgb(38, 38, 38);
-    border: 1px solid rgb(64, 64, 64);
-  }
-
-  :global(.dark) .bookPerspectiveContainerStyles:hover {
-    background-color: rgb(64, 64, 64);
-  }
-
-  .bookPerspectiveStyles {
-    display: flex;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-    margin: 0;
-  }
-
-  .bookThreeDStyles {
-    margin: 0;
-    position: relative;
-    transition: transform 0.5s ease-in-out;
-    flex: auto 0;
-    width: 100%;
-    max-width: 120px;
-  }
-
-  .bookThreeDStyles:after {
-    display: block;
-    content: "";
-    background-color: #f6f6f6;
-    width: calc(100% + 0.5px);
-    position: absolute;
-    left: 0;
-    border-radius: 8px 0 0 8px;
-    border-color: #333;
-    border-bottom: 3px solid;
-    border-top: 3px solid;
-    border-left: 4px solid;
-    border-right: 0;
-  }
-
-  .bookThreeDStyles:before {
-    display: block;
-    content: "";
-    background-color: #fff;
-    height: calc(100% + 0.5px);
-    position: absolute;
-    right: 0;
-    top: 0;
-    border-color: #333;
-    border-left: 3px solid;
-    border-right: 3px solid;
-    border-top: 3px solid #eaeaed;
-    border-bottom: 0;
-  }
-
-  .bookMetaTextStyles {
-    text-align: left;
-    position: absolute;
-    top: -24px;
-    left: -24px;
-    right: -24px;
-    opacity: 0;
-    transform: translateY(-16px);
-    transition: all 0.5s ease-in-out;
-    margin: 0;
-  }
-
-  .bookMetaTextStylesTitle {
-    font-size: 18px;
-    font-weight: bold;
-    line-height: 1.2em;
-    margin: 0 !important;
-  }
-
-  .bookMetaTextStylesAuthor {
-    font-size: 16px;
-    color: #666 !important;
-    margin: 4px 0 0 !important;
-  }
-
-  :global(.dark) .bookMetaTextStylesTitle {
-    color: #ffffff !important;
-  }
-
-  :global(.dark) .bookMetaTextStylesAuthor {
-    color: rgb(178, 178, 178) !important;
-  }
-
-  .bookPerspectiveContainer:hover .bookImage {
-    border-radius: 6px 0 0 6px;
-  }
-
-  .bookImage {
-    border-radius: 3px 0 0 3px;
-    transition: border-radius 0.3s ease-in-out;
-  }
-
-  .bookExternalLink {
-    position: absolute;
-    font-weight: bold;
-    color: rgb(0, 0, 0) !important;
-    font-size: 14px;
-    bottom: -24px;
-    left: -24px;
-    right: -24px;
-    opacity: 0;
-    transform: translateY(16px);
-    transition: all 0.5s ease-in-out;
-    margin: 0;
-    display: block;
-  }
-
-  :global(.dark) .bookExternalLink {
-    color: #fff !important;
-  }
-
-  .bookExternalLinkSpan {
-    display: inline-flex;
-    align-items: center;
-    margin-right: 4px;
-    cursor: pointer;
-    position: relative;
-    text-decoration: underline dotted rgb(0, 0, 0);
-    text-underline-offset: 6px;
-    text-decoration-thickness: 2px;
-  }
-
-  @media (max-width: 640px) {
-    .bookMetaTextStylesTitle {
-      font-size: 0.95rem;
-    }
-
-    .bookMetaTextStylesAuthor {
-      font-size: 0.85rem;
-    }
-
-    .bookExternalLink {
-      font-size: 0.75rem; /* Decreased font size for small screens */
-    }
-  }
-
-  :global(.dark) .bookExternalLinkSpan {
-    text-decoration: underline dotted rgb(255, 255, 255);
-  }
-
-  .bookExternalLinkArrow {
-    height: 8px;
-    width: 8px;
-    margin-left: 6px;
-    fill: rgb(0, 0, 0);
-  }
-
-  :global(.dark) .bookExternalLinkArrow {
-    fill: rgb(255, 255, 255);
+  .group:hover .absolute.bottom-0:not(.left-0) {
+    transform: rotateY(20deg) translateZ(0px) !important;
   }
 </style>
