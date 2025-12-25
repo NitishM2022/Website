@@ -4,68 +4,72 @@
   export let image;
   export let length;
   export let link;
-  export let color = "#1f2937";
+  export let color;
 
-  // Dynamic thickness based on length (pages) or a default
-  $: thickness = 50;
+  const pageWidth = 30;
+  let isHovered = false;
 </script>
 
 <div
-  class="group relative h-96 flex flex-col justify-end items-center transition-all duration-500 ease-out w-32 hover:w-56 perspective-midrange"
-  style="--thickness: {thickness}px; --spine-color: {color};"
+  class="group relative flex flex-col items-center justify-end w-48 h-96"
+  style="perspective: 1000px;"
+  on:mouseenter={() => (isHovered = true)}
+  on:mouseleave={() => (isHovered = false)}
+  role="button"
+  tabindex="0"
 >
   <div
-    class="relative w-full h-80 cursor-pointer"
-    style="transform-style: preserve-3d;"
+    class="book-wrapper relative w-52 h-80 transition-transform duration-500 ease-out"
+    style="transform-style: preserve-3d; transform: rotateY({isHovered
+      ? -15
+      : -30}deg);"
   >
+    <!-- Front Cover -->
     <div
-      class="absolute left-0 bottom-0 h-full origin-right transition-all duration-500 ease-out text-white rounded-l-sm z-20"
-      style="width: var(--thickness); background-color: var(--spine-color); backface-visibility: hidden; transform: rotateY(-45deg) translateZ(0px);"
+      class="absolute inset-0 shadow-xl overflow-hidden"
+      style="transform: translateZ({pageWidth}px); backface-visibility: hidden;"
+    >
+      <img src={image} alt={name} class="w-full h-full object-cover" />
+      <div
+        class="absolute inset-0 bg-gradient-to-r from-black/10 via-transparent to-transparent pointer-events-none"
+      ></div>
+    </div>
+
+    <!-- Pages (right side edge) -->
+    <div
+      class="absolute inset-y-0 right-0"
+      style="width: {pageWidth *
+        2}px; transform: translateZ({pageWidth}px) rotateY(-90deg); transform-origin: right center; background: linear-gradient(to right, #f5f1e8, #e8e3d6);"
     >
       <div
-        class="w-full h-full flex items-center justify-center overflow-hidden relative"
-      >
-        <span class="absolute inset-0 opacity-20 pointer-events-none z-10"
-        ></span>
-
-        <h2
-          class="m-0 text-[10px] font-black tracking-widest uppercase whitespace-nowrap"
-          style="writing-mode: vertical-rl; text-orientation: mixed;"
-        >
-          {name}
-        </h2>
-      </div>
+        class="absolute inset-0"
+        style="background-image: repeating-linear-gradient(0deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 1px, transparent 1px, transparent 2px);"
+      ></div>
     </div>
 
+    <!-- Back Cover -->
     <div
-      class="absolute bottom-0 w-52 h-full origin-left transition-all duration-500 ease-out bg-stone-200 z-10 shadow-md group-hover:shadow-2xl"
-      style="left: var(--thickness); backface-visibility: hidden; transform: rotateY(45deg);"
+      class="absolute inset-0 shadow-xl"
+      style="transform: translateZ(-{pageWidth}px); backface-visibility: hidden;"
     >
-      <div class="w-full h-full relative overflow-hidden">
-        <span class="absolute inset-0 opacity-30 pointer-events-none z-10"
-        ></span>
-        <span
-          class="absolute inset-0 pointer-events-none z-20 bg-gradient-to-br from-white/10 to-black/5"
-        ></span>
-        <img src={image} alt={name} class="w-full h-full object-cover block" />
-      </div>
+      <div
+        class="absolute inset-0 bg-gradient-to-br from-neutral-700 to-neutral-900"
+      ></div>
     </div>
+
+    <!-- Inner Back Cover (black) -->
+    <div
+      class="absolute inset-0 bg-black"
+      style="transform: translateZ(-{pageWidth}px) rotateY(180deg); backface-visibility: hidden;"
+    ></div>
   </div>
 
+  <!-- Book info on hover -->
   <div
-    class="translate-x-7 absolute -bottom-14 w-52 text-center transition-opacity duration-300 ease-out opacity-0 pointer-events-none z-50 group-hover:opacity-100"
+    class="absolute -bottom-12 w-52 text-center transition-opacity duration-300 ease-out pointer-events-none"
+    style="opacity: {isHovered ? 1 : 0};"
   >
     <h3 class="text-sm font-bold text-stone-900 dark:text-stone-100">{name}</h3>
-    <p class="text-xs text-stone-600 dark:text-stone-400 mt-0.5">{author}</p>
+    <p class="text-xs text-stone-600 dark:text-stone-400 mt-1">{author}</p>
   </div>
 </div>
-
-<style>
-  .group:hover .absolute.left-0 {
-    transform: rotateY(-70deg) translateZ(0px) !important;
-  }
-
-  .group:hover .absolute.bottom-0:not(.left-0) {
-    transform: rotateY(20deg) translateZ(0px) !important;
-  }
-</style>
