@@ -327,8 +327,9 @@
             this.container.appendChild(this.filter.domElement);
             this.setSize(this.width, this.height);
 
-            this.container.addEventListener("mousemove", this.onMouseMove);
-            this.container.addEventListener("touchmove", this.onMouseMove);
+            // Listen on window instead of container (container has pointer-events-none)
+            window.addEventListener("mousemove", this.onMouseMove);
+            window.addEventListener("touchmove", this.onMouseMove);
         }
 
         setSize(w, h) {
@@ -370,10 +371,10 @@
         }
 
         updateRotation() {
-            const x = Math.map(this.mouse.y, 0, this.height, 0.25, -0.25);
-            const y = Math.map(this.mouse.x, 0, this.width, -0.25, 0.25);
-            this.mesh.rotation.x += (x - this.mesh.rotation.x) * 0.008;
-            this.mesh.rotation.y += (y - this.mesh.rotation.y) * 0.008;
+            const x = Math.map(this.mouse.y, 0, this.height, 0.22, -0.22);
+            const y = Math.map(this.mouse.x, 0, this.width, -0.22, 0.22);
+            this.mesh.rotation.x += (x - this.mesh.rotation.x) * 0.02;
+            this.mesh.rotation.y += (y - this.mesh.rotation.y) * 0.02;
         }
 
         clear() {
@@ -404,8 +405,8 @@
             cancelAnimationFrame(this.animationFrameId);
             this.filter.dispose();
             this.container.removeChild(this.filter.domElement);
-            this.container.removeEventListener("mousemove", this.onMouseMove);
-            this.container.removeEventListener("touchmove", this.onMouseMove);
+            window.removeEventListener("mousemove", this.onMouseMove);
+            window.removeEventListener("touchmove", this.onMouseMove);
             this.clear();
             this.renderer.dispose();
         }
