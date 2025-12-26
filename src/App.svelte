@@ -1,4 +1,5 @@
 <script>
+    import { onMount } from "svelte";
     import Project from "./lib/Project.svelte";
     import Book from "./lib/Book.svelte";
     import HeroText from "./lib/HeroText.svelte";
@@ -9,6 +10,18 @@
     import projects from "./lib/assets/projects.json";
     import AsciiText from "./lib/AsciiText.svelte";
     import books from "./lib/assets/books.json";
+
+    let isMobile = false;
+    $: displayedBooks = isMobile ? books.slice(0, 4) : books;
+
+    onMount(() => {
+        const checkMobile = () => {
+            isMobile = window.innerWidth < 800;
+        };
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+    });
 </script>
 
 <div class="grid-border h-10 mb-10">
@@ -121,7 +134,7 @@
 <main class="mx-auto w-full sm:w-210 font-rope flex flex-col">
     <section class="flex flex-col gap-10 rounded-3xl">
         <section
-            class="grid-border fade-in-bottom-first flex flex-col sm:flex-row h-auto sm:h-80"
+            class="grid-border fade-in-bottom-first flex flex-col sm:flex-row sm:h-80"
         >
             <div class="w-full sm:flex-grow h-80 sm:h-full">
                 <Shader />
@@ -129,7 +142,7 @@
 
             <div class=" relative flex flex-col sm:w-340">
                 <div
-                    class="absolute -top-28 -left-6 sm:left-0 w-100 h-100 pointer-events-none"
+                    class="absolute -top-28 -left-4 sm:left-0 w-100 h-100 pointer-events-none"
                 >
                     <AsciiText text="howdy" asciiFontSize={6} />
                 </div>
@@ -140,7 +153,7 @@
         </section>
     </section>
     <!-- Projects Section -->
-    <section class="fade-in-bottom-second mt-5 sm:mt-15">
+    <section class="fade-in-bottom-second mt-15">
         <h2
             class="font-medium text-2xl leading-10 text-stone-950 dark:text-stone-100 mb-5 px-2 sm:px-0"
         >
@@ -163,7 +176,7 @@
         <div
             class="grid-border font-light flex flex-row gap-0 overflow-x-visible overflow-y-visible items-end h-80"
         >
-            {#each books as { name, author, image, length, link, color }, index}
+            {#each displayedBooks as { name, author, image, length, link, color }, index}
                 <div
                     class="flex-shrink-0 transition-all duration-500 ease-out hover:z-50 -ml-14 first:ml-0"
                     style="z-index: {100 - index};"

@@ -16,7 +16,7 @@
 
 <div
   class="group relative flex flex-col items-center justify-end"
-  style="perspective: 800px; width: {bookWidth}px; transform: translate(40px, -60px);"
+  style="perspective: 800px; width: {bookWidth}px; transform: translate(30px, -60px);"
   on:mouseenter={() => (isHovered = true)}
   on:mouseleave={() => (isHovered = false)}
   role="button"
@@ -75,7 +75,7 @@
     style="opacity: {isHovered
       ? 1
       : 0}; transform: translateZ(10px) rotateY(-30deg) {isHovered && index > 0
-      ? 'translateX(64px)'
+      ? 'translateX(60px)'
       : ''}; transform-origin: left center; transform-style: preserve-3d;"
   >
     <h3 class="text-xs font-bold text-stone-900 dark:text-stone-100 truncate">

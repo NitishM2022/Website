@@ -25,7 +25,7 @@
 </script>
 
 <div
-    class="uppercase tracking-tight leading-10 text-2xl sm:text-[25.5px] text-stone-950 dark:text-stone-300 min-h-[160px] sm:min-h-[120px]"
+    class="uppercase tracking-tight leading-10 text-2xl sm:text-[25.5px] text-stone-950 dark:text-stone-300 h-40 sm:min-h-[120px] sm:h-auto overflow-hidden"
     style="font-family: 'Geist Mono', monospace;"
 >
     I'm Nitish, a developing <a
