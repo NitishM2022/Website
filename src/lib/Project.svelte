@@ -10,8 +10,10 @@
   import Link from "./Link.svelte";
 </script>
 
+<!-- border-[rgba(0,0,0,0.05)] dark:border-[rgba(255,255,255,0.05)] -->
+
 <div
-  class="sm:h-100 flex flex-col bg-stone-100 dark:bg-neutral-800 border-1 border-neutral-200 dark:border-neutral-700 overflow-hidden shadow-lg dark:shadow-neutral-800"
+  class="sm:h-100 flex flex-col bg-[#fafaf9] dark:bg-[#171717] grid-border overflow-hidden"
 >
   <div class="px-6 pt-4 flex flex-col mb-6">
     <div class="flex flex-row items-center">
@@ -68,16 +70,10 @@
       </div>
     </div>
 
-    <p
-      class="text-xs text-thin text-stone-500 dark:text-stone-400 font-mono mb-1.5"
-    >
-      {date}
-    </p>
-
-    <div class="flex flex-wrap gap-1 items-center mb-1.5">
+    <div class="flex flex-wrap gap-1 items-center my-1">
       {#each tech as tech}
         <p
-          class="border-1 px-2 rounded-2xl text-sm text-stone-950 dark:text-stone-300 dark:border-stone-100"
+          class="px-2 rounded-2xl text-sm bg-stone-800 text-stone-100 dark:bg-stone-200 dark:text-stone-900"
         >
           {tech}
         </p>
