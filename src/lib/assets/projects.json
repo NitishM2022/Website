@@ -1,15 +1,5 @@
 [
   {
-    "name": "FeGBA",
-    "description": "A Game Boy Advance emulator written in Rust, designed to replicate the hardware and gameplay of the original console. Implements CPU, memory, graphics, and audio to run GBA games accurately.",
-    "link": {
-      "github": "https://github.com/AidenBeresford/FeGBA?tab=readme-ov-file#fegba"
-    },
-    "date": "PRESENT",
-    "tech": ["Rust", "WASM"],
-    "images": ["./fegba/gba.png", "./fegba/thumb.jpeg"]
-  },
-  {
     "name": "TCP over UDP",
     "description": "Application-layer implementation of a connection-oriented protocol over a connectionless one. Emulates flow control, congestion control, RTT estimation, fast retransmits, and more, achieving over 1 Gbps throughput with threading.",
     "link": {
