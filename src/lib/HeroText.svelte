@@ -1,63 +1,43 @@
 <script>
-    import { onMount } from "svelte";
-    import TextScramble from "./TextScramble.svelte";
+    import { onMount, onDestroy } from "svelte";
+    import DecryptedText from "./DecryptedText.svelte";
 
     const bioTexts = [
-        'studying CS with a minor in Embedded Systems at Texas A&M',
-        'interested in Graphics, Comp Arch, and ML',
-        'who worked at Dell where I developed a BIOS debugger using GenAI and RAG',
-        'Eagle Scout, President\'s Scholar, and USACO Gold division member',
+        "studying Computer Science at Texas A&M",
+        "who engineered a cross-platform C++ visualization tool at Amazon",
+        "who developed an AI-powered BIOS debugger using Llama 3 at Dell",
+        "Eagle Scout, President's Scholar, and USACO Gold member",
     ];
 
-    // Simple demo texts
-    const hoverText = "Hover over me to scramble text!";
-    const clickText = "Click me for a scramble effect!";
-
-    // Component references
-    let bioScrambler;
-    let clickScrambler;
-    let hoverScrambler;
-    let manualText = $state("Try the manual scramble button!");
-    let manualScrambler;
-
-    function handleClickScramble() {
-        clickScrambler.setText(clickText);
-    }
-
-    function handleHoverStart() {
-        hoverScrambler.setText(hoverText);
-    }
-
-    function scrambleManualText() {
-        manualScrambler.setText(manualText);
-    }
-
-    function changeManualText() {
-        manualText = "Text changed! Now scramble me again.";
-        // We don't call setText here - wait for the button click
-    }
+    let { maxLength = 64 } = $props();
+    let currentIndex = $state(0);
+    let interval;
 
     onMount(() => {
-        // You can programmatically control the scrambler if needed
-        // For example, pause/restart the bio text cycle
-        // Example: setTimeout(() => bioScrambler.stopCycle(), 10000);
+        interval = setInterval(() => {
+            currentIndex = (currentIndex + 1) % bioTexts.length;
+        }, 4000);
+    });
+
+    onDestroy(() => {
+        if (interval) clearInterval(interval);
     });
 </script>
 
 <div
-    class="text-2xl xs:leading-10 font-rope xs:text-[30px] text-stone-950 dark:text-stone-300"
+    class="uppercase tracking-tight leading-10 text-2xl sm:text-[25.5px] text-stone-950 dark:text-stone-300 min-h-[160px] sm:min-h-[120px]"
+    style="font-family: 'Geist Mono', monospace;"
 >
-    <p>
-        I'm Nitish, an aspiring <a
-            href="https://paulgraham.com/hp.html"
-            target="_blank"
-            class="underline underline-offset-4 decoration-2">builder</a
-        >,
-    </p>
-    <TextScramble
-        bind:this={bioScrambler}
-        textArray={bioTexts}
-        cycleInterval={4000}
+    I'm Nitish, a developing <a
+        href="https://paulgraham.com/hp.html"
+        target="_blank"
+        class="underline underline-offset-4 decoration-2 link">builder</a
+    >,
+    <DecryptedText
+        text={bioTexts[currentIndex]}
+        animateOn="view"
+        revealDirection="center"
+        speed={60}
+        {maxLength}
     />
 </div>
-
