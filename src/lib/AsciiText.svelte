@@ -9,8 +9,41 @@
     export let planeBaseHeight = 8;
     export let enableWaves = true;
 
+    // Optional explicit dimensions - if not provided, auto-calculate
+    export let width = 0;
+    export let height = 0;
+
     let container;
     let asciiInstance;
+    let computedWidth = 400;
+    let computedHeight = 200;
+
+    // Calculate intrinsic size based on text and font
+    function calculateIntrinsicSize() {
+        // The ASCII text needs enough room for the 3D animated text
+        const baseWidth = text.length * asciiFontSize * 13; // Tighter width
+        const baseHeight = asciiFontSize * 22; // Taller to fit text fully
+
+        // On mobile, cap width to viewport width
+        const maxWidth =
+            typeof window !== "undefined" ? window.innerWidth * 0.9 : baseWidth;
+
+        return {
+            width: Math.round(Math.min(baseWidth, maxWidth)),
+            height: Math.round(baseHeight),
+        };
+    }
+
+    // Calculate responsive font size based on screen width
+    function getResponsiveFontSize(baseSize) {
+        if (typeof window === "undefined") return baseSize;
+        const width = window.innerWidth;
+        if (width < 400) return Math.max(4, baseSize - 2);
+        if (width < 500) return Math.max(5, baseSize - 1);
+        return baseSize;
+    }
+
+    let responsiveFontSize = asciiFontSize;
 
     const vertexShader = `
         varying vec2 vUv;
@@ -263,13 +296,15 @@
 
             this.camera = new THREE.PerspectiveCamera(
                 45,
-                this.width / this.height,
+                this.width / this.height, // Adjusted for taller view
                 1,
                 1000,
             );
-            this.camera.position.z = 30;
+            // Zoom camera closer to make text larger in smaller container
+            this.camera.position.z = 10;
             this.scene = new THREE.Scene();
             this.mouse = { x: 0, y: 0 };
+            this.mouseVelocity = 0;
 
             this.onMouseMove = this.onMouseMove.bind(this);
             this.setMesh();
@@ -307,6 +342,8 @@
             });
 
             this.mesh = new THREE.Mesh(this.geometry, this.material);
+            // Offset mesh position for alignment
+            this.mesh.position.y = 0.5;
             this.scene.add(this.mesh);
         }
 
@@ -350,6 +387,13 @@
             const bounds = this.container.getBoundingClientRect();
             const x = e.clientX - bounds.left;
             const y = e.clientY - bounds.top;
+
+            // Calculate velocity (acceleration)
+            const dx = x - this.mouse.x;
+            const dy = y - this.mouse.y;
+            const velocity = Math.sqrt(dx * dx + dy * dy);
+            this.mouseVelocity = Math.min(velocity / 10, 2); // Cap at 2x
+
             this.mouse = { x, y };
         }
 
@@ -371,10 +415,14 @@
         }
 
         updateRotation() {
-            const x = Math.map(this.mouse.y, 0, this.height, 0.22, -0.22);
-            const y = Math.map(this.mouse.x, 0, this.width, -0.22, 0.22);
-            this.mesh.rotation.x += (x - this.mesh.rotation.x) * 0.02;
-            this.mesh.rotation.y += (y - this.mesh.rotation.y) * 0.02;
+            // Decay mouse velocity over time
+            this.mouseVelocity *= 0.95;
+
+            // Update wave intensity based on mouse velocity
+            const targetWave = 0.3 + this.mouseVelocity;
+            const currentWave = this.mesh.material.uniforms.uEnableWaves.value;
+            this.mesh.material.uniforms.uEnableWaves.value +=
+                (targetWave - currentWave) * 0.1;
         }
 
         clear() {
@@ -415,87 +463,73 @@
     onMount(() => {
         if (!container) return;
 
-        const { width, height } = container.getBoundingClientRect();
+        // Get responsive font size based on current window width
+        responsiveFontSize = getResponsiveFontSize(asciiFontSize);
 
-        if (width === 0 || height === 0) {
-            const observer = new IntersectionObserver(
-                ([entry]) => {
-                    if (
-                        entry.isIntersecting &&
-                        entry.boundingClientRect.width > 0 &&
-                        entry.boundingClientRect.height > 0
-                    ) {
-                        const { width: w, height: h } =
-                            entry.boundingClientRect;
-                        asciiInstance = new CanvAscii(
-                            {
-                                text,
-                                asciiFontSize,
-                                textFontSize,
-                                textColor,
-                                planeBaseHeight,
-                                enableWaves,
-                            },
-                            container,
-                            w,
-                            h,
-                        );
-                        asciiInstance.load();
-                        observer.disconnect();
-                    }
-                },
-                { threshold: 0.1 },
-            );
+        // Calculate intrinsic size if not provided
+        function updateSize() {
+            if (width <= 0 || height <= 0) {
+                const intrinsic = calculateIntrinsicSize();
+                computedWidth = intrinsic.width;
+                computedHeight = intrinsic.height;
+            } else {
+                computedWidth = width;
+                computedHeight = height;
+            }
 
-            observer.observe(container);
-
-            return () => {
-                observer.disconnect();
-                if (asciiInstance) asciiInstance.dispose();
-            };
+            // Update the ASCII renderer if it exists
+            if (asciiInstance) {
+                asciiInstance.setSize(computedWidth, computedHeight);
+            }
         }
 
+        updateSize();
+
+        // Use computed dimensions
+        const w = computedWidth;
+        const h = computedHeight;
+
+        // Directly initialize with computed size
         asciiInstance = new CanvAscii(
             {
                 text,
-                asciiFontSize,
+                asciiFontSize: responsiveFontSize,
                 textFontSize,
                 textColor,
                 planeBaseHeight,
                 enableWaves,
             },
             container,
-            width,
-            height,
+            w,
+            h,
         );
         asciiInstance.load();
 
-        const ro = new ResizeObserver((entries) => {
-            if (!entries[0] || !asciiInstance) return;
-            const { width: w, height: h } = entries[0].contentRect;
-            if (w > 0 && h > 0) {
-                asciiInstance.setSize(w, h);
-            }
-        });
-        ro.observe(container);
+        // Listen for resize to update dimensions
+        const handleResize = () => {
+            updateSize();
+        };
+        window.addEventListener("resize", handleResize);
 
         return () => {
-            ro.disconnect();
+            window.removeEventListener("resize", handleResize);
             if (asciiInstance) asciiInstance.dispose();
         };
     });
 </script>
 
-<div bind:this={container} class="ascii-text-container"></div>
+<div
+    bind:this={container}
+    class="ascii-text-container"
+    style="width: {computedWidth}px; height: {computedHeight}px;"
+></div>
 
 <style>
     @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&display=swap");
 
     .ascii-text-container {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
+        position: relative;
+        overflow: hidden;
     }
 
     :global(.ascii-text-container canvas) {

@@ -11,27 +11,55 @@
     import AsciiText from "./lib/AsciiText.svelte";
     import books from "./lib/assets/books.json";
 
-    let isMobile = false;
-    $: displayedBooks = isMobile ? books.slice(0, 4) : books;
+    let maxBooks = books.length;
+    let booksContainer;
+
+    // Calculate how many books can fit based on container width
+    // Each book is 140px wide but overlaps by ~40px, so effective width is ~100px per book after first
+    // First book needs full 140px, subsequent books need ~100px each
+    function calculateMaxBooks(containerWidth) {
+        if (containerWidth <= 0) return 4;
+        const firstBookWidth = 140;
+        const additionalBookWidth = 100; // 140px - 40px overlap
+        const padding = 60; // Some padding for edges
+
+        const availableWidth = containerWidth - padding;
+        if (availableWidth < firstBookWidth) return 1;
+
+        const additionalBooks = Math.floor(
+            (availableWidth - firstBookWidth) / additionalBookWidth,
+        );
+        return Math.min(1 + additionalBooks, books.length);
+    }
+
+    $: displayedBooks = books.slice(0, maxBooks);
 
     onMount(() => {
-        const checkMobile = () => {
-            isMobile = window.innerWidth < 800;
+        const updateBookCount = () => {
+            if (booksContainer) {
+                const width = booksContainer.getBoundingClientRect().width;
+                maxBooks = calculateMaxBooks(width);
+            }
         };
-        checkMobile();
-        window.addEventListener("resize", checkMobile);
-        return () => window.removeEventListener("resize", checkMobile);
+
+        // Initial calculation after a short delay to ensure container is rendered
+        setTimeout(updateBookCount, 100);
+
+        window.addEventListener("resize", updateBookCount);
+        return () => window.removeEventListener("resize", updateBookCount);
     });
 </script>
 
-<div class="grid-border h-10 mb-10">
+<div class="grid-h h-10 mb-10">
     <div
-        class="flex flex-row items-center justify-center h-full px-4 sm:w-210 mx-auto grid-line border-r-1 border-l-1"
+        class="flex flex-row items-center justify-center h-full px-4 sm:w-210 mx-auto sm:grid-line sm:border-r-1 sm:border-l-1"
     >
         <h1
             class="text-2xl font-rope font-extralight text-stone-950 dark:text-stone-100"
         >
-            nitish malluru
+            <span class="xs:hidden">nitish</span><span class="hidden xs:inline"
+                >nitish malluru</span
+            >
         </h1>
         <div class="flex-grow"></div>
         <div
@@ -140,13 +168,11 @@
                 <Shader />
             </div>
 
-            <div class=" relative flex flex-col sm:w-340">
-                <div
-                    class="absolute -top-28 -left-4 sm:left-0 w-100 h-100 pointer-events-none"
-                >
+            <div class="flex flex-col sm:w-340 items-start">
+                <div class="pointer-events-none pt-6 h-40 sm:h-auto">
                     <AsciiText text="howdy" asciiFontSize={6} />
                 </div>
-                <div class="mt-40 px-2 sm:pl-4 overflow-hidden">
+                <div class="px-2 sm:pl-4 overflow-hidden">
                     <HeroText />
                 </div>
             </div>
@@ -174,6 +200,7 @@
             Reading
         </h2>
         <div
+            bind:this={booksContainer}
             class="grid-border font-light flex flex-row gap-0 overflow-x-visible overflow-y-visible items-end h-80"
         >
             {#each displayedBooks as { name, author, image, length, link, color }, index}
@@ -198,18 +225,19 @@
 
 <!-- Contact Section -->
 
-<footer class="fade-in-bottom-fourth grid-border h-10 mt-20">
+<footer class="fade-in-bottom-fourth grid-f h-10 mt-20">
     <div
-        class="flex flex-row items-center h-full px-4 sm:w-210 mx-auto grid-line border-r-1 border-l-1"
+        class="flex flex-row items-center h-full px-4 sm:w-210 mx-auto grid-f sm:grid-line sm:border-r-1 sm:border-l-1"
     >
         <p class="text-stone-950 dark:text-stone-300 font-light text-base">
-            Reach me at <a href="mailto:nitishethan@gmail.com" class="underline"
-                >nitishethan@gmail.com</a
+            <span class="hidden xsm:inline">Reach me at&nbsp;</span><a
+                href="mailto:nitishethan@gmail.com"
+                class="underline">nitishethan@gmail.com</a
             >
         </p>
         <div class="flex-grow"></div>
         <p class="text-stone-950 dark:text-stone-300 font-light text-base">
-            Peace 😸🧑‍💻🙈🐒🗿🚬🪬🔮🧿
+            Peace 🚬
         </p>
     </div>
 </footer>

@@ -13,7 +13,7 @@
 <!-- border-[rgba(0,0,0,0.05)] dark:border-[rgba(255,255,255,0.05)] -->
 
 <div
-  class="sm:h-100 flex flex-col bg-[#fafaf9] dark:bg-[#171717] grid-border overflow-hidden"
+  class="h-120 xs:h-120 xsm:h-110 sm:h-100 flex flex-col bg-[#fafaf9] dark:bg-[#171717] grid-border overflow-hidden"
 >
   <div class="px-6 pt-4 flex flex-col mb-6">
     <div class="flex flex-row items-center">
