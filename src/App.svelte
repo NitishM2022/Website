@@ -15,13 +15,13 @@
     let booksContainer;
 
     // Calculate how many books can fit based on container width
-    // Each book is 140px wide but overlaps by ~40px, so effective width is ~100px per book after first
+    // Each book is 140px wide but overlaps by 40px (-ml-10), so effective width is ~100px per book after first
     // First book needs full 140px, subsequent books need ~100px each
     function calculateMaxBooks(containerWidth) {
         if (containerWidth <= 0) return 4;
         const firstBookWidth = 140;
-        const additionalBookWidth = 100; // 140px - 40px overlap
-        const padding = 60; // Some padding for edges
+        const additionalBookWidth = 100; // 140px - 40px overlap (-ml-10)
+        const padding = 50; // Account for translate(20px) and edges
 
         const availableWidth = containerWidth - padding;
         if (availableWidth < firstBookWidth) return 1;
@@ -205,7 +205,7 @@
         >
             {#each displayedBooks as { name, author, image, length, link, color }, index}
                 <div
-                    class="flex-shrink-0 transition-all duration-500 ease-out hover:z-50 -ml-14 first:ml-0"
+                    class="flex-shrink-0 transition-all duration-500 ease-out hover:z-50 -ml-10 first:ml-0"
                     style="z-index: {100 - index};"
                 >
                     <Book

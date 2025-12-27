@@ -26,7 +26,7 @@
     class="book-wrapper relative transition-transform duration-500 ease-out"
     style="transform-style: preserve-3d; width: {bookWidth}px; transform: rotateY(-30deg) {isHovered &&
     index > 0
-      ? 'translateX(68px)'
+      ? 'translateX(50px)'
       : ''};"
   >
     <!-- Front Cover - this determines the height -->
