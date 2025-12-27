@@ -16,7 +16,7 @@
 
 <div
   class="group relative flex flex-col items-center justify-end"
-  style="perspective: 800px; width: {bookWidth}px; transform: translate(30px, -60px);"
+  style="perspective: 800px; width: {bookWidth}px; transform: translate(20px, -60px);"
   on:mouseenter={() => (isHovered = true)}
   on:mouseleave={() => (isHovered = false)}
   role="button"
