@@ -75,7 +75,7 @@
     style="opacity: {isHovered
       ? 1
       : 0}; transform: translateZ(10px) rotateY(-30deg) {isHovered && index > 0
-      ? 'translateX(60px)'
+      ? 'translateX(45px)'
       : ''}; transform-origin: left center; transform-style: preserve-3d;"
   >
     <h3 class="text-xs font-bold text-stone-900 dark:text-stone-100 truncate">
