@@ -52,7 +52,7 @@
 
 <div class="grid-h h-10 mb-10">
     <div
-        class="flex flex-row items-center justify-center h-full px-4 sm:w-210 mx-auto sm:grid-line sm:border-r-1 sm:border-l-1"
+        class="flex flex-row items-center justify-center h-full px-4 sm:w-[841px] mx-auto sm:grid-line sm:border-r-1 sm:border-l-1"
     >
         <h1
             class="text-2xl font-rope font-extralight text-stone-950 dark:text-stone-100"
@@ -225,9 +225,9 @@
 
 <!-- Contact Section -->
 
-<footer class="fade-in-bottom-fourth grid-f h-10 mt-20">
+<footer class="grid-f h-10 mt-20">
     <div
-        class="flex flex-row items-center h-full px-4 sm:w-210 mx-auto grid-f sm:grid-line sm:border-r-1 sm:border-l-1"
+        class="flex flex-row items-center h-full px-4 sm:w-210 mx-auto grid-f sm:grid-line sm:grid-lr"
     >
         <p class="text-stone-950 dark:text-stone-300 font-light text-base">
             <span class="hidden xsm:inline">Reach me at&nbsp;</span><a
