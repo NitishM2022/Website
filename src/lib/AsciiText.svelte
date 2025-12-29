@@ -20,17 +20,50 @@
 
     // Calculate intrinsic size based on text and font
     function calculateIntrinsicSize() {
-        // The ASCII text needs enough room for the 3D animated text
-        const baseWidth = text.length * asciiFontSize * 13; // Tighter width
-        const baseHeight = asciiFontSize * 22; // Taller to fit text fully
+        // Use responsive font size for calculation
+        // But don't shrink aggressively on desktop
+        const currentFontSize =
+            typeof window !== "undefined" && window.innerWidth < 840
+                ? getResponsiveFontSize(asciiFontSize)
+                : asciiFontSize;
 
-        // On mobile, cap width to viewport width
-        const maxWidth =
-            typeof window !== "undefined" ? window.innerWidth * 0.9 : baseWidth;
+        // Calculate true aspect ratio of the 3D content roughly
+        // Reduced from 15 to 12 to tighten horizontal space
+        const baseAspect = (text.length * 12) / 22;
+
+        // Base width determines the tight size of the text
+        const baseWidth = text.length * currentFontSize * 12;
+
+        // Constraint width conservatively to viewport
+        // xsm breakpoint is 715px, where the column becomes fixed at 340px
+        let maxWidth = 2000;
+        if (typeof window !== "undefined") {
+            if (window.innerWidth >= 715) {
+                maxWidth = 340; // Fixed column width
+            } else {
+                maxWidth = window.innerWidth * 0.9;
+            }
+        }
+
+        let availableWidth = maxWidth;
+
+        // Use baseWidth (tight fit) capped at availableWidth
+        const width = Math.round(Math.min(baseWidth, availableWidth));
+
+        // Height is DERIVED from width to preserve aspect ratio
+        // height = width / aspect
+        const idealHeight = width / baseAspect;
+
+        // No longer snapping to 40px grid.
+        // Allowing smooth resizing as constrained by parent container.
+        let height = Math.ceil(idealHeight);
+
+        // Ensure reasonable minimum
+        if (height < 40) height = 40;
 
         return {
-            width: Math.round(Math.min(baseWidth, maxWidth)),
-            height: Math.round(baseHeight),
+            width: width,
+            height: height,
         };
     }
 
@@ -344,6 +377,7 @@
             this.mesh = new THREE.Mesh(this.geometry, this.material);
             // Offset mesh position for alignment
             this.mesh.position.y = 0.5;
+            this.alignMesh();
             this.scene.add(this.mesh);
         }
 
@@ -376,6 +410,30 @@
             this.camera.updateProjectionMatrix();
             this.filter.setSize(w, h);
             this.center = { x: w / 2, y: h / 2 };
+
+            if (this.mesh && this.geometry) {
+                this.alignMesh();
+            }
+        }
+
+        alignMesh() {
+            // Calculate visible size at z=0 (camera at z=10, fov=45)
+            // h = 2 * tan(fov/2) * dist
+            const visibleHeight = 2 * Math.tan((Math.PI / 180) * 22.5) * 10;
+            const visibleWidth = visibleHeight * this.camera.aspect;
+            const meshWidth = this.geometry.parameters.width;
+            const meshHeight = this.geometry.parameters.height;
+
+            // Horizontal: Shift to left edge of frustum
+            // Center is 0. Left edge is -visibleWidth/2.
+            // Left edge of mesh is x - meshWidth/2.
+            // x - meshWidth/2 = -visibleWidth/2 => x = (meshWidth - visibleWidth) / 2
+            const x = (meshWidth - visibleWidth) / 2;
+
+            // Vertical: Center tightly (original 0.5 offset)
+            const y = 0.5;
+
+            this.mesh.position.set(x, y, 0);
         }
 
         load() {

@@ -117,7 +117,7 @@
 
 <style>
     .decrypted-text-wrapper {
-        display: inline-block;
+        display: inline;
         white-space: pre-wrap;
         font-family: "Geist Mono", monospace;
     }

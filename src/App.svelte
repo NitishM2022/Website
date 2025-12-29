@@ -52,7 +52,7 @@
 
 <div class="grid-h h-10 mb-10">
     <div
-        class="flex flex-row items-center justify-center h-full px-4 sm:w-[841px] mx-auto sm:grid-line sm:border-r-1 sm:border-l-1"
+        class="flex flex-row items-center justify-center h-full px-3 sm:w-[841px] mx-auto sm:grid-line sm:border-r-1 sm:border-l-1"
     >
         <h1
             class="text-2xl font-rope font-extralight text-stone-950 dark:text-stone-100"
@@ -162,17 +162,17 @@
 <main class="mx-auto w-full sm:w-210 font-rope flex flex-col">
     <section class="flex flex-col gap-10 rounded-3xl">
         <section
-            class="grid-border fade-in-bottom-first flex flex-col sm:flex-row sm:h-80"
+            class="grid-border fade-in-bottom-first flex flex-col xsm:flex-row h-160 xsm:h-80 overflow-hidden"
         >
-            <div class="w-full sm:flex-grow h-80 sm:h-full">
+            <div class="w-full xsm:flex-grow h-80 xsm:h-full">
                 <Shader />
             </div>
 
-            <div class="flex flex-col sm:w-340 items-start">
-                <div class="pointer-events-none pt-6 h-40 sm:h-auto">
+            <div class="flex flex-col xsm:w-340 py-6 pl-2 items-start">
+                <div class="pointer-events-none xsm:h-auto">
                     <AsciiText text="howdy" asciiFontSize={6} />
                 </div>
-                <div class="px-2 sm:pl-4 overflow-hidden">
+                <div class="px-2">
                     <HeroText />
                 </div>
             </div>
@@ -227,7 +227,7 @@
 
 <footer class="grid-f h-10 mt-20">
     <div
-        class="flex flex-row items-center h-full px-4 sm:w-210 mx-auto grid-f sm:grid-line sm:grid-lr"
+        class="flex flex-row items-center h-full px-3 sm:w-[841px] mx-auto grid-f sm:grid-line sm:border-r-1 sm:border-l-1"
     >
         <p class="text-stone-950 dark:text-stone-300 font-light text-base">
             <span class="hidden xsm:inline">Reach me at&nbsp;</span><a
