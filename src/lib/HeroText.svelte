@@ -25,7 +25,7 @@
 </script>
 
 <div
-    class="uppercase tracking-tight leading-10 text-xl xs:text-2xl text-stone-950 dark:text-stone-300 min-h-40 overflow-hidden transition-all duration-300 ease-in-out"
+    class="uppercase tracking-tight leading-10 text-xl xs:text-2xl text-stone-950 dark:text-stone-300 h-40 overflow-hidden transition-all duration-300 ease-in-out"
     style="font-family: 'Geist Mono', monospace;"
 >
     I'm Nitish, a developing <a

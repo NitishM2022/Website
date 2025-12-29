@@ -12,7 +12,7 @@
 <div
   class="flex flex-col bg-[#fafaf9] dark:bg-[#171717] grid-border overflow-hidden"
 >
-  <div class="flex flex-col px-5 pt-4 sm:h-40 h-50">
+  <div class="flex flex-col px-5 pt-4 sm:h-30 h-40 mb-10 overflow-hidden">
     <div class="flex items-center">
       <h3 class="text-xl font-medium text-stone-950 dark:text-stone-300 line">
         {name}
@@ -66,9 +66,9 @@
       {description}
     </p>
   </div>
-  <div class="min-h-50 flex items-end">
+  <div class="h-40 sm:h-60 flex flex-col">
     {#if images.length == 2}
-      <div class="flex grid-border w-full gap-[1px]">
+      <div class="flex grid-border w-full gap-[1px] mt-auto">
         <img
           src={images[0]}
           class="w-4/7 max-h-60 object-cover object-top-left"
@@ -76,7 +76,10 @@
         <img src={images[1]} class="w-3/7 max-h-60 object-cover object-top" />
       </div>
     {:else if images.length == 1}
-      <img src={images[0]} class="w-full max-h-60 object-cover object-top" />
+      <img
+        src={images[0]}
+        class="w-full max-h-60 object-cover object-top mt-auto"
+      />
     {/if}
   </div>
 </div>
