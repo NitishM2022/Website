@@ -9,19 +9,17 @@
   import Link from "./Link.svelte";
 </script>
 
-<!-- border-[rgba(0,0,0,0.05)] dark:border-[rgba(255,255,255,0.05)] -->
-
 <div
-  class="h-120 xs:h-120 xsm:h-110 sm:h-100 flex flex-col bg-[#fafaf9] dark:bg-[#171717] grid-border overflow-hidden"
+  class="flex flex-col bg-[#fafaf9] dark:bg-[#171717] grid-border overflow-hidden"
 >
-  <div class="px-6 pt-4 flex flex-col mb-6">
-    <div class="flex flex-row items-center">
-      <h3 class="text-xl font-medium text-stone-950 dark:text-stone-300">
+  <div class="flex flex-col px-5 pt-4 sm:h-40 h-50">
+    <div class="flex items-center">
+      <h3 class="text-xl font-medium text-stone-950 dark:text-stone-300 line">
         {name}
       </h3>
       <div class="grow"></div>
 
-      <div class="flex flex-row gap-3">
+      <div class="flex gap-3">
         {#if link.apple}
           <Link href={link.apple}>
             <div class=" text-stone-950 dark:text-stone-100 items-center">
@@ -54,7 +52,7 @@
       </div>
     </div>
 
-    <div class="flex flex-wrap gap-1 items-center my-1">
+    <div class="flex flex-wrap gap-1 items-center mt-1.5 mb-2">
       {#each tech as tech}
         <p
           class="px-2 rounded-2xl text-sm bg-stone-800 text-stone-100 dark:bg-stone-200 dark:text-stone-900"
@@ -64,42 +62,21 @@
       {/each}
     </div>
 
-    <p class="text-sm text-stone-500 dark:text-stone-400 mb-0 sm:mb-0">
+    <p class="text-sm text-stone-500 dark:text-stone-400 mb-0 min-[840px]:mb-0">
       {description}
     </p>
   </div>
-  {#if images.length == 2}
-    <div class="flex flex-row gap-2 px-7 xsm:px-10">
-      <img
-        src={images[0]}
-        alt="Nitish"
-        class="hover:z-10 double drop-shadow-sm xsm:w-7/12 sm:h-64 object-cover object-left-top xsm:-rotate-3 xsm:-translate-x-1 translate-y-5 rounded-lg transition duration-300 ease-in-out hover:scale-102 border-4 border-white"
-      />
-      <img
-        src={images[1]}
-        alt="Nitish"
-        class="hover:z-10 hidden xsm:inline double drop-shadow-sm w-5/12 sm:h-64 object-cover object-left-top rotate-2 -translate-x-1 translate-y-4 rounded-lg transition duration-300 ease-in-out hover:scale-102"
-      />
-    </div>
-  {:else if images.length == 1}
-    <div class="flex flex-row gap-2 px-7">
-      <img
-        src={images[0]}
-        alt="Nitish"
-        class="mx-auto double drop-shadow-sm object-cover object-left-top translate-y-5 rounded-lg transition duration-300 ease-in-out hover:scale-102 border-4 border-white"
-      />
-    </div>
-  {/if}
+  <div class="min-h-50 flex items-end">
+    {#if images.length == 2}
+      <div class="flex grid-border w-full gap-[1px]">
+        <img
+          src={images[0]}
+          class="w-4/7 max-h-60 object-cover object-top-left"
+        />
+        <img src={images[1]} class="w-3/7 max-h-60 object-cover object-top" />
+      </div>
+    {:else if images.length == 1}
+      <img src={images[0]} class="w-full max-h-60 object-cover object-top" />
+    {/if}
+  </div>
 </div>
-
-<style>
-  .double {
-    border: 0.5px solid #eaeaea;
-    outline: 4px solid #ffffff;
-  }
-
-  :global(.dark) .double {
-    border: 0px solid #eaeaea;
-    outline: 4.5px solid rgb(60, 60, 60);
-  }
-</style>

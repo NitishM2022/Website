@@ -98,9 +98,7 @@
 
   --color-neutral-850: rgb(30, 30, 30);
 
-  --breakpoint-sm: 840px;
-  --breakpoint-xsm: 715px;
-  --breakpoint-xs: 450px;
+  --breakpoint-xs: 480px;
 }
 
 body {

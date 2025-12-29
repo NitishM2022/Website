@@ -36,10 +36,10 @@
         const baseWidth = text.length * currentFontSize * 12;
 
         // Constraint width conservatively to viewport
-        // xsm breakpoint is 715px, where the column becomes fixed at 340px
+        // md breakpoint is 768px, where the column becomes fixed at 340px
         let maxWidth = 2000;
         if (typeof window !== "undefined") {
-            if (window.innerWidth >= 715) {
+            if (window.innerWidth >= 768) {
                 maxWidth = 340; // Fixed column width
             } else {
                 maxWidth = window.innerWidth * 0.9;

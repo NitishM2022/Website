@@ -13,18 +13,18 @@
 
 <div class="grid-h h-10 mb-10">
     <div
-        class="flex flex-row items-center justify-center h-full px-3 sm:w-[841px] mx-auto sm:grid-line sm:border-r-1 sm:border-l-1"
+        class="flex items-center justify-center h-full px-3 min-[840px]:w-[841px] mx-auto min-[840px]:grid-line min-[840px]:border-r-1 min-[840px]:border-l-1"
     >
         <h1
             class="text-2xl font-rope font-extralight text-stone-950 dark:text-stone-100"
         >
-            <span class="xs:hidden">nitish</span><span class="hidden xs:inline"
+            <span class="md:hidden">nitish</span><span class="hidden md:inline"
                 >nitish malluru</span
             >
         </h1>
         <div class="flex-grow"></div>
         <div
-            class="flex flex-row gap-3 text-stone-950 dark:text-stone-100 items-center mr-2"
+            class="flex gap-3 text-stone-950 dark:text-stone-100 items-center mr-2"
         >
             <Link href="./resume.pdf">
                 <svg
@@ -101,16 +101,16 @@
         <Toggle />
     </div>
 </div>
-<main class="mx-auto w-full sm:w-210 font-rope flex flex-col">
+<main class="mx-auto w-full min-[840px]:w-210 font-rope flex flex-col">
     <section class="flex flex-col gap-10 rounded-3xl">
         <section
-            class="grid-border fade-in-bottom-first flex flex-col xsm:flex-row h-160 xsm:h-80 overflow-hidden"
+            class="grid-border fade-in-bottom-first flex flex-col md:flex-row h-160 md:h-80 overflow-hidden"
         >
-            <div class="w-full xsm:flex-grow h-80 xsm:h-full">
+            <div class="w-full md:flex-grow h-80 md:h-full">
                 <Shader />
             </div>
 
-            <div class="flex flex-col xsm:w-340 py-6 pl-2 items-start">
+            <div class="flex flex-col md:w-340 py-6 pl-2 items-start">
                 <AsciiText text="howdy" asciiFontSize={6} />
                 <div class="px-2">
                     <HeroText />
@@ -121,11 +121,11 @@
     <!-- Projects Section -->
     <section class="fade-in-bottom-second mt-15">
         <h2
-            class="font-medium text-2xl leading-10 text-stone-950 dark:text-stone-100 mb-5 px-2 sm:px-0"
+            class="font-medium text-2xl leading-10 text-stone-950 dark:text-stone-100 mb-5 px-2 min-[840px]:px-0"
         >
             Projects
         </h2>
-        <div class="grid sm:grid-cols-1 gap-10">
+        <div class="grid min-[840px]:grid-cols-1 gap-10">
             {#each projects as { name, description, link, date, tech, images }}
                 <Project {name} {description} {link} {date} {tech} {images} />
             {/each}
@@ -140,7 +140,7 @@
 
 <footer class="grid-f h-10 mt-20">
     <div
-        class="flex flex-row items-center h-full px-3 sm:w-[841px] mx-auto grid-f sm:grid-line sm:border-r-1 sm:border-l-1"
+        class="flex items-center h-full px-3 min-[840px]:w-[841px] mx-auto grid-f min-[840px]:grid-line min-[840px]:border-r-1 min-[840px]:border-l-1"
     >
         <p class="text-stone-950 dark:text-stone-300 font-light text-base">
             <span class="hidden xs:inline">Reach me at&nbsp;</span><a

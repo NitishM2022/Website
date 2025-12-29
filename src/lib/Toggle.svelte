@@ -50,13 +50,13 @@
       loading="lazy"
       src={moon}
       alt="Enable Light Mode"
-      class="icon-moon w-4.5 sm:5"
+      class="icon-moon w-4.5"
     />
     <img
       loading="lazy"
       src={sun}
       alt="Enable Dark Mode"
-      class="icon-sun w-4.5 sm:5"
+      class="icon-sun w-4.5"
     />
   </div>
 </button>
