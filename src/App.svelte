@@ -1,53 +1,14 @@
 <script>
-    import { onMount } from "svelte";
     import Project from "./lib/Project.svelte";
-    import Book from "./lib/Book.svelte";
     import HeroText from "./lib/HeroText.svelte";
     import Toggle from "./lib/Toggle.svelte";
     import Link from "./lib/Link.svelte";
     import Shader from "./lib/Shader.svelte";
+    import GithubIcon from "./lib/GithubIcon.svelte";
+    import BooksSection from "./lib/BooksSection.svelte";
 
     import projects from "./lib/assets/projects.json";
     import AsciiText from "./lib/AsciiText.svelte";
-    import books from "./lib/assets/books.json";
-
-    let maxBooks = books.length;
-    let booksContainer;
-
-    // Calculate how many books can fit based on container width
-    // Each book is 140px wide but overlaps by 40px (-ml-10), so effective width is ~100px per book after first
-    // First book needs full 140px, subsequent books need ~100px each
-    function calculateMaxBooks(containerWidth) {
-        if (containerWidth <= 0) return 4;
-        const firstBookWidth = 140;
-        const additionalBookWidth = 100; // 140px - 40px overlap (-ml-10)
-        const padding = 50; // Account for translate(20px) and edges
-
-        const availableWidth = containerWidth - padding;
-        if (availableWidth < firstBookWidth) return 1;
-
-        const additionalBooks = Math.floor(
-            (availableWidth - firstBookWidth) / additionalBookWidth,
-        );
-        return Math.min(1 + additionalBooks, books.length);
-    }
-
-    $: displayedBooks = books.slice(0, maxBooks);
-
-    onMount(() => {
-        const updateBookCount = () => {
-            if (booksContainer) {
-                const width = booksContainer.getBoundingClientRect().width;
-                maxBooks = calculateMaxBooks(width);
-            }
-        };
-
-        // Initial calculation after a short delay to ensure container is rendered
-        setTimeout(updateBookCount, 100);
-
-        window.addEventListener("resize", updateBookCount);
-        return () => window.removeEventListener("resize", updateBookCount);
-    });
 </script>
 
 <div class="grid-h h-10 mb-10">
@@ -65,7 +26,7 @@
         <div
             class="flex flex-row gap-3 text-stone-950 dark:text-stone-100 items-center mr-2"
         >
-            <Link href="./resume.pdf" name="RESUME">
+            <Link href="./resume.pdf">
                 <svg
                     width="16"
                     height="16"
@@ -82,7 +43,7 @@
                     ></path></svg
                 >
             </Link>
-            <Link href="mailto:nitishethan@gmail.com" name="email">
+            <Link href="mailto:nitishethan@gmail.com">
                 <svg
                     width="19"
                     height="19"
@@ -97,28 +58,12 @@
                     ><use href="#ai:mdi:email-outline"></use>
                 </svg>
             </Link>
-            <Link href={"https://github.com/NitishM2022"} name="GITHUB">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="w-4 h-4"
-                    aria-hidden="true"
-                    ><path
-                        d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
-                    ></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg
-                >
+            <Link href={"https://github.com/NitishM2022"}>
+                <GithubIcon />
             </Link>
 
             <Link
                 href={"https://bitbucket.org/nitishethan/workspace/repositories/"}
-                name="BITBUCKET"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -133,10 +78,7 @@
                 >
             </Link>
 
-            <Link
-                href={"https://www.linkedin.com/in/nitishmalluru/"}
-                name="LINKEDIN"
-            >
+            <Link href={"https://www.linkedin.com/in/nitishmalluru/"}>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -191,34 +133,7 @@
     </section>
 
     <!-- Reading List -->
-    <section class="fade-in-bottom-third mt-15">
-        <h2
-            class=" font-medium text-2xl leading-10 text-stone-950 dark:text-stone-100 mb-5 px-2 sm:px-0"
-        >
-            Reading
-        </h2>
-        <div
-            bind:this={booksContainer}
-            class="grid-border font-light flex flex-row gap-0 overflow-x-visible overflow-y-visible items-end h-80"
-        >
-            {#each displayedBooks as { name, author, image, length, link, color }, index}
-                <div
-                    class="flex-shrink-0 transition-all duration-500 ease-out hover:z-50 -ml-10 first:ml-0"
-                    style="z-index: {100 - index};"
-                >
-                    <Book
-                        {name}
-                        {author}
-                        {image}
-                        {length}
-                        {link}
-                        {color}
-                        {index}
-                    />
-                </div>
-            {/each}
-        </div>
-    </section>
+    <BooksSection />
 </main>
 
 <!-- Contact Section -->
@@ -263,17 +178,5 @@
         animation: fadeInBottom 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         animation-fill-mode: both;
         animation-delay: 0.1s; /* Shorter delay for tighter sequence */
-    }
-
-    .fade-in-bottom-third {
-        animation: fadeInBottom 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        animation-fill-mode: both;
-        animation-delay: 0.2s;
-    }
-
-    .fade-in-bottom-fourth {
-        animation: fadeInBottom 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        animation-fill-mode: both;
-        animation-delay: 0.3s;
     }
 </style>

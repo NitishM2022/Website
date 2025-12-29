@@ -1,10 +1,7 @@
 <script>
   export let name;
-  export let author;
   export let image;
   export let length;
-  export let link;
-  export let color;
   export let index = 0;
 
   // Calculate page thickness based on book length (simple: pages / 20, clamped 15-30px)

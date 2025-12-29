@@ -2,11 +2,10 @@
   export let name;
   export let description;
   export let link = {};
-  export let date;
   export let tech = [];
   export let images = [];
 
-  import Github from "./Github.svelte";
+  import GithubIcon from "./GithubIcon.svelte";
   import Link from "./Link.svelte";
 </script>
 
@@ -24,7 +23,7 @@
 
       <div class="flex flex-row gap-3">
         {#if link.apple}
-          <Link href={link.apple} name="APPLE">
+          <Link href={link.apple}>
             <div class=" text-stone-950 dark:text-stone-100 items-center">
               <svg
                 width="24"
@@ -46,24 +45,9 @@
           </Link>
         {/if}
         {#if link.github}
-          <Link href={link.github} name="GITHUB">
-            <div class=" text-stone-950 dark:text-stone-100 items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="w-4 h-4"
-                aria-hidden="true"
-                ><path
-                  d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
-                ></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg
-              >
+          <Link href={link.github}>
+            <div class="text-stone-950 dark:text-stone-100 items-center">
+              <GithubIcon />
             </div>
           </Link>
         {/if}
@@ -109,33 +93,6 @@
 </div>
 
 <style>
-  .gradient {
-    background-image: none; /* Initially no gradient */
-    transition: background-image 300ms ease-in-out; /* Transition for background-image */
-  }
-
-  .gradient:hover {
-    background-image: radial-gradient(
-      ellipse 60% 80% at 100% 0%,
-      rgb(255, 234, 0) 0%,
-      hsla(58, 100%, 50%, 0.6) 20%,
-      hsla(58, 100%, 50%, 0.3) 40%,
-      hsla(58, 100%, 50%, 0.1) 60%,
-      transparent 80%
-    );
-  }
-
-  .dark .gradient {
-    background-image: radial-gradient(
-      ellipse 100% 35% at 80%,
-      hsla(239, 100%, 50%, 0.9) 0%,
-      hsla(239, 100%, 50%, 0.6) 20%,
-      hsla(239, 100%, 50%, 0.3) 40%,
-      hsla(239, 100%, 50%, 0.1) 60%,
-      transparent 80%
-    );
-  }
-
   .double {
     border: 0.5px solid #eaeaea;
     outline: 4px solid #ffffff;

@@ -36,8 +36,6 @@
   }
 </script>
 
-<!-- Rest of the code stays the same -->
-
 <button
   on:click={toggleDarkMode}
   class="bg-transparent border-0 cursor-pointer p-0 outline-none"
@@ -64,18 +62,6 @@
 </button>
 
 <style>
-  button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    outline: 0;
-  }
-
-  .spin {
-    animation: spin 575ms cubic-bezier(0.075, 0.82, 0.17, 1.135);
-  }
-
   .spin-right {
     animation: spin-right 575ms cubic-bezier(0.075, 0.82, 0.17, 1.135);
   }
