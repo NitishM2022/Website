@@ -230,7 +230,7 @@
         class="flex flex-row items-center h-full px-3 sm:w-[841px] mx-auto grid-f sm:grid-line sm:border-r-1 sm:border-l-1"
     >
         <p class="text-stone-950 dark:text-stone-300 font-light text-base">
-            <span class="hidden xsm:inline">Reach me at&nbsp;</span><a
+            <span class="hidden xs:inline">Reach me at&nbsp;</span><a
                 href="mailto:nitishethan@gmail.com"
                 class="underline">nitishethan@gmail.com</a
             >
