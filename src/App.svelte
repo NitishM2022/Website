@@ -169,9 +169,7 @@
             </div>
 
             <div class="flex flex-col xsm:w-340 py-6 pl-2 items-start">
-                <div class="pointer-events-none xsm:h-auto">
-                    <AsciiText text="howdy" asciiFontSize={6} />
-                </div>
+                <AsciiText text="howdy" asciiFontSize={6} />
                 <div class="px-2">
                     <HeroText />
                 </div>

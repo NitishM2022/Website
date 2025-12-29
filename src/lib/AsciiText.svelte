@@ -17,6 +17,7 @@
     let asciiInstance;
     let computedWidth = 400;
     let computedHeight = 200;
+    let fontsLoaded = false;
 
     // Calculate intrinsic size based on text and font
     function calculateIntrinsicSize() {
@@ -29,7 +30,7 @@
 
         // Calculate true aspect ratio of the 3D content roughly
         // Reduced from 15 to 12 to tighten horizontal space
-        const baseAspect = (text.length * 12) / 22;
+        const baseAspect = (text.length * 13) / 22;
 
         // Base width determines the tight size of the text
         const baseWidth = text.length * currentFontSize * 12;
@@ -152,6 +153,9 @@
 
             this.onMouseMove = this.onMouseMove.bind(this);
             document.addEventListener("mousemove", this.onMouseMove);
+
+            // Track if we've measured the font yet
+            this.fontMeasured = false;
         }
 
         setSize(width, height) {
@@ -164,27 +168,39 @@
         }
 
         reset() {
-            this.context.font = `${this.fontSize}px ${this.fontFamily}`;
-            const charWidth = this.context.measureText("A").width;
+            // Set font and measure character dimensions
+            this.context.font = `600 ${this.fontSize}px ${this.fontFamily}`;
 
+            // Measure actual character width - use a wider character for more accurate measurement
+            const charWidth = this.context.measureText("M").width;
+
+            // Calculate columns and rows based on actual measurements
             this.cols = Math.floor(this.width / charWidth);
             this.rows = Math.floor(this.height / this.fontSize);
 
             this.canvas.width = this.cols;
             this.canvas.height = this.rows;
 
+            // Apply exact same font settings to the pre element
             this.pre.style.fontFamily = this.fontFamily;
             this.pre.style.fontSize = `${this.fontSize}px`;
+            this.pre.style.fontWeight = "600";
             this.pre.style.margin = "0";
             this.pre.style.padding = "0";
             this.pre.style.lineHeight = "1em";
             this.pre.style.position = "absolute";
-            this.pre.style.left = "50%";
-            this.pre.style.top = "50%";
-            this.pre.style.transform = "translate(-50%, -50%)";
+            this.pre.style.left = "0";
+            this.pre.style.top = "0";
+            this.pre.style.width = "100%";
+            this.pre.style.height = "100%";
             this.pre.style.zIndex = "9";
             this.pre.style.backgroundAttachment = "fixed";
             this.pre.style.mixBlendMode = "difference";
+            // Disable text wrapping to maintain grid alignment
+            this.pre.style.whiteSpace = "pre";
+            this.pre.style.overflow = "hidden";
+
+            this.fontMeasured = true;
         }
 
         render(scene, camera) {
@@ -247,7 +263,7 @@
                     }
                     str += "\n";
                 }
-                this.pre.innerHTML = str;
+                this.pre.textContent = str;
             }
         }
 
@@ -329,7 +345,7 @@
 
             this.camera = new THREE.PerspectiveCamera(
                 45,
-                this.width / this.height, // Adjusted for taller view
+                this.width / this.height,
                 1,
                 1000,
             );
@@ -518,8 +534,29 @@
         }
     }
 
-    onMount(() => {
+    // Wait for fonts to load before initializing
+    async function waitForFonts() {
+        if (typeof document === "undefined") return;
+
+        try {
+            // Wait for the specific font we're using
+            await document.fonts.load('600 12px "IBM Plex Mono"');
+            await document.fonts.load(`600 ${textFontSize}px "IBM Plex Mono"`);
+            fontsLoaded = true;
+        } catch (e) {
+            console.warn("Font loading check failed, proceeding anyway:", e);
+            fontsLoaded = true;
+        }
+    }
+
+    onMount(async () => {
         if (!container) return;
+
+        // Wait for fonts to be ready
+        await waitForFonts();
+
+        // Small additional delay to ensure fonts are fully rendered
+        await new Promise((resolve) => setTimeout(resolve, 100));
 
         // Get responsive font size based on current window width
         responsiveFontSize = getResponsiveFontSize(asciiFontSize);
@@ -564,8 +601,12 @@
         asciiInstance.load();
 
         // Listen for resize to update dimensions
+        let resizeTimeout;
         const handleResize = () => {
-            updateSize();
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                updateSize();
+            }, 150);
         };
         window.addEventListener("resize", handleResize);
 
@@ -583,7 +624,7 @@
 ></div>
 
 <style>
-    @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&display=swap");
+    @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&display=swap");
 
     .ascii-text-container {
         position: relative;
@@ -619,6 +660,10 @@
         -webkit-background-clip: text;
         background-clip: text;
         z-index: 9;
+        /* Ensure consistent rendering */
+        font-feature-settings: normal;
+        font-variant: normal;
+        text-rendering: geometricPrecision;
     }
 
     :global(.dark .ascii-text-container pre) {
