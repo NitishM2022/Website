@@ -68,7 +68,7 @@
   </div>
   <div class="h-40 sm:h-60 flex flex-col">
     {#if images.length == 2}
-      <div class="flex grid-border w-full gap-[1px] mt-auto">
+      <div class="flex w-full gap-[1px] mt-auto">
         <img
           src={images[0]}
           class="w-4/7 max-h-60 object-cover object-top-left"
