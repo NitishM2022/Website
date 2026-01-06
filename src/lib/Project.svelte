@@ -10,7 +10,7 @@
 </script>
 
 <div
-  class="flex flex-col bg-[#fafaf9] dark:bg-[#171717] grid-border overflow-hidden"
+  class="flex flex-col bg-[#fafaf9] dark:bg-[#171717] grid-border pb-[0.5px]"
 >
   <div class="flex flex-col px-5 pt-4 sm:h-30 h-40 mb-10 overflow-hidden">
     <div class="flex items-center">
@@ -66,7 +66,7 @@
       {description}
     </p>
   </div>
-  <div class="h-40 sm:h-60 flex flex-col">
+  <div class="h-[159.5px] sm:h-[239.5px] flex flex-col overflow-hidden px-0 sm:px-[0.5px]">
     {#if images.length == 2}
       <div class="flex w-full gap-[1px] mt-auto">
         <img
