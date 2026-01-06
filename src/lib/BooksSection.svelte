@@ -39,7 +39,7 @@
     });
 </script>
 
-<section class="fade-in-bottom-third mt-15">
+<section class="mt-15">
     <h2
         class=" font-medium text-2xl leading-10 text-stone-950 dark:text-stone-100 mb-5 px-2 sm:px-0"
     >
@@ -60,21 +60,3 @@
     </div>
 </section>
 
-<style>
-    @keyframes fadeInBottom {
-        from {
-            opacity: 0;
-            transform: translateY(60px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .fade-in-bottom-third {
-        animation: fadeInBottom 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        animation-fill-mode: both;
-        animation-delay: 0.2s;
-    }
-</style>

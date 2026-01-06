@@ -1,4 +1,5 @@
 <script>
+    import { fade } from "svelte/transition";
     import Project from "./lib/Project.svelte";
     import HeroText from "./lib/HeroText.svelte";
     import Toggle from "./lib/Toggle.svelte";
@@ -11,7 +12,7 @@
     import AsciiText from "./lib/AsciiText.svelte";
 </script>
 
-<div class="grid-h h-10 mb-10">
+<div class="grid-h h-10">
     <div
         class="flex items-center justify-center h-full px-3 min-[840px]:w-[841px] mx-auto min-[840px]:grid-line min-[840px]:border-r-1 min-[840px]:border-l-1"
     >
@@ -101,44 +102,48 @@
         <Toggle />
     </div>
 </div>
-<main class="mx-auto w-full min-[840px]:w-210 font-rope flex flex-col">
-    <section class="flex flex-col gap-10 rounded-3xl">
+<div class="main-content pt-10 pb-20">
+    <main class="mx-auto w-full min-[840px]:w-210 font-rope flex flex-col">
+    <section class="flex flex-col gap-10 rounded-3xl" in:fade={{ duration: 800 }}>
         <section
-            class="grid-border fade-in-bottom-first flex flex-col md:flex-row h-160 md:h-80 overflow-hidden"
+            class="grid-border flex flex-col md:flex-row h-160 md:h-80 overflow-hidden"
         >
-            <div class="w-full md:flex-grow h-80 md:h-full">
-                <Shader />
-            </div>
-
-            <div class="flex flex-col md:w-340 py-6 pl-2 items-start">
-                <AsciiText text="howdy" asciiFontSize={6} />
-                <div class="px-2">
-                    <HeroText />
+                <div class="w-full md:flex-grow h-80 md:h-full">
+                    <Shader />
                 </div>
+
+                <div class="flex flex-col md:w-340 py-6 pl-2 items-start">
+                    <AsciiText text="howdy" asciiFontSize={6} />
+                    <div class="px-2">
+                        <HeroText />
+                    </div>
+                </div>
+            </section>
+        </section>
+    <!-- Projects Section -->
+    <section class="mt-15" in:fade={{ duration: 800, delay: 100 }}>
+            <h2
+                class="font-medium text-2xl leading-10 text-stone-950 dark:text-stone-100 mb-5 px-2 min-[840px]:px-0"
+            >
+                Projects
+            </h2>
+            <div class="grid min-[840px]:grid-cols-1 gap-10">
+                {#each projects as { name, description, link, date, tech, images }}
+                    <Project {name} {description} {link} {date} {tech} {images} />
+                {/each}
             </div>
         </section>
-    </section>
-    <!-- Projects Section -->
-    <section class="fade-in-bottom-second mt-15">
-        <h2
-            class="font-medium text-2xl leading-10 text-stone-950 dark:text-stone-100 mb-5 px-2 min-[840px]:px-0"
-        >
-            Projects
-        </h2>
-        <div class="grid min-[840px]:grid-cols-1 gap-10">
-            {#each projects as { name, description, link, date, tech, images }}
-                <Project {name} {description} {link} {date} {tech} {images} />
-            {/each}
-        </div>
-    </section>
 
     <!-- Reading List -->
-    <BooksSection />
-</main>
+    <div in:fade={{ duration: 800, delay: 200 }}>
+        <BooksSection />
+    </div>
+    </main>
+</div>
 
 <!-- Contact Section -->
 
-<footer class="grid-f h-10 mt-20">
+<footer class="grid-f h-10">
     <div
         class="flex items-center h-full px-3 min-[840px]:w-[841px] mx-auto grid-f min-[840px]:grid-line min-[840px]:border-r-1 min-[840px]:border-l-1"
     >
@@ -156,27 +161,17 @@
 </footer>
 
 <style>
-    @keyframes fadeInBottom {
-        from {
-            opacity: 0;
-            transform: translateY(
-                60px
-            ); /* Reduced from 80px for subtler movement */
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .main-content {
+        background-color: rgb(250, 250, 249);
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='rgba(0,0,0,0.15)' stroke-width='0.5'/%3E%3C/svg%3E");
+        background-size: 40px 40px;
+        background-position: center top;
     }
 
-    .fade-in-bottom-first {
-        animation: fadeInBottom 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        animation-fill-mode: both;
-    }
-
-    .fade-in-bottom-second {
-        animation: fadeInBottom 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        animation-fill-mode: both;
-        animation-delay: 0.1s; /* Shorter delay for tighter sequence */
+    :global(.dark) .main-content {
+        background-color: rgb(23, 23, 23);
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='rgba(255,255,255,0.15)' stroke-width='0.5'/%3E%3C/svg%3E");
+        background-size: 40px 40px;
+        background-position: center top;
     }
 </style>
