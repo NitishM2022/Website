@@ -36,8 +36,7 @@
     <DecryptedText
         text={bioTexts[currentIndex]}
         animateOn="view"
-        revealDirection="center"
-        speed={60}
+        duration={900}
         {maxLength}
     />
 </div>
