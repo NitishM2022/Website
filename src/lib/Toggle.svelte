@@ -38,7 +38,7 @@
 
 <button
   on:click={toggleDarkMode}
-  class="bg-transparent border-0 cursor-pointer p-0 outline-none"
+  class="cursor-pointer border-0 bg-transparent p-0 outline-none"
 >
   <div
     class="icon"

@@ -1,85 +1,87 @@
 <script>
-    import { onMount } from "svelte";
-    import * as THREE from "three";
+  import { onMount } from "svelte";
+  import * as THREE from "three";
 
-    export let text = "howdy";
-    export let asciiFontSize = 8;
-    export let textFontSize = 200;
-    export let textColor = "#fdf9f3";
-    export let planeBaseHeight = 8;
-    export let enableWaves = true;
+  export let text = "howdy";
+  export let asciiFontSize = 8;
+  export let textFontSize = 200;
+  export let textColor = "#fdf9f3";
+  export let planeBaseHeight = 8;
+  export let enableWaves = true;
 
-    // Optional explicit dimensions - if not provided, auto-calculate
-    export let width = 0;
-    export let height = 0;
+  // Optional explicit dimensions - if not provided, auto-calculate
+  export let width = 0;
+  export let height = 0;
 
-    let container;
-    let asciiInstance;
-    let computedWidth = 400;
-    let computedHeight = 200;
-    let fontsLoaded = false;
+  let container;
+  let asciiInstance;
+  let computedWidth = 400;
+  let computedHeight = 200;
+  let fontsLoaded = false;
 
-    // Calculate intrinsic size based on text and font
-    function calculateIntrinsicSize() {
-        // Use responsive font size for calculation
-        // But don't shrink aggressively on desktop
-        const currentFontSize =
-            typeof window !== "undefined" && window.innerWidth < 840
-                ? getResponsiveFontSize(asciiFontSize)
-                : asciiFontSize;
+  // Calculate intrinsic size based on text and font
+  function calculateIntrinsicSize() {
+    // Use responsive font size for calculation
+    // But don't shrink aggressively on desktop
+    const currentFontSize =
+      typeof window !== "undefined" && window.innerWidth < 840
+        ? getResponsiveFontSize(asciiFontSize)
+        : asciiFontSize;
 
-        // Calculate true aspect ratio of the 3D content roughly
-        // Reduced from 15 to 12 to tighten horizontal space
-        const baseAspect = (text.length * 13) / 22;
+    // Calculate true aspect ratio of the 3D content roughly
+    // Reduced from 15 to 12 to tighten horizontal space
+    const baseAspect = (text.length * 13) / 22;
 
-        // Base width determines the tight size of the text
-        const baseWidth = text.length * currentFontSize * 12;
+    // Base width determines the tight size of the text
+    const baseWidth = text.length * currentFontSize * 12;
 
-        // Constraint width conservatively to viewport
-        // md breakpoint is 768px, where the column becomes fixed at 340px
-        let maxWidth = 2000;
-        if (typeof window !== "undefined") {
-            if (window.innerWidth >= 768) {
-                maxWidth = 340; // Fixed column width
-            } else {
-                maxWidth = window.innerWidth * 0.9;
-            }
-        }
-
-        let availableWidth = maxWidth;
-
-        // Use baseWidth (tight fit) capped at availableWidth
-        const width = Math.round(Math.min(baseWidth, availableWidth));
-
-        // Height is DERIVED from width to preserve aspect ratio
-        // height = width / aspect
-        const idealHeight = width / baseAspect;
-
-        // No longer snapping to 40px grid.
-        // Allowing smooth resizing as constrained by parent container.
-        let height = Math.ceil(idealHeight);
-
-        // Ensure reasonable minimum
-        if (height < 40) height = 40;
-
-        return {
-            width: width,
-            height: height,
-        };
+    // Constrain width by the actual available parent width when possible
+    let maxWidth = 2000;
+    if (typeof window !== "undefined") {
+      const parentWidth = container?.parentElement?.clientWidth ?? 0;
+      if (parentWidth > 0) {
+        maxWidth = parentWidth;
+      } else if (window.innerWidth >= 768) {
+        maxWidth = 460;
+      } else {
+        maxWidth = window.innerWidth * 0.9;
+      }
     }
 
-    // Calculate responsive font size based on screen width
-    function getResponsiveFontSize(baseSize) {
-        if (typeof window === "undefined") return baseSize;
-        const width = window.innerWidth;
-        if (width < 400) return Math.max(4, baseSize - 2);
-        if (width < 500) return Math.max(5, baseSize - 1);
-        return baseSize;
-    }
+    let availableWidth = maxWidth;
 
-    let responsiveFontSize = asciiFontSize;
+    // Use baseWidth (tight fit) capped at availableWidth
+    const width = Math.round(Math.min(baseWidth, availableWidth));
 
-    const vertexShader = `
+    // Height is DERIVED from width to preserve aspect ratio
+    // height = width / aspect
+    const idealHeight = width / baseAspect;
+
+    // No longer snapping to 40px grid.
+    // Allowing smooth resizing as constrained by parent container.
+    let height = Math.ceil(idealHeight);
+
+    // Ensure reasonable minimum
+    if (height < 40) height = 40;
+
+    return {
+      width: width,
+      height: height,
+    };
+  }
+
+  // Calculate responsive font size based on screen width
+  function getResponsiveFontSize(baseSize) {
+    if (typeof window === "undefined") return baseSize;
+    const width = window.innerWidth;
+    if (width < 400) return Math.max(4, baseSize - 2);
+    if (width < 500) return Math.max(5, baseSize - 1);
+    return baseSize;
+  }
+
+  let responsiveFontSize = asciiFontSize;
+
+  const vertexShader = `
         varying vec2 vUv;
         uniform float uTime;
         uniform float mouse;
@@ -99,7 +101,7 @@
         }
     `;
 
-    const fragmentShader = `
+  const fragmentShader = `
         varying vec2 vUv;
         uniform float mouse;
         uniform float uTime;
@@ -117,561 +119,609 @@
         }
     `;
 
-    const PX_RATIO =
-        typeof window !== "undefined" ? window.devicePixelRatio : 1;
+  const PX_RATIO = typeof window !== "undefined" ? window.devicePixelRatio : 1;
 
-    Math.map = function (n, start, stop, start2, stop2) {
-        return ((n - start) / (stop - start)) * (stop2 - start2) + start2;
+  Math.map = function (n, start, stop, start2, stop2) {
+    return ((n - start) / (stop - start)) * (stop2 - start2) + start2;
+  };
+
+  class AsciiFilter {
+    constructor(renderer, { fontSize, fontFamily, charset, invert } = {}) {
+      this.renderer = renderer;
+      this.domElement = document.createElement("div");
+      this.domElement.style.position = "absolute";
+      this.domElement.style.top = "0";
+      this.domElement.style.left = "0";
+      this.domElement.style.width = "100%";
+      this.domElement.style.height = "100%";
+
+      this.pre = document.createElement("pre");
+      this.domElement.appendChild(this.pre);
+
+      this.canvas = document.createElement("canvas");
+      this.context = this.canvas.getContext("2d");
+      this.domElement.appendChild(this.canvas);
+
+      this.deg = 0;
+      this.invert = invert ?? true;
+      this.fontSize = fontSize ?? 12;
+      this.fontFamily = fontFamily ?? "'Courier New', monospace";
+      this.charset =
+        charset ??
+        " .'`^\",:;Il!i~+_-?][}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$";
+
+      this.context.imageSmoothingEnabled = false;
+
+      this.onMouseMove = this.onMouseMove.bind(this);
+      document.addEventListener("mousemove", this.onMouseMove);
+
+      // Track if we've measured the font yet
+      this.fontMeasured = false;
+    }
+
+    setSize(width, height) {
+      this.width = width;
+      this.height = height;
+      this.renderer.setSize(width, height);
+      this.reset();
+      this.center = { x: width / 2, y: height / 2 };
+      this.mouse = { x: this.center.x, y: this.center.y };
+    }
+
+    reset() {
+      // Set font and measure character dimensions
+      this.context.font = `600 ${this.fontSize}px ${this.fontFamily}`;
+
+      // Measure actual character width - use a wider character for more accurate measurement
+      const charWidth = this.context.measureText("M").width;
+
+      // Calculate columns and rows based on actual measurements
+      this.cols = Math.floor(this.width / charWidth);
+      this.rows = Math.floor(this.height / this.fontSize);
+
+      this.canvas.width = this.cols;
+      this.canvas.height = this.rows;
+
+      // Apply exact same font settings to the pre element
+      this.pre.style.fontFamily = this.fontFamily;
+      this.pre.style.fontSize = `${this.fontSize}px`;
+      this.pre.style.fontWeight = "600";
+      this.pre.style.margin = "0";
+      this.pre.style.padding = "0";
+      this.pre.style.lineHeight = "1em";
+      this.pre.style.position = "absolute";
+      this.pre.style.left = "0";
+      this.pre.style.top = "0";
+      this.pre.style.width = "100%";
+      this.pre.style.height = "100%";
+      this.pre.style.zIndex = "9";
+      this.pre.style.backgroundAttachment = "fixed";
+      this.pre.style.mixBlendMode = "difference";
+      // Disable text wrapping to maintain grid alignment
+      this.pre.style.whiteSpace = "pre";
+      this.pre.style.overflow = "hidden";
+
+      this.fontMeasured = true;
+    }
+
+    render(scene, camera) {
+      this.renderer.render(scene, camera);
+
+      const w = this.canvas.width;
+      const h = this.canvas.height;
+      this.context.clearRect(0, 0, w, h);
+      if (this.context && w && h) {
+        this.context.drawImage(this.renderer.domElement, 0, 0, w, h);
+      }
+
+      this.asciify(this.context, w, h);
+      this.hue();
+    }
+
+    onMouseMove(e) {
+      this.mouse = { x: e.clientX * PX_RATIO, y: e.clientY * PX_RATIO };
+    }
+
+    get dx() {
+      return this.mouse.x - this.center.x;
+    }
+
+    get dy() {
+      return this.mouse.y - this.center.y;
+    }
+
+    hue() {
+      const deg = (Math.atan2(this.dy, this.dx) * 180) / Math.PI;
+      this.deg += (deg - this.deg) * 0.075;
+      this.domElement.style.filter = `hue-rotate(${this.deg.toFixed(1)}deg)`;
+    }
+
+    asciify(ctx, w, h) {
+      if (w && h) {
+        const imgData = ctx.getImageData(0, 0, w, h).data;
+        let str = "";
+        for (let y = 0; y < h; y++) {
+          for (let x = 0; x < w; x++) {
+            const i = x * 4 + y * 4 * w;
+            const [r, g, b, a] = [
+              imgData[i],
+              imgData[i + 1],
+              imgData[i + 2],
+              imgData[i + 3],
+            ];
+
+            if (a === 0) {
+              str += " ";
+              continue;
+            }
+
+            let gray = (0.3 * r + 0.6 * g + 0.1 * b) / 255;
+            let idx = Math.floor((1 - gray) * (this.charset.length - 1));
+            if (this.invert) idx = this.charset.length - idx - 1;
+            str += this.charset[idx];
+          }
+          str += "\n";
+        }
+        this.pre.textContent = str;
+      }
+    }
+
+    dispose() {
+      document.removeEventListener("mousemove", this.onMouseMove);
+    }
+  }
+
+  class CanvasTxt {
+    constructor(
+      txt,
+      { fontSize = 200, fontFamily = "Arial", color = "#fdf9f3" } = {},
+    ) {
+      this.canvas = document.createElement("canvas");
+      this.context = this.canvas.getContext("2d");
+      this.txt = txt;
+      this.fontSize = fontSize;
+      this.fontFamily = fontFamily;
+      this.color = color;
+      this.font = `600 ${this.fontSize}px ${this.fontFamily}`;
+      this.padLeft = 0;
+      this.padRight = 2;
+      this.padY = 10;
+    }
+
+    resize() {
+      this.context.font = this.font;
+      const metrics = this.context.measureText(this.txt);
+      const textWidth = Math.ceil(metrics.width) + this.padLeft + this.padRight;
+      const textHeight =
+        Math.ceil(
+          metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent,
+        ) +
+        this.padY * 2;
+      this.canvas.width = textWidth;
+      this.canvas.height = textHeight;
+    }
+
+    render() {
+      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.context.fillStyle = this.color;
+      this.context.font = this.font;
+      const metrics = this.context.measureText(this.txt);
+      const yPos = this.padY + metrics.actualBoundingBoxAscent;
+      this.context.fillText(this.txt, this.padLeft, yPos);
+    }
+
+    get width() {
+      return this.canvas.width;
+    }
+    get height() {
+      return this.canvas.height;
+    }
+    get texture() {
+      return this.canvas;
+    }
+  }
+
+  class CanvAscii {
+    constructor(
+      {
+        text,
+        asciiFontSize,
+        textFontSize,
+        textColor,
+        planeBaseHeight,
+        enableWaves,
+      },
+      containerElem,
+      width,
+      height,
+    ) {
+      this.textString = text;
+      this.asciiFontSize = asciiFontSize;
+      this.textFontSize = textFontSize;
+      this.textColor = textColor;
+      this.planeBaseHeight = planeBaseHeight;
+      this.container = containerElem;
+      this.width = width;
+      this.height = height;
+      this.enableWaves = enableWaves;
+
+      this.camera = new THREE.PerspectiveCamera(
+        45,
+        this.width / this.height,
+        1,
+        1000,
+      );
+      // Zoom camera closer to make text larger in smaller container
+      this.camera.position.z = 10;
+      this.scene = new THREE.Scene();
+      this.mouse = { x: 0, y: 0 };
+      this.mouseVelocity = 0;
+      this.isDisposed = false;
+      this.isAnimating = false;
+      this.animationFrameId = 0;
+
+      this.onMouseMove = this.onMouseMove.bind(this);
+      this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
+      this.setMesh();
+      this.setRenderer();
+    }
+
+    setMesh() {
+      this.textCanvas = new CanvasTxt(this.textString, {
+        fontSize: this.textFontSize,
+        fontFamily: "IBM Plex Mono",
+        color: this.textColor,
+      });
+      this.textCanvas.resize();
+      this.textCanvas.render();
+
+      this.texture = new THREE.CanvasTexture(this.textCanvas.texture);
+      this.texture.minFilter = THREE.NearestFilter;
+
+      const textAspect = this.textCanvas.width / this.textCanvas.height;
+      const baseH = this.planeBaseHeight;
+      const planeW = baseH * textAspect;
+      const planeH = baseH;
+
+      this.geometry = new THREE.PlaneGeometry(planeW, planeH, 36, 36);
+      this.material = new THREE.ShaderMaterial({
+        vertexShader,
+        fragmentShader,
+        transparent: true,
+        uniforms: {
+          uTime: { value: 0 },
+          mouse: { value: 1.0 },
+          uTexture: { value: this.texture },
+          uEnableWaves: { value: this.enableWaves ? 1.0 : 0.0 },
+        },
+      });
+
+      this.mesh = new THREE.Mesh(this.geometry, this.material);
+      // Offset mesh position for alignment
+      this.mesh.position.y = 0.5;
+      this.alignMesh();
+      this.scene.add(this.mesh);
+    }
+
+    setRenderer() {
+      this.renderer = new THREE.WebGLRenderer({
+        antialias: false,
+        alpha: true,
+      });
+      this.renderer.setPixelRatio(1);
+      this.renderer.setClearColor(0x000000, 0);
+
+      this.filter = new AsciiFilter(this.renderer, {
+        fontFamily: "IBM Plex Mono",
+        fontSize: this.asciiFontSize,
+        invert: true,
+      });
+
+      this.container.appendChild(this.filter.domElement);
+      this.setSize(this.width, this.height);
+
+      // Listen on window instead of container (container has pointer-events-none)
+      window.addEventListener("mousemove", this.onMouseMove);
+      window.addEventListener("touchmove", this.onMouseMove);
+    }
+
+    setSize(w, h) {
+      this.width = w;
+      this.height = h;
+      this.camera.aspect = w / h;
+      this.camera.updateProjectionMatrix();
+      this.filter.setSize(w, h);
+      this.center = { x: w / 2, y: h / 2 };
+
+      if (this.mesh && this.geometry) {
+        this.alignMesh();
+      }
+    }
+
+    alignMesh() {
+      // Calculate visible size at z=0 (camera at z=10, fov=45)
+      // h = 2 * tan(fov/2) * dist
+      const visibleHeight = 2 * Math.tan((Math.PI / 180) * 22.5) * 10;
+      const visibleWidth = visibleHeight * this.camera.aspect;
+      const meshWidth = this.geometry.parameters.width;
+      const meshHeight = this.geometry.parameters.height;
+
+      // Horizontal: Shift to left edge of frustum
+      // Center is 0. Left edge is -visibleWidth/2.
+      // Left edge of mesh is x - meshWidth/2.
+      // x - meshWidth/2 = -visibleWidth/2 => x = (meshWidth - visibleWidth) / 2
+      const x = (meshWidth - visibleWidth) / 2;
+
+      // Vertical: Center tightly (original 0.5 offset)
+      const y = 0.5;
+
+      this.mesh.position.set(x, y, 0);
+    }
+
+    load() {
+      document.addEventListener(
+        "visibilitychange",
+        this.handleVisibilityChange,
+      );
+      this.startAnimation();
+    }
+
+    onMouseMove(evt) {
+      const e = evt.touches ? evt.touches[0] : evt;
+      const bounds = this.container.getBoundingClientRect();
+      const x = e.clientX - bounds.left;
+      const y = e.clientY - bounds.top;
+
+      // Calculate velocity (acceleration)
+      const dx = x - this.mouse.x;
+      const dy = y - this.mouse.y;
+      const velocity = Math.sqrt(dx * dx + dy * dy);
+      this.mouseVelocity = Math.min(velocity / 10, 2); // Cap at 2x
+
+      this.mouse = { x, y };
+    }
+
+    animateFrame() {
+      if (this.isDisposed || !this.isAnimating) return;
+      this.render();
+      this.animationFrameId = requestAnimationFrame(() => this.animateFrame());
+    }
+
+    startAnimation() {
+      if (this.isDisposed || this.isAnimating || document.hidden) return;
+      this.isAnimating = true;
+      this.animationFrameId = requestAnimationFrame(() => this.animateFrame());
+    }
+
+    stopAnimation() {
+      this.isAnimating = false;
+      if (this.animationFrameId) {
+        cancelAnimationFrame(this.animationFrameId);
+        this.animationFrameId = 0;
+      }
+    }
+
+    handleVisibilityChange() {
+      if (document.hidden) {
+        this.stopAnimation();
+      } else {
+        this.startAnimation();
+      }
+    }
+
+    render() {
+      const time = new Date().getTime() * 0.001;
+      this.textCanvas.render();
+      this.texture.needsUpdate = true;
+      this.mesh.material.uniforms.uTime.value = Math.sin(time);
+      this.updateRotation();
+      this.filter.render(this.scene, this.camera);
+    }
+
+    updateRotation() {
+      // Decay mouse velocity over time
+      this.mouseVelocity *= 0.95;
+
+      // Update wave intensity based on mouse velocity
+      const targetWave = 0.3 + this.mouseVelocity;
+      const currentWave = this.mesh.material.uniforms.uEnableWaves.value;
+      this.mesh.material.uniforms.uEnableWaves.value +=
+        (targetWave - currentWave) * 0.1;
+    }
+
+    clear() {
+      this.scene.traverse((obj) => {
+        if (
+          obj.isMesh &&
+          typeof obj.material === "object" &&
+          obj.material !== null
+        ) {
+          Object.keys(obj.material).forEach((key) => {
+            const matProp = obj.material[key];
+            if (
+              matProp !== null &&
+              typeof matProp === "object" &&
+              typeof matProp.dispose === "function"
+            ) {
+              matProp.dispose();
+            }
+          });
+          obj.material.dispose();
+          obj.geometry.dispose();
+        }
+      });
+      this.scene.clear();
+    }
+
+    dispose() {
+      if (this.isDisposed) return;
+      this.isDisposed = true;
+      this.stopAnimation();
+      document.removeEventListener(
+        "visibilitychange",
+        this.handleVisibilityChange,
+      );
+      this.filter.dispose();
+      if (this.container?.contains(this.filter.domElement)) {
+        this.container.removeChild(this.filter.domElement);
+      }
+      window.removeEventListener("mousemove", this.onMouseMove);
+      window.removeEventListener("touchmove", this.onMouseMove);
+      this.clear();
+      this.renderer.dispose();
+    }
+  }
+
+  // Wait for fonts to load before initializing
+  async function waitForFonts() {
+    if (typeof document === "undefined") return;
+
+    try {
+      // Wait for the specific font we're using
+      await document.fonts.load('600 12px "IBM Plex Mono"');
+      await document.fonts.load(`600 ${textFontSize}px "IBM Plex Mono"`);
+      fontsLoaded = true;
+    } catch (e) {
+      console.warn("Font loading check failed, proceeding anyway:", e);
+      fontsLoaded = true;
+    }
+  }
+
+  onMount(() => {
+    if (!container) return;
+
+    let isActive = true;
+    let fontDelayTimeout;
+    let resizeTimeout;
+
+    // Calculate intrinsic size if not provided
+    function updateSize() {
+      if (width <= 0 || height <= 0) {
+        const intrinsic = calculateIntrinsicSize();
+        computedWidth = intrinsic.width;
+        computedHeight = intrinsic.height;
+      } else {
+        computedWidth = width;
+        computedHeight = height;
+      }
+
+      // Update the ASCII renderer if it exists
+      if (asciiInstance) {
+        asciiInstance.setSize(computedWidth, computedHeight);
+      }
+    }
+
+    const handleResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        if (!isActive) return;
+        updateSize();
+      }, 150);
     };
 
-    class AsciiFilter {
-        constructor(renderer, { fontSize, fontFamily, charset, invert } = {}) {
-            this.renderer = renderer;
-            this.domElement = document.createElement("div");
-            this.domElement.style.position = "absolute";
-            this.domElement.style.top = "0";
-            this.domElement.style.left = "0";
-            this.domElement.style.width = "100%";
-            this.domElement.style.height = "100%";
-
-            this.pre = document.createElement("pre");
-            this.domElement.appendChild(this.pre);
-
-            this.canvas = document.createElement("canvas");
-            this.context = this.canvas.getContext("2d");
-            this.domElement.appendChild(this.canvas);
-
-            this.deg = 0;
-            this.invert = invert ?? true;
-            this.fontSize = fontSize ?? 12;
-            this.fontFamily = fontFamily ?? "'Courier New', monospace";
-            this.charset =
-                charset ??
-                " .'`^\",:;Il!i~+_-?][}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$";
-
-            this.context.imageSmoothingEnabled = false;
-
-            this.onMouseMove = this.onMouseMove.bind(this);
-            document.addEventListener("mousemove", this.onMouseMove);
-
-            // Track if we've measured the font yet
-            this.fontMeasured = false;
-        }
-
-        setSize(width, height) {
-            this.width = width;
-            this.height = height;
-            this.renderer.setSize(width, height);
-            this.reset();
-            this.center = { x: width / 2, y: height / 2 };
-            this.mouse = { x: this.center.x, y: this.center.y };
-        }
-
-        reset() {
-            // Set font and measure character dimensions
-            this.context.font = `600 ${this.fontSize}px ${this.fontFamily}`;
-
-            // Measure actual character width - use a wider character for more accurate measurement
-            const charWidth = this.context.measureText("M").width;
-
-            // Calculate columns and rows based on actual measurements
-            this.cols = Math.floor(this.width / charWidth);
-            this.rows = Math.floor(this.height / this.fontSize);
-
-            this.canvas.width = this.cols;
-            this.canvas.height = this.rows;
-
-            // Apply exact same font settings to the pre element
-            this.pre.style.fontFamily = this.fontFamily;
-            this.pre.style.fontSize = `${this.fontSize}px`;
-            this.pre.style.fontWeight = "600";
-            this.pre.style.margin = "0";
-            this.pre.style.padding = "0";
-            this.pre.style.lineHeight = "1em";
-            this.pre.style.position = "absolute";
-            this.pre.style.left = "0";
-            this.pre.style.top = "0";
-            this.pre.style.width = "100%";
-            this.pre.style.height = "100%";
-            this.pre.style.zIndex = "9";
-            this.pre.style.backgroundAttachment = "fixed";
-            this.pre.style.mixBlendMode = "difference";
-            // Disable text wrapping to maintain grid alignment
-            this.pre.style.whiteSpace = "pre";
-            this.pre.style.overflow = "hidden";
-
-            this.fontMeasured = true;
-        }
-
-        render(scene, camera) {
-            this.renderer.render(scene, camera);
-
-            const w = this.canvas.width;
-            const h = this.canvas.height;
-            this.context.clearRect(0, 0, w, h);
-            if (this.context && w && h) {
-                this.context.drawImage(this.renderer.domElement, 0, 0, w, h);
-            }
-
-            this.asciify(this.context, w, h);
-            this.hue();
-        }
-
-        onMouseMove(e) {
-            this.mouse = { x: e.clientX * PX_RATIO, y: e.clientY * PX_RATIO };
-        }
-
-        get dx() {
-            return this.mouse.x - this.center.x;
-        }
-
-        get dy() {
-            return this.mouse.y - this.center.y;
-        }
-
-        hue() {
-            const deg = (Math.atan2(this.dy, this.dx) * 180) / Math.PI;
-            this.deg += (deg - this.deg) * 0.075;
-            this.domElement.style.filter = `hue-rotate(${this.deg.toFixed(1)}deg)`;
-        }
-
-        asciify(ctx, w, h) {
-            if (w && h) {
-                const imgData = ctx.getImageData(0, 0, w, h).data;
-                let str = "";
-                for (let y = 0; y < h; y++) {
-                    for (let x = 0; x < w; x++) {
-                        const i = x * 4 + y * 4 * w;
-                        const [r, g, b, a] = [
-                            imgData[i],
-                            imgData[i + 1],
-                            imgData[i + 2],
-                            imgData[i + 3],
-                        ];
-
-                        if (a === 0) {
-                            str += " ";
-                            continue;
-                        }
-
-                        let gray = (0.3 * r + 0.6 * g + 0.1 * b) / 255;
-                        let idx = Math.floor(
-                            (1 - gray) * (this.charset.length - 1),
-                        );
-                        if (this.invert) idx = this.charset.length - idx - 1;
-                        str += this.charset[idx];
-                    }
-                    str += "\n";
-                }
-                this.pre.textContent = str;
-            }
-        }
-
-        dispose() {
-            document.removeEventListener("mousemove", this.onMouseMove);
-        }
-    }
-
-    class CanvasTxt {
-        constructor(
-            txt,
-            { fontSize = 200, fontFamily = "Arial", color = "#fdf9f3" } = {},
-        ) {
-            this.canvas = document.createElement("canvas");
-            this.context = this.canvas.getContext("2d");
-            this.txt = txt;
-            this.fontSize = fontSize;
-            this.fontFamily = fontFamily;
-            this.color = color;
-            this.font = `600 ${this.fontSize}px ${this.fontFamily}`;
-        }
-
-        resize() {
-            this.context.font = this.font;
-            const metrics = this.context.measureText(this.txt);
-            const textWidth = Math.ceil(metrics.width) + 20;
-            const textHeight =
-                Math.ceil(
-                    metrics.actualBoundingBoxAscent +
-                        metrics.actualBoundingBoxDescent,
-                ) + 20;
-            this.canvas.width = textWidth;
-            this.canvas.height = textHeight;
-        }
-
-        render() {
-            this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            this.context.fillStyle = this.color;
-            this.context.font = this.font;
-            const metrics = this.context.measureText(this.txt);
-            const yPos = 10 + metrics.actualBoundingBoxAscent;
-            this.context.fillText(this.txt, 10, yPos);
-        }
-
-        get width() {
-            return this.canvas.width;
-        }
-        get height() {
-            return this.canvas.height;
-        }
-        get texture() {
-            return this.canvas;
-        }
-    }
-
-    class CanvAscii {
-        constructor(
-            {
-                text,
-                asciiFontSize,
-                textFontSize,
-                textColor,
-                planeBaseHeight,
-                enableWaves,
-            },
-            containerElem,
-            width,
-            height,
-        ) {
-            this.textString = text;
-            this.asciiFontSize = asciiFontSize;
-            this.textFontSize = textFontSize;
-            this.textColor = textColor;
-            this.planeBaseHeight = planeBaseHeight;
-            this.container = containerElem;
-            this.width = width;
-            this.height = height;
-            this.enableWaves = enableWaves;
-
-            this.camera = new THREE.PerspectiveCamera(
-                45,
-                this.width / this.height,
-                1,
-                1000,
-            );
-            // Zoom camera closer to make text larger in smaller container
-            this.camera.position.z = 10;
-            this.scene = new THREE.Scene();
-            this.mouse = { x: 0, y: 0 };
-            this.mouseVelocity = 0;
-
-            this.onMouseMove = this.onMouseMove.bind(this);
-            this.setMesh();
-            this.setRenderer();
-        }
-
-        setMesh() {
-            this.textCanvas = new CanvasTxt(this.textString, {
-                fontSize: this.textFontSize,
-                fontFamily: "IBM Plex Mono",
-                color: this.textColor,
-            });
-            this.textCanvas.resize();
-            this.textCanvas.render();
-
-            this.texture = new THREE.CanvasTexture(this.textCanvas.texture);
-            this.texture.minFilter = THREE.NearestFilter;
-
-            const textAspect = this.textCanvas.width / this.textCanvas.height;
-            const baseH = this.planeBaseHeight;
-            const planeW = baseH * textAspect;
-            const planeH = baseH;
-
-            this.geometry = new THREE.PlaneGeometry(planeW, planeH, 36, 36);
-            this.material = new THREE.ShaderMaterial({
-                vertexShader,
-                fragmentShader,
-                transparent: true,
-                uniforms: {
-                    uTime: { value: 0 },
-                    mouse: { value: 1.0 },
-                    uTexture: { value: this.texture },
-                    uEnableWaves: { value: this.enableWaves ? 1.0 : 0.0 },
-                },
-            });
-
-            this.mesh = new THREE.Mesh(this.geometry, this.material);
-            // Offset mesh position for alignment
-            this.mesh.position.y = 0.5;
-            this.alignMesh();
-            this.scene.add(this.mesh);
-        }
-
-        setRenderer() {
-            this.renderer = new THREE.WebGLRenderer({
-                antialias: false,
-                alpha: true,
-            });
-            this.renderer.setPixelRatio(1);
-            this.renderer.setClearColor(0x000000, 0);
-
-            this.filter = new AsciiFilter(this.renderer, {
-                fontFamily: "IBM Plex Mono",
-                fontSize: this.asciiFontSize,
-                invert: true,
-            });
-
-            this.container.appendChild(this.filter.domElement);
-            this.setSize(this.width, this.height);
-
-            // Listen on window instead of container (container has pointer-events-none)
-            window.addEventListener("mousemove", this.onMouseMove);
-            window.addEventListener("touchmove", this.onMouseMove);
-        }
-
-        setSize(w, h) {
-            this.width = w;
-            this.height = h;
-            this.camera.aspect = w / h;
-            this.camera.updateProjectionMatrix();
-            this.filter.setSize(w, h);
-            this.center = { x: w / 2, y: h / 2 };
-
-            if (this.mesh && this.geometry) {
-                this.alignMesh();
-            }
-        }
-
-        alignMesh() {
-            // Calculate visible size at z=0 (camera at z=10, fov=45)
-            // h = 2 * tan(fov/2) * dist
-            const visibleHeight = 2 * Math.tan((Math.PI / 180) * 22.5) * 10;
-            const visibleWidth = visibleHeight * this.camera.aspect;
-            const meshWidth = this.geometry.parameters.width;
-            const meshHeight = this.geometry.parameters.height;
-
-            // Horizontal: Shift to left edge of frustum
-            // Center is 0. Left edge is -visibleWidth/2.
-            // Left edge of mesh is x - meshWidth/2.
-            // x - meshWidth/2 = -visibleWidth/2 => x = (meshWidth - visibleWidth) / 2
-            const x = (meshWidth - visibleWidth) / 2;
-
-            // Vertical: Center tightly (original 0.5 offset)
-            const y = 0.5;
-
-            this.mesh.position.set(x, y, 0);
-        }
-
-        load() {
-            this.animate();
-        }
-
-        onMouseMove(evt) {
-            const e = evt.touches ? evt.touches[0] : evt;
-            const bounds = this.container.getBoundingClientRect();
-            const x = e.clientX - bounds.left;
-            const y = e.clientY - bounds.top;
-
-            // Calculate velocity (acceleration)
-            const dx = x - this.mouse.x;
-            const dy = y - this.mouse.y;
-            const velocity = Math.sqrt(dx * dx + dy * dy);
-            this.mouseVelocity = Math.min(velocity / 10, 2); // Cap at 2x
-
-            this.mouse = { x, y };
-        }
-
-        animate() {
-            const animateFrame = () => {
-                this.animationFrameId = requestAnimationFrame(animateFrame);
-                this.render();
-            };
-            animateFrame();
-        }
-
-        render() {
-            const time = new Date().getTime() * 0.001;
-            this.textCanvas.render();
-            this.texture.needsUpdate = true;
-            this.mesh.material.uniforms.uTime.value = Math.sin(time);
-            this.updateRotation();
-            this.filter.render(this.scene, this.camera);
-        }
-
-        updateRotation() {
-            // Decay mouse velocity over time
-            this.mouseVelocity *= 0.95;
-
-            // Update wave intensity based on mouse velocity
-            const targetWave = 0.3 + this.mouseVelocity;
-            const currentWave = this.mesh.material.uniforms.uEnableWaves.value;
-            this.mesh.material.uniforms.uEnableWaves.value +=
-                (targetWave - currentWave) * 0.1;
-        }
-
-        clear() {
-            this.scene.traverse((obj) => {
-                if (
-                    obj.isMesh &&
-                    typeof obj.material === "object" &&
-                    obj.material !== null
-                ) {
-                    Object.keys(obj.material).forEach((key) => {
-                        const matProp = obj.material[key];
-                        if (
-                            matProp !== null &&
-                            typeof matProp === "object" &&
-                            typeof matProp.dispose === "function"
-                        ) {
-                            matProp.dispose();
-                        }
-                    });
-                    obj.material.dispose();
-                    obj.geometry.dispose();
-                }
-            });
-            this.scene.clear();
-        }
-
-        dispose() {
-            cancelAnimationFrame(this.animationFrameId);
-            this.filter.dispose();
-            this.container.removeChild(this.filter.domElement);
-            window.removeEventListener("mousemove", this.onMouseMove);
-            window.removeEventListener("touchmove", this.onMouseMove);
-            this.clear();
-            this.renderer.dispose();
-        }
-    }
-
-    // Wait for fonts to load before initializing
-    async function waitForFonts() {
-        if (typeof document === "undefined") return;
-
-        try {
-            // Wait for the specific font we're using
-            await document.fonts.load('600 12px "IBM Plex Mono"');
-            await document.fonts.load(`600 ${textFontSize}px "IBM Plex Mono"`);
-            fontsLoaded = true;
-        } catch (e) {
-            console.warn("Font loading check failed, proceeding anyway:", e);
-            fontsLoaded = true;
-        }
-    }
-
-    onMount(async () => {
-        if (!container) return;
-
-        // Wait for fonts to be ready
-        await waitForFonts();
-
-        // Small additional delay to ensure fonts are fully rendered
-        await new Promise((resolve) => setTimeout(resolve, 100));
-
-        // Get responsive font size based on current window width
-        responsiveFontSize = getResponsiveFontSize(asciiFontSize);
-
-        // Calculate intrinsic size if not provided
-        function updateSize() {
-            if (width <= 0 || height <= 0) {
-                const intrinsic = calculateIntrinsicSize();
-                computedWidth = intrinsic.width;
-                computedHeight = intrinsic.height;
-            } else {
-                computedWidth = width;
-                computedHeight = height;
-            }
-
-            // Update the ASCII renderer if it exists
-            if (asciiInstance) {
-                asciiInstance.setSize(computedWidth, computedHeight);
-            }
-        }
-
-        updateSize();
-
-        // Use computed dimensions
-        const w = computedWidth;
-        const h = computedHeight;
-
-        // Directly initialize with computed size
-        asciiInstance = new CanvAscii(
-            {
-                text,
-                asciiFontSize: responsiveFontSize,
-                textFontSize,
-                textColor,
-                planeBaseHeight,
-                enableWaves,
-            },
-            container,
-            w,
-            h,
-        );
-        asciiInstance.load();
-
-        // Listen for resize to update dimensions
-        let resizeTimeout;
-        const handleResize = () => {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(() => {
-                updateSize();
-            }, 150);
-        };
-        window.addEventListener("resize", handleResize);
-
-        return () => {
-            window.removeEventListener("resize", handleResize);
-            if (asciiInstance) asciiInstance.dispose();
-        };
-    });
+    (async () => {
+      // Wait for fonts to be ready
+      await waitForFonts();
+      if (!isActive) return;
+
+      // Small additional delay to ensure fonts are fully rendered
+      await new Promise((resolve) => {
+        fontDelayTimeout = setTimeout(resolve, 100);
+      });
+      if (!isActive) return;
+
+      // Get responsive font size based on current window width
+      responsiveFontSize = getResponsiveFontSize(asciiFontSize);
+      updateSize();
+
+      // Directly initialize with computed size
+      asciiInstance = new CanvAscii(
+        {
+          text,
+          asciiFontSize: responsiveFontSize,
+          textFontSize,
+          textColor,
+          planeBaseHeight,
+          enableWaves,
+        },
+        container,
+        computedWidth,
+        computedHeight,
+      );
+      asciiInstance.load();
+    })();
+
+    // Listen for resize to update dimensions
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      isActive = false;
+      clearTimeout(fontDelayTimeout);
+      clearTimeout(resizeTimeout);
+      window.removeEventListener("resize", handleResize);
+      if (asciiInstance) {
+        asciiInstance.dispose();
+        asciiInstance = undefined;
+      }
+    };
+  });
 </script>
 
 <div
-    bind:this={container}
-    class="ascii-text-container"
-    style="width: {computedWidth}px; height: {computedHeight}px;"
+  bind:this={container}
+  class="ascii-text-container"
+  style="width: {computedWidth}px; height: {computedHeight}px;"
 ></div>
 
 <style>
-    @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&display=swap");
 
-    .ascii-text-container {
-        position: relative;
-        overflow: hidden;
-    }
+  .ascii-text-container {
+    position: relative;
+    overflow: hidden;
+  }
 
-    :global(.ascii-text-container canvas) {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        image-rendering: pixelated;
-    }
+  :global(.ascii-text-container canvas) {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+  }
 
-    :global(.ascii-text-container pre) {
-        margin: 0;
-        user-select: none;
-        padding: 0;
-        line-height: 1em;
-        text-align: left;
-        position: absolute;
-        left: 0;
-        top: 0;
-        background-image: radial-gradient(
-            circle,
-            #ff6188 0%,
-            #fc9867 50%,
-            #ffd866 100%
-        );
-        background-attachment: fixed;
-        -webkit-text-fill-color: transparent;
-        -webkit-background-clip: text;
-        background-clip: text;
-        z-index: 9;
-        /* Ensure consistent rendering */
-        font-feature-settings: normal;
-        font-variant: normal;
-        text-rendering: geometricPrecision;
-    }
+  :global(.ascii-text-container pre) {
+    margin: 0;
+    user-select: none;
+    padding: 0;
+    line-height: 1em;
+    text-align: left;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-image: radial-gradient(
+      circle,
+      #ff6188 0%,
+      #fc9867 50%,
+      #ffd866 100%
+    );
+    background-attachment: fixed;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    z-index: 9;
+    /* Ensure consistent rendering */
+    font-feature-settings: normal;
+    font-variant: normal;
+    text-rendering: geometricPrecision;
+  }
 
-    :global(.dark .ascii-text-container pre) {
-        background-image: radial-gradient(
-            circle,
-            #ff6188 0%,
-            #fc9867 50%,
-            #ffd866 100%
-        );
-    }
+  :global(.dark .ascii-text-container pre) {
+    background-image: radial-gradient(
+      circle,
+      #ff6188 0%,
+      #fc9867 50%,
+      #ffd866 100%
+    );
+  }
 </style>

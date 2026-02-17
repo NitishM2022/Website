@@ -2,21 +2,21 @@
   import Mark from "./Mark.svelte";
 </script>
 
-<div class="ml-1.5 flex flex-row relative">
-  <div class="stamp-container -rotate-2 relative z-0">
+<div class="relative ml-1.5 flex flex-row">
+  <div class="stamp-container relative z-0 -rotate-2">
     <div class="stamp mb-5">
       <div
-        class="m-1 rounded-sm p-2 px-3 bg-cover bg-center bg-[url('./lib/assets/stamp.jpeg')]"
+        class="m-1 rounded-sm bg-[url('./lib/assets/stamp.jpeg')] bg-cover bg-center p-2 px-3"
       >
         <h1
-          class="text-stone-100 text-5xl font-medium font-serif italic z-20 relative"
+          class="relative z-20 font-serif text-5xl font-medium text-stone-100 italic"
         >
           Howdy
         </h1>
       </div>
     </div>
   </div>
-  <div class="w-36 -rotate-2 -translate-x-9 -translate-y-3 z-10">
+  <div class="z-10 w-36 -translate-x-9 -translate-y-3 -rotate-2">
     <Mark />
   </div>
 </div>

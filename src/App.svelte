@@ -1,177 +1,199 @@
 <script>
-    import { fade } from "svelte/transition";
-    import Project from "./lib/Project.svelte";
-    import HeroText from "./lib/HeroText.svelte";
-    import Toggle from "./lib/Toggle.svelte";
-    import Link from "./lib/Link.svelte";
-    import Shader from "./lib/Shader.svelte";
-    import GithubIcon from "./lib/GithubIcon.svelte";
-    import BooksSection from "./lib/BooksSection.svelte";
-
-    import projects from "./lib/assets/projects.json";
-    import AsciiText from "./lib/AsciiText.svelte";
+  import { fade } from "svelte/transition";
+  import Project from "./lib/Project.svelte";
+  import HeroText from "./lib/HeroText.svelte";
+  import Toggle from "./lib/Toggle.svelte";
+  import Link from "./lib/Link.svelte";
+  import Shader from "./lib/Shader.svelte";
+  import GithubIcon from "./lib/GithubIcon.svelte";
+  import BooksSection from "./lib/BooksSection.svelte";
+  import HeroPixelHover from "./lib/HeroPixelHover.svelte";
+  import AsciiText from "./lib/AsciiText.svelte";
+  import projects from "./lib/assets/projects.json";
 </script>
 
-<div class="grid-h h-10">
-    <div
-        class="flex items-center justify-center h-full px-3 min-[840px]:w-[841px] mx-auto min-[840px]:grid-line min-[840px]:border-r-1 min-[840px]:border-l-1"
-    >
-        <h1
-            class="text-2xl font-rope font-extralight text-stone-950 dark:text-stone-100"
-        >
-            <span class="md:hidden">nitish</span><span class="hidden md:inline"
-                >nitish malluru</span
-            >
+<div class="flex">
+  <div aria-hidden="true" class="hidden min-[1080px]:block min-[1080px]:flex-1">
+    <div class="grid-h h-10"></div>
+    <div class="grid-dash-b-long h-140 md:h-130"></div>
+  </div>
+  <div
+    class="min-[840px]:grid-lr-b w-full p-3 pt-2.5 min-[1080px]:w-270 min-[1080px]:flex-none"
+  >
+    <div class="relative isolate overflow-hidden rounded-2xl bg-[#0041ba]">
+      <HeroPixelHover alwaysOn={true} />
+
+      <div class="relative z-10 flex h-10 items-center justify-center px-5">
+        <h1 class="font-rope text-2xl font-extralight text-stone-100">
+          <span class="md:hidden">nitish</span><span class="hidden md:inline"
+            >nitish malluru</span
+          >
         </h1>
         <div class="flex-grow"></div>
-        <div
-            class="flex gap-3 text-stone-950 dark:text-stone-100 items-center mr-2"
-        >
-            <Link href="./resume.pdf">
-                <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 15 15"
-                    stroke="currentColor"
-                    stroke-width="0.5"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    ><path
-                        d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z"
-                        fill="currentColor"
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                    ></path></svg
-                >
-            </Link>
-            <Link href="mailto:nitishethan@gmail.com">
-                <svg
-                    width="19"
-                    height="19"
-                    class="text-2xl text-black dark:text-neutral-100"
-                    data-icon="mdi:email-outline"
-                >
-                    <symbol id="ai:mdi:email-outline" viewBox="0 0 24 24"
-                        ><path
-                            fill="currentColor"
-                            d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2zm-2 0l-8 5-8-5zm0 12H4V8l8 5l8-5z"
-                        ></path></symbol
-                    ><use href="#ai:mdi:email-outline"></use>
-                </svg>
-            </Link>
-            <Link href={"https://github.com/NitishM2022"}>
-                <GithubIcon />
-            </Link>
-
-            <Link
-                href={"https://bitbucket.org/nitishethan/workspace/repositories/"}
+        <div class="mr-2 flex items-center gap-3 text-stone-100">
+          <Link href="./resume.pdf">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 15 15"
+              stroke="currentColor"
+              stroke-width="0.5"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              ><path
+                d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z"
+                fill="currentColor"
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+              ></path></svg
             >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="14"
-                    height="14"
-                    stroke-width="0.1"
-                    viewBox="8.4 14.39 2481.29 2231.21"
-                    ><path
-                        d="M81.2602 1.16415e-10C37.3602 -0.569994 1.31016 34.5604 0.750158 78.46C0.690158 83.07 1.03016 87.68 1.77016 92.23L339.25 2140.95C347.93 2192.7 392.51 2230.75 444.99 2231.19H2064.02C2103.4 2231.69 2137.21 2203.29 2143.51 2164.41L2481 92.63C2488.03 49.2904 2458.59 8.45991 2415.25 1.43C2410.7 0.690006 2406.1 0.350002 2401.49 0.410001L81.2602 1.16415e-10ZM1880 1961L633 1960.99L301.5 270.99L2181 271L1880 1961Z"
-                        fill="currentColor"
-                    /></svg
-                >
-            </Link>
+          </Link>
+          <Link href="mailto:nitishethan@gmail.com">
+            <svg
+              width="19"
+              height="19"
+              class="text-2xl text-neutral-100"
+              data-icon="mdi:email-outline"
+            >
+              <symbol id="ai:mdi:email-outline" viewBox="0 0 24 24"
+                ><path
+                  fill="currentColor"
+                  d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2zm-2 0l-8 5-8-5zm0 12H4V8l8 5l8-5z"
+                ></path></symbol
+              ><use href="#ai:mdi:email-outline"></use>
+            </svg>
+          </Link>
+          <Link href={"https://github.com/NitishM2022"}>
+            <GithubIcon />
+          </Link>
 
-            <Link href={"https://www.linkedin.com/in/nitishmalluru/"}>
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="w-4 h-4"
-                    aria-hidden="true"
-                    ><path
-                        d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
-                    ></path><rect x="2" y="9" width="4" height="12"
-                    ></rect><circle cx="4" cy="4" r="2"></circle></svg
-                >
-            </Link>
+          <Link
+            href={"https://bitbucket.org/nitishethan/workspace/repositories/"}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              stroke-width="0.1"
+              viewBox="8.4 14.39 2481.29 2231.21"
+              ><path
+                d="M81.2602 1.16415e-10C37.3602 -0.569994 1.31016 34.5604 0.750158 78.46C0.690158 83.07 1.03016 87.68 1.77016 92.23L339.25 2140.95C347.93 2192.7 392.51 2230.75 444.99 2231.19H2064.02C2103.4 2231.69 2137.21 2203.29 2143.51 2164.41L2481 92.63C2488.03 49.2904 2458.59 8.45991 2415.25 1.43C2410.7 0.690006 2406.1 0.350002 2401.49 0.410001L81.2602 1.16415e-10ZM1880 1961L633 1960.99L301.5 270.99L2181 271L1880 1961Z"
+                fill="currentColor"
+              /></svg
+            >
+          </Link>
+
+          <Link href={"https://www.linkedin.com/in/nitishmalluru/"}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-4 w-4"
+              aria-hidden="true"
+              ><path
+                d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+              ></path><rect x="2" y="9" width="4" height="12"></rect><circle
+                cx="4"
+                cy="4"
+                r="2"
+              ></circle></svg
+            >
+          </Link>
         </div>
         <Toggle />
-    </div>
-</div>
-<div class="main-content pt-10 pb-20">
-    <main class="mx-auto w-full min-[840px]:w-210 font-rope flex flex-col">
-    <section class="flex flex-col gap-10 rounded-3xl" in:fade={{ duration: 800 }}>
-        <section
-            class="grid-border flex flex-col md:flex-row h-160 md:h-80 overflow-hidden"
+      </div>
+
+      <section
+        class="grid-border-no-top-lines relative z-10 flex h-auto min-h-110 w-full flex-col overflow-visible md:h-124 md:flex-row md:overflow-hidden"
+      >
+        <div
+          class="xs:h-72 h-64 w-full overflow-hidden rounded-b-3xl sm:h-80 md:aspect-square md:h-full md:w-auto md:flex-none md:rounded-br-none"
         >
-                <div class="w-full md:flex-grow h-80 md:h-full">
-                    <Shader />
-                </div>
+          <div
+            class="xs:pl-4 xs:pb-4 box-border h-full pt-1 pb-3 pl-3 sm:pb-5 sm:pl-5"
+          >
+            <Shader />
+          </div>
+        </div>
 
-                <div class="flex flex-col md:w-340 py-6 pl-2 items-start">
-                    <AsciiText text="howdy" asciiFontSize={6} />
-                    <div class="px-2">
-                        <HeroText />
-                    </div>
-                </div>
-            </section>
-        </section>
-    <!-- Projects Section -->
-    <section class="mt-15" in:fade={{ duration: 800, delay: 100 }}>
-            <h2
-                class="font-medium text-2xl leading-10 text-stone-950 dark:text-stone-100 mb-5 px-2 min-[840px]:px-0"
-            >
-                Projects
-            </h2>
-            <div class="grid min-[840px]:grid-cols-1 gap-10">
-                {#each projects as { name, description, link, date, tech, images }}
-                    <Project {name} {description} {link} {date} {tech} {images} />
-                {/each}
-            </div>
-        </section>
-
-    <!-- Reading List -->
-    <div in:fade={{ duration: 800, delay: 200 }}>
-        <BooksSection />
+        <div class="mt-5 flex flex-col items-start pr-5 pl-4 md:flex-1">
+          <AsciiText
+            text="howdy"
+            asciiFontSize={8}
+            textFontSize={220}
+            planeBaseHeight={8}
+          />
+          <div class="">
+            <HeroText />
+          </div>
+        </div>
+      </section>
     </div>
-    </main>
+  </div>
+  <div aria-hidden="true" class="hidden min-[1080px]:block min-[1080px]:flex-1">
+    <div class="grid-h h-10"></div>
+    <div class="grid-dash-b-long h-130 md:h-130" s></div>
+  </div>
+</div>
+
+<div class="main-content">
+  <div class="flex w-full justify-center overflow-hidden">
+    <div class="mx-auto flex w-max flex-row justify-center">
+      <div
+        aria-hidden="true"
+        class="grid-dot-dash-l-long w-[120px] flex-none opacity-100"
+      ></div>
+      <!-- Projects Section -->
+      <main
+        class="font-rope grid-dash-lr-long flex w-screen max-w-[840px] flex-none flex-col"
+      >
+        <section class="" in:fade={{ duration: 800, delay: 100 }}>
+          <h2
+            class="mt-5 mb-5 px-4 text-2xl leading-10 font-medium text-stone-950 dark:text-stone-100"
+          >
+            Projects
+          </h2>
+          <div class="grid gap-10 min-[840px]:grid-cols-1">
+            {#each projects as { name, description, link, date, tech, images }}
+              <Project {name} {description} {link} {date} {tech} {images} />
+            {/each}
+          </div>
+        </section>
+
+        <!-- Reading List -->
+        <div in:fade={{ duration: 800, delay: 200 }} class="">
+          <BooksSection />
+        </div>
+      </main>
+      <div
+        aria-hidden="true"
+        class="grid-dot-dash-r-long w-[120px] flex-none opacity-100"
+      ></div>
+    </div>
+  </div>
 </div>
 
 <!-- Contact Section -->
 
-<footer class="grid-f h-10">
-    <div
-        class="flex items-center h-full px-3 min-[840px]:w-[841px] mx-auto grid-f min-[840px]:grid-line min-[840px]:border-r-1 min-[840px]:border-l-1"
-    >
-        <p class="text-stone-950 dark:text-stone-300 font-light text-base">
-            <span class="hidden xs:inline">Reach me at&nbsp;</span><a
-                href="mailto:nitishethan@gmail.com"
-                class="underline">nitishethan@gmail.com</a
-            >
-        </p>
-        <div class="flex-grow"></div>
-        <p class="text-stone-950 dark:text-stone-300 font-light text-base">
-            Peace 🚬
-        </p>
-    </div>
+<footer class="grid-f-lr-lines h-10 bg-[#0041ba]">
+  <div
+    class="min-[840px]:grid-f-lr-lines mx-auto flex h-full items-center bg-[#0041ba] px-5 min-[1080px]:w-270"
+    style="--grid-line-color: rgba(255, 255, 255, 0.15);"
+  >
+    <p class="text-base font-light text-stone-100">
+      <span class="xs:inline hidden">Reach me at&nbsp;</span><a
+        href="mailto:nitishethan@gmail.com"
+        class="text-stone-100 underline visited:text-stone-100 hover:text-white"
+        >nitishethan@gmail.com</a
+      >
+    </p>
+    <div class="flex-grow"></div>
+    <p class="text-base font-light text-stone-100">Peace 🚬</p>
+  </div>
 </footer>
-
-<style>
-    .main-content {
-        background-color: rgb(250, 250, 249);
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='rgba(0,0,0,0.15)' stroke-width='0.5'/%3E%3C/svg%3E");
-        background-size: 40px 40px;
-        background-position: center top;
-    }
-
-    :global(.dark) .main-content {
-        background-color: rgb(23, 23, 23);
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='rgba(255,255,255,0.15)' stroke-width='0.5'/%3E%3C/svg%3E");
-        background-size: 40px 40px;
-        background-position: center top;
-    }
-</style>

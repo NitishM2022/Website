@@ -2,8 +2,9 @@
 @variant dark (&:where(.dark, .dark *));
 
 @font-face {
-  font-family: 'Geist Mono';
-  src: url('/node_modules/geist/dist/fonts/geist-mono/GeistMono-Variable.woff2') format('woff2');
+  font-family: "Geist Mono";
+  src: url("/node_modules/geist/dist/fonts/geist-mono/GeistMono-Variable.woff2")
+    format("woff2");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
@@ -11,84 +12,276 @@
 
 @layer base {
   :root {
-    --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    --font-sans:
+      ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --grid-bg: rgb(250, 250, 249);
+    --grid-line-color: rgba(0, 0, 0, 0.15);
+    --grid-dot-color: rgba(0, 0, 0, 0.18);
+    --grid-line-width: 1px;
+    --grid-cell-size: 40px;
+  }
+
+  .dark {
+    --grid-bg: rgb(23, 23, 23);
+    --grid-line-color: rgba(255, 255, 255, 0.15);
+    --grid-dot-color: rgba(255, 255, 255, 0.17);
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
   }
 }
 
 @utility grid-border {
-  background-color: rgb(250, 250, 249);
-  box-sizing: border-box;
-  box-shadow: 
-    inset 0 0.5px 0 0 rgba(0, 0, 0, 0.15),
-    inset 0 -0.5px 0 0 rgba(0, 0, 0, 0.15);
+  background-color: var(--grid-bg);
+  box-shadow:
+    inset 0 var(--grid-line-width) 0 0 var(--grid-line-color),
+    inset 0 calc(var(--grid-line-width) * -1) 0 0 var(--grid-line-color);
 
   @media (min-width: 840px) {
-    box-shadow: 
-      inset 0 0.5px 0 0 rgba(0, 0, 0, 0.15),
-      inset 0 -0.5px 0 0 rgba(0, 0, 0, 0.15),
-      inset 0.5px 0 0 0 rgba(0, 0, 0, 0.15),
-      inset -0.5px 0 0 0 rgba(0, 0, 0, 0.15);
+    box-shadow:
+      inset 0 var(--grid-line-width) 0 0 var(--grid-line-color),
+      inset 0 calc(var(--grid-line-width) * -1) 0 0 var(--grid-line-color),
+      inset var(--grid-line-width) 0 0 0 var(--grid-line-color),
+      inset calc(var(--grid-line-width) * -1) 0 0 0 var(--grid-line-color);
   }
+}
 
-  &:where(.dark, .dark *) {
-    background-color: rgb(23, 23, 23);
-    box-shadow: 
-      inset 0 0.5px 0 0 rgba(255, 255, 255, 0.15),
-      inset 0 -0.5px 0 0 rgba(255, 255, 255, 0.15);
-    
-    @media (min-width: 840px) {
-      box-shadow: 
-        inset 0 0.5px 0 0 rgba(255, 255, 255, 0.15),
-        inset 0 -0.5px 0 0 rgba(255, 255, 255, 0.15),
-        inset 0.5px 0 0 0 rgba(255, 255, 255, 0.15),
-        inset -0.5px 0 0 0 rgba(255, 255, 255, 0.15);
-    }
+@utility grid-border-no-top {
+  background-color: var(--grid-bg);
+  box-shadow: inset 0 calc(var(--grid-line-width) * -1) 0 0
+    var(--grid-line-color);
+
+  @media (min-width: 840px) {
+    box-shadow:
+      inset 0 calc(var(--grid-line-width) * -1) 0 0 var(--grid-line-color),
+      inset var(--grid-line-width) 0 0 0 var(--grid-line-color),
+      inset calc(var(--grid-line-width) * -1) 0 0 0 var(--grid-line-color);
+  }
+}
+
+@utility grid-border-no-top-lines {
+  box-shadow: inset 0 calc(var(--grid-line-width) * -1) 0 0
+    var(--grid-line-color);
+
+  @media (min-width: 840px) {
+    box-shadow:
+      inset 0 calc(var(--grid-line-width) * -1) 0 0 var(--grid-line-color),
+      inset var(--grid-line-width) 0 0 0 var(--grid-line-color),
+      inset calc(var(--grid-line-width) * -1) 0 0 0 var(--grid-line-color);
   }
 }
 
 @utility grid-h {
-  background-color: rgb(250, 250, 249);
-  box-sizing: border-box;
-  box-shadow: inset 0 -0.5px 0 0 rgba(0, 0, 0, 0.15);
-
-  &:where(.dark, .dark *) {
-    background-color: rgb(23, 23, 23);
-    box-shadow: inset 0 -0.5px 0 0 rgba(255, 255, 255, 0.15);
-  }
+  background-color: var(--grid-bg);
+  box-shadow: inset 0 calc(var(--grid-line-width) * -1) 0 0
+    var(--grid-line-color);
 }
 
 @utility grid-f {
-  background-color: rgb(250, 250, 249);
-  box-sizing: border-box;
-  box-shadow: inset 0 0.5px 0 0 rgba(0, 0, 0, 0.15);
+  background-color: var(--grid-bg);
+  box-shadow: inset 0 var(--grid-line-width) 0 0 var(--grid-line-color);
+}
 
-  &:where(.dark, .dark *) {
-    background-color: rgb(23, 23, 23);
-    box-shadow: inset 0 0.5px 0 0 rgba(255, 255, 255, 0.15);
-  }
+@utility grid-b {
+  background-color: var(--grid-bg);
+  box-shadow: inset 0 calc(var(--grid-line-width) * -1) 0 0
+    var(--grid-line-color);
+}
+
+@utility grid-tb {
+  background-color: var(--grid-bg);
+  box-shadow:
+    inset 0 var(--grid-line-width) 0 0 var(--grid-line-color),
+    inset 0 calc(var(--grid-line-width) * -1) 0 0 var(--grid-line-color);
 }
 
 @utility grid-lr {
-  box-sizing: border-box;
-  box-shadow: 
-    inset 0.5px 0 0 0 rgba(0, 0, 0, 0.15),
-    inset -0.5px 0 0 0 rgba(0, 0, 0, 0.15);
+  box-shadow:
+    inset var(--grid-line-width) 0 0 0 var(--grid-line-color),
+    inset calc(var(--grid-line-width) * -1) 0 0 0 var(--grid-line-color);
+}
 
-  &:where(.dark, .dark *) {
-    box-shadow: 
-      inset 0.5px 0 0 0 rgba(255, 255, 255, 0.15),
-      inset -0.5px 0 0 0 rgba(255, 255, 255, 0.15);
-  }
+@utility grid-lr-b {
+  background-color: var(--grid-bg);
+  box-shadow:
+    inset var(--grid-line-width) 0 0 0 var(--grid-line-color),
+    inset calc(var(--grid-line-width) * -1) 0 0 0 var(--grid-line-color),
+    inset 0 calc(var(--grid-line-width) * -1) 0 0 var(--grid-line-color);
+}
+
+@utility grid-tb-lr {
+  background-color: var(--grid-bg);
+  box-shadow:
+    inset 0 var(--grid-line-width) 0 0 var(--grid-line-color),
+    inset 0 calc(var(--grid-line-width) * -1) 0 0 var(--grid-line-color),
+    inset var(--grid-line-width) 0 0 0 var(--grid-line-color),
+    inset calc(var(--grid-line-width) * -1) 0 0 0 var(--grid-line-color);
+}
+
+@utility grid-f-lr {
+  background-color: var(--grid-bg);
+  box-shadow:
+    inset 0 var(--grid-line-width) 0 0 var(--grid-line-color),
+    inset var(--grid-line-width) 0 0 0 var(--grid-line-color),
+    inset calc(var(--grid-line-width) * -1) 0 0 0 var(--grid-line-color);
+}
+
+@utility grid-f-lr-lines {
+  box-shadow:
+    inset 0 var(--grid-line-width) 0 0 var(--grid-line-color),
+    inset var(--grid-line-width) 0 0 0 var(--grid-line-color),
+    inset calc(var(--grid-line-width) * -1) 0 0 0 var(--grid-line-color);
+}
+
+@utility grid-main-bg {
+  background-color: var(--grid-bg);
+  background-image:
+    linear-gradient(
+      var(--grid-line-color) var(--grid-line-width),
+      transparent var(--grid-line-width)
+    ),
+    linear-gradient(
+      90deg,
+      var(--grid-line-color) var(--grid-line-width),
+      transparent var(--grid-line-width)
+    );
+  background-size: var(--grid-cell-size) var(--grid-cell-size);
+  background-position: center top;
+}
+
+@utility grid-dash-b-long {
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--grid-line-color) 0 18px,
+    transparent 18px 28px
+  );
+  background-size: 100% var(--grid-line-width);
+  background-position: left bottom;
+  background-repeat: no-repeat;
+}
+
+@utility grid-dash-lr-long {
+  background-image:
+    repeating-linear-gradient(
+      180deg,
+      var(--grid-line-color) 0 18px,
+      transparent 18px 28px
+    ),
+    repeating-linear-gradient(
+      180deg,
+      var(--grid-line-color) 0 18px,
+      transparent 18px 28px
+    );
+  background-size:
+    var(--grid-line-width) 100%,
+    var(--grid-line-width) 100%;
+  background-position:
+    left top,
+    right top;
+  background-repeat: no-repeat, no-repeat;
+}
+
+@utility grid-dot-dash-b-long {
+  background-color: var(--grid-bg);
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      var(--grid-line-color) 0 18px,
+      transparent 18px 28px
+    ),
+    radial-gradient(var(--grid-dot-color) 0.9px, transparent 0.9px);
+  background-size:
+    100% var(--grid-line-width),
+    20px 20px;
+  background-position:
+    left bottom,
+    center calc(var(--grid-line-width));
+  background-repeat: no-repeat, repeat;
+  background-origin: border-box, content-box;
+  background-clip: border-box, content-box;
+  padding-left: var(--grid-line-width);
+  padding-right: var(--grid-line-width);
+}
+
+@utility grid-dot-dash-lr-long {
+  background-color: var(--grid-bg);
+  background-image:
+    repeating-linear-gradient(
+      180deg,
+      var(--grid-line-color) 0 18px,
+      transparent 18px 28px
+    ),
+    repeating-linear-gradient(
+      180deg,
+      var(--grid-line-color) 0 18px,
+      transparent 18px 28px
+    ),
+    radial-gradient(var(--grid-dot-color) 0.9px, transparent 0.9px);
+  background-size:
+    var(--grid-line-width) 100%,
+    var(--grid-line-width) 100%,
+    20px 20px;
+  background-position:
+    left top,
+    right top,
+    center calc(var(--grid-line-width));
+  background-repeat: no-repeat, no-repeat, repeat;
+  background-origin: border-box, border-box, content-box;
+  background-clip: border-box, border-box, content-box;
+  padding-left: var(--grid-line-width);
+  padding-right: var(--grid-line-width);
+}
+
+@utility grid-dot-dash-l-long {
+  background-color: var(--grid-bg);
+  background-image:
+    repeating-linear-gradient(
+      180deg,
+      var(--grid-line-color) 0 18px,
+      transparent 18px 28px
+    ),
+    radial-gradient(var(--grid-dot-color) 0.9px, transparent 0.9px);
+  background-size:
+    var(--grid-line-width) 100%,
+    20px 20px;
+  background-position:
+    left top,
+    center calc(var(--grid-line-width));
+  background-repeat: no-repeat, repeat;
+  background-origin: border-box, content-box;
+  background-clip: border-box, content-box;
+  padding-left: var(--grid-line-width);
+  padding-right: var(--grid-line-width);
+}
+
+@utility grid-dot-dash-r-long {
+  background-color: var(--grid-bg);
+  background-image:
+    repeating-linear-gradient(
+      180deg,
+      var(--grid-line-color) 0 18px,
+      transparent 18px 28px
+    ),
+    radial-gradient(var(--grid-dot-color) 0.9px, transparent 0.9px);
+  background-size:
+    var(--grid-line-width) 100%,
+    20px 20px;
+  background-position:
+    right top,
+    center calc(var(--grid-line-width));
+  background-repeat: no-repeat, repeat;
+  background-origin: border-box, content-box;
+  background-clip: border-box, content-box;
+  padding-left: var(--grid-line-width);
+  padding-right: var(--grid-line-width);
 }
 
 @utility grid-line {
-  border-color: rgba(0, 0, 0, 0.15);
-  box-sizing: border-box;
-
-  &:where(.dark, .dark *) {
-    border-color: rgba(255, 255, 255, 0.15);
-  }
+  border-color: var(--grid-line-color);
 }
 
 @theme {
@@ -101,47 +294,61 @@
   --breakpoint-xs: 480px;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   min-height: 100vh;
-  background-color: rgb(250, 250, 249);
+  background-color: var(--grid-bg);
   position: relative;
   overscroll-behavior: none;
 }
 
 .dark body {
-  background-color: rgb(23, 23, 23);
+  background-color: var(--grid-bg);
 }
-
 
 /* Light mode (your existing behavior) */
 .link {
-  color: #0000EE;
+  color: #0000ee;
 }
 .link:visited {
-  color: #551A8B;
+  color: #551a8b;
 }
 .link:hover,
 .link:focus {
-  color: #0000EE;
+  color: #0000ee;
+  text-decoration: underline;
+}
+
+.hero-link {
+  color: rgb(191, 219, 254);
+}
+
+.hero-link:visited {
+  color: rgb(196, 181, 253);
+}
+
+.hero-link:hover,
+.hero-link:focus {
+  color: rgb(224, 231, 255);
   text-decoration: underline;
 }
 .link:active {
-  color: #EE0000;
+  color: #ee0000;
 }
 
 /* Dark mode (using .dark class) */
 .dark .link {
-  color: #8AB4F8;
+  color: #8ab4f8;
 }
 .dark .link:visited {
-  color: #C58AF9;
+  color: #c58af9;
 }
 .dark .link:hover,
 .dark .link:focus {
-  color: #8AB4F8;
+  color: #8ab4f8;
   text-decoration: underline;
 }
 .dark .link:active {
-  color: #F28B82;
+  color: #f28b82;
 }

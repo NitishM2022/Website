@@ -28,18 +28,18 @@
   >
     <!-- Front Cover - this determines the height -->
     <div
-      class="relative shadow-xl overflow-hidden"
+      class="relative overflow-hidden shadow-xl"
       style="transform: translateZ({pageWidth}px); backface-visibility: hidden;"
     >
-      <img src={image} alt={name} class="block w-full h-auto" />
+      <img src={image} alt={name} class="block h-auto w-full" />
       <div
-        class="absolute inset-0 bg-gradient-to-r from-black/10 via-transparent to-transparent pointer-events-none"
+        class="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/10 via-transparent to-transparent"
       ></div>
     </div>
 
     <!-- Pages (right side edge) - positioned absolutely to match front cover height -->
     <div
-      class="absolute top-1 bottom-1 right-1"
+      class="absolute top-1 right-1 bottom-1"
       style="width: {pageWidth * 2 - 4}px; transform: translateZ({pageWidth -
         2}px) rotateY(-90deg); transform-origin: right center; background: linear-gradient(to right, #f5f1e8, #e8e3d6);"
     >
@@ -68,14 +68,14 @@
 
   <!-- Book info on hover -->
   <div
-    class="absolute -bottom-6 left-0 w-full text-center transition-all duration-500 ease-out pointer-events-none px-1"
+    class="pointer-events-none absolute -bottom-6 left-0 w-full px-1 text-center transition-all duration-500 ease-out"
     style="opacity: {isHovered
       ? 1
       : 0}; transform: translateZ(10px) rotateY(-30deg) {isHovered && index > 0
       ? 'translateX(45px)'
       : ''}; transform-origin: left center; transform-style: preserve-3d;"
   >
-    <h3 class="text-xs font-bold text-stone-900 dark:text-stone-100 truncate">
+    <h3 class="truncate text-xs font-bold text-stone-900 dark:text-stone-100">
       {name}
     </h3>
   </div>

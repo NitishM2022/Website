@@ -9,12 +9,10 @@
   import Link from "./Link.svelte";
 </script>
 
-<div
-  class="flex flex-col bg-[#fafaf9] dark:bg-[#171717] grid-border pb-[0.5px]"
->
-  <div class="flex flex-col px-5 pt-4 sm:h-30 h-40 mb-10 overflow-hidden">
+<div class="grid-tb min-[840px]:grid-tb-lr flex flex-col pb-[1px]">
+  <div class="mb-10 flex h-44 flex-col overflow-hidden px-5 pt-4 sm:h-34">
     <div class="flex items-center">
-      <h3 class="text-xl font-medium text-stone-950 dark:text-stone-300 line">
+      <h3 class="line text-xl font-medium text-stone-950 dark:text-stone-300">
         {name}
       </h3>
       <div class="grow"></div>
@@ -22,7 +20,7 @@
       <div class="flex gap-3">
         {#if link.apple}
           <Link href={link.apple}>
-            <div class=" text-stone-950 dark:text-stone-100 items-center">
+            <div class=" items-center text-stone-950 dark:text-stone-100">
               <svg
                 width="24"
                 height="24"
@@ -32,7 +30,7 @@
                 stroke-width="2.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="w-4 h-4"
+                class="h-4 w-4"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
@@ -44,7 +42,7 @@
         {/if}
         {#if link.github}
           <Link href={link.github}>
-            <div class="text-stone-950 dark:text-stone-100 items-center">
+            <div class="items-center text-stone-950 dark:text-stone-100">
               <GithubIcon />
             </div>
           </Link>
@@ -52,33 +50,33 @@
       </div>
     </div>
 
-    <div class="flex flex-wrap gap-1 items-center mt-1.5 mb-2">
+    <div class="mt-1.5 mb-2 flex flex-wrap items-center gap-1">
       {#each tech as tech}
         <p
-          class="px-2 rounded-2xl text-sm bg-stone-800 text-stone-100 dark:bg-stone-200 dark:text-stone-900"
+          class="rounded-2xl bg-stone-800 px-2 text-sm text-stone-100 dark:bg-stone-200 dark:text-stone-900"
         >
           {tech}
         </p>
       {/each}
     </div>
 
-    <p class="text-sm text-stone-500 dark:text-stone-400 mb-0 min-[840px]:mb-0">
+    <p class="mb-0 text-sm text-stone-500 min-[840px]:mb-0 dark:text-stone-400">
       {description}
     </p>
   </div>
-  <div class="h-[159.5px] sm:h-[239.5px] flex flex-col overflow-hidden px-0 sm:px-[0.5px]">
+  <div class="flex h-[190px] flex-col overflow-hidden px-[1px] sm:h-[260px]">
     {#if images.length == 2}
-      <div class="flex w-full gap-[1px] mt-auto">
+      <div class="mt-auto flex w-full gap-[1px]">
         <img
           src={images[0]}
-          class="w-4/7 max-h-60 object-cover object-top-left"
+          class="max-h-72 w-4/7 object-cover object-top-left"
         />
-        <img src={images[1]} class="w-3/7 max-h-60 object-cover object-top" />
+        <img src={images[1]} class="max-h-72 w-3/7 object-cover object-top" />
       </div>
     {:else if images.length == 1}
       <img
         src={images[0]}
-        class="w-full max-h-60 object-cover object-top mt-auto"
+        class="mt-auto max-h-72 w-full object-cover object-top"
       />
     {/if}
   </div>

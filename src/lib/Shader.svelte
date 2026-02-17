@@ -7,12 +7,18 @@
   let imageElement;
   let easeFactor = 0.02;
   let scene, camera, renderer, planeMesh;
+  let geometry;
+  let material;
+  let texture;
   let mousePosition = { x: 0.5, y: 0.5 };
   let targetMousePosition = { x: 0.5, y: 0.5 };
   let mouseStopTimeout;
   let aberrationIntensity = 0.0;
-  let lastPosition = { x: 0.5, y: 0.5 };
   let prevPosition = { x: 0.5, y: 0.5 };
+  let rafId = 0;
+  let isMounted = false;
+  let sceneInitialized = false;
+  let isVisible = true;
 
   // shaders
   const vertexShader = `
@@ -51,14 +57,14 @@
       }
   `;
 
-  function initializeScene(texture) {
+  function initializeScene(loadedTexture) {
     scene = new THREE.Scene();
 
     camera = new THREE.PerspectiveCamera(
       90,
       imageElement.offsetWidth / imageElement.offsetHeight,
       0.01,
-      10
+      10,
     );
     camera.position.z = 1;
 
@@ -66,23 +72,23 @@
       u_mouse: { type: "v2", value: new THREE.Vector2() },
       u_prevMouse: { type: "v2", value: new THREE.Vector2() },
       u_aberrationIntensity: { type: "f", value: 0.0 },
-      u_texture: { type: "t", value: texture },
+      u_texture: { type: "t", value: loadedTexture },
     };
 
-    planeMesh = new THREE.Mesh(
-      new THREE.PlaneGeometry(2, 2),
-      new THREE.ShaderMaterial({
-        uniforms: shaderUniforms,
-        vertexShader,
-        fragmentShader,
-      })
-    );
+    geometry = new THREE.PlaneGeometry(2, 2);
+    material = new THREE.ShaderMaterial({
+      uniforms: shaderUniforms,
+      vertexShader,
+      fragmentShader,
+    });
+
+    planeMesh = new THREE.Mesh(geometry, material);
 
     scene.add(planeMesh);
 
     renderer = new THREE.WebGLRenderer({ alpha: true }); // Added alpha: true for transparency
     renderer.setSize(imageElement.offsetWidth, imageElement.offsetHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.domElement.style.imageRendering = "pixelated";
 
     // Remove existing canvas if it exists
@@ -94,20 +100,37 @@
     imageContainer.appendChild(renderer.domElement);
   }
 
+  function stopAnimation() {
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+      rafId = 0;
+    }
+  }
+
+  function startAnimation() {
+    if (!isMounted || !sceneInitialized || !isVisible || rafId) return;
+    rafId = requestAnimationFrame(animateScene);
+  }
+
   function animateScene() {
-    requestAnimationFrame(animateScene);
+    if (!isMounted || !sceneInitialized || !isVisible) {
+      stopAnimation();
+      return;
+    }
+
+    rafId = requestAnimationFrame(animateScene);
 
     mousePosition.x += (targetMousePosition.x - mousePosition.x) * easeFactor;
     mousePosition.y += (targetMousePosition.y - mousePosition.y) * easeFactor;
 
     planeMesh.material.uniforms.u_mouse.value.set(
       mousePosition.x,
-      1.0 - mousePosition.y
+      1.0 - mousePosition.y,
     );
 
     planeMesh.material.uniforms.u_prevMouse.value.set(
       prevPosition.x,
-      1.0 - prevPosition.y
+      1.0 - prevPosition.y,
     );
 
     aberrationIntensity = Math.max(0.0, aberrationIntensity - 0.05);
@@ -115,6 +138,15 @@
       aberrationIntensity;
 
     renderer.render(scene, camera);
+  }
+
+  function handleVisibilityChange() {
+    isVisible = !document.hidden;
+    if (isVisible) {
+      startAnimation();
+    } else {
+      stopAnimation();
+    }
   }
 
   function handleMouseMove(event) {
@@ -143,43 +175,86 @@
     targetMousePosition = { ...prevPosition };
   }
 
-  onMount(() => {
-    imageContainer = document.getElementById("imageContainer");
-    imageElement = document.getElementById("myImage");
+  function startShader() {
+    if (!imageElement || sceneInitialized || !isMounted) return;
 
+    texture = new THREE.TextureLoader().load(imageElement.src);
+    texture.magFilter = THREE.NearestFilter;
+    texture.minFilter = THREE.LinearFilter;
+
+    initializeScene(texture);
+    sceneInitialized = true;
+    startAnimation();
+
+    // Hide the original image once Three.js scene is initialized
+    imageElement.style.display = "none";
+
+    imageContainer.addEventListener("mousemove", handleMouseMove);
+    imageContainer.addEventListener("mouseenter", handleMouseEnter);
+    imageContainer.addEventListener("mouseleave", handleMouseLeave);
+  }
+
+  onMount(() => {
+    isMounted = true;
     if (!imageElement) return;
+    isVisible = !document.hidden;
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     // Wait for image to load before initializing
-    imageElement.onload = () => {
-      const texture = new THREE.TextureLoader().load(imageElement.src);
-      texture.magFilter = THREE.NearestFilter;
-      texture.minFilter = THREE.LinearFilter;
-
-      initializeScene(texture);
-      animateScene();
-
-      // Hide the original image once Three.js scene is initialized
-      imageElement.style.display = "none";
-
-      imageContainer.addEventListener("mousemove", handleMouseMove);
-      imageContainer.addEventListener("mouseenter", handleMouseEnter);
-      imageContainer.addEventListener("mouseleave", handleMouseLeave);
-    };
+    if (imageElement.complete) {
+      startShader();
+    } else {
+      imageElement.onload = startShader;
+    }
 
     return () => {
+      isMounted = false;
+      stopAnimation();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+
       if (imageContainer) {
         imageContainer.removeEventListener("mousemove", handleMouseMove);
         imageContainer.removeEventListener("mouseenter", handleMouseEnter);
         imageContainer.removeEventListener("mouseleave", handleMouseLeave);
       }
-      if (renderer) {
-        renderer.dispose();
+      if (mouseStopTimeout) {
+        clearTimeout(mouseStopTimeout);
       }
+      if (imageElement) {
+        imageElement.onload = null;
+      }
+      if (planeMesh) {
+        scene?.remove(planeMesh);
+      }
+      geometry?.dispose();
+      material?.dispose();
+      texture?.dispose();
+      if (renderer) {
+        const canvas = renderer.domElement;
+        if (canvas?.parentNode) {
+          canvas.parentNode.removeChild(canvas);
+        }
+        renderer.dispose();
+        renderer.forceContextLoss?.();
+      }
+
+      planeMesh = undefined;
+      geometry = undefined;
+      material = undefined;
+      texture = undefined;
+      renderer = undefined;
+      scene = undefined;
+      camera = undefined;
+      sceneInitialized = false;
     };
   });
 </script>
 
-<div id="imageContainer" bind:this={imageContainer}>
+<div
+  id="imageContainer"
+  class="rounded-tr-2xl rounded-bl-2xl"
+  bind:this={imageContainer}
+>
   <img src="./n_med.jpeg" alt="Nitish" id="myImage" bind:this={imageElement} />
   <!-- <img src={nimg} /> -->
 </div>
@@ -191,8 +266,8 @@
 
   #imageContainer {
     position: relative;
-    width: 320px;
-    height: 320px;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
     max-width: 100%;
   }
