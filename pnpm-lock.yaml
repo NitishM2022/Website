@@ -8,6 +8,21 @@ importers:
 
   .:
     dependencies:
+      '@fontsource/monaspace-argon':
+        specifier: ^5.2.5
+        version: 5.2.5
+      '@fontsource/monaspace-krypton':
+        specifier: ^5.2.5
+        version: 5.2.5
+      '@fontsource/monaspace-neon':
+        specifier: ^5.2.5
+        version: 5.2.5
+      '@fontsource/monaspace-radon':
+        specifier: ^5.2.5
+        version: 5.2.5
+      '@fontsource/monaspace-xenon':
+        specifier: ^5.2.5
+        version: 5.2.5
       geist:
         specifier: ^1.5.1
         version: 1.7.0(next@16.1.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
@@ -203,6 +218,21 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@fontsource/monaspace-argon@5.2.5':
+    resolution: {integrity: sha512-EJ+jq1Smm3BB+8RK/gwB1uzjrSKdycZkKm8OZGCYvqJiTChKcGe7b2lmj0PmQbb/+lAEdCBIAcFLlPaWhtRANA==}
+
+  '@fontsource/monaspace-krypton@5.2.5':
+    resolution: {integrity: sha512-dOWSb0DtSMfjbptckxTme2FKNfRkFtmTuNRQ86sBki/CanR4ajSrE+GuJoCm9Kl3352CvafoRt2fDo8FU+Gz4A==}
+
+  '@fontsource/monaspace-neon@5.2.5':
+    resolution: {integrity: sha512-TjSSuHC37DroyhP5YCKRCAxdUb3In/uqHzqqW/8Ul+JWilz37d8lr8jFeapnbD3QdYXgiQoU2Rf/CmTdyl06DA==}
+
+  '@fontsource/monaspace-radon@5.2.5':
+    resolution: {integrity: sha512-mG6ltrFW5BYmcoRvVIKboCORZu8BeGg6h5zV5rnwEmFcjv8Bltua3KOj6aOxWbrR4PYnKyR17lNqSsjR8kx4bQ==}
+
+  '@fontsource/monaspace-xenon@5.2.5':
+    resolution: {integrity: sha512-k10RCF5nek9ee/rKSALaeYgOcJjjvzxxGkIlPwkSAoasjrsEeVKOSJ6ii1dMXOZwL9ZtW3p56Dxhgaw0Gtwvaw==}
 
   '@img/colour@1.0.0':
     resolution: {integrity: sha512-A5P/LfWGFSl6nsckYtjw9da+19jB8hkJ6ACTGcDfEJ0aE+l2n2El7dsVM7UVHZQ9s2lmYMWlrS21YLy2IR1LUw==}
@@ -1146,6 +1176,16 @@ snapshots:
 
   '@esbuild/win32-x64@0.25.12':
     optional: true
+
+  '@fontsource/monaspace-argon@5.2.5': {}
+
+  '@fontsource/monaspace-krypton@5.2.5': {}
+
+  '@fontsource/monaspace-neon@5.2.5': {}
+
+  '@fontsource/monaspace-radon@5.2.5': {}
+
+  '@fontsource/monaspace-xenon@5.2.5': {}
 
   '@img/colour@1.0.0':
     optional: true
