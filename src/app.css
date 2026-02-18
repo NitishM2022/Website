@@ -10,6 +10,56 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "Neon";
+  src:
+    url("/fonts/Monaspace Neon/Monaspace Neon Var.woff2") format("woff2"),
+    url("/fonts/Monaspace Neon/Monaspace Neon Var.woff") format("woff");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Argon";
+  src:
+    url("/fonts/Monaspace Argon/Monaspace Argon Var.woff2") format("woff2"),
+    url("/fonts/Monaspace Argon/Monaspace Argon Var.woff") format("woff");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Xenon";
+  src:
+    url("/fonts/Monaspace Xenon/Monaspace Xenon Var.woff2") format("woff2"),
+    url("/fonts/Monaspace Xenon/Monaspace Xenon Var.woff") format("woff");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Radon";
+  src:
+    url("/fonts/Monaspace Radon/Monaspace Radon Var.woff2") format("woff2"),
+    url("/fonts/Monaspace Radon/Monaspace Radon Var.woff") format("woff");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Krypton";
+  src:
+    url("/fonts/Monaspace Krypton/Monaspace Krypton Var.woff2") format("woff2"),
+    url("/fonts/Monaspace Krypton/Monaspace Krypton Var.woff") format("woff");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
   :root {
     --font-sans:
@@ -20,6 +70,8 @@
     --grid-dot-color: rgba(0, 0, 0, 0.18);
     --grid-line-width: 1px;
     --grid-cell-size: 40px;
+    --grid-dash-length: 18px;
+    --grid-gap-length: 10px;
   }
 
   .dark {
@@ -156,8 +208,9 @@
 @utility grid-dash-b-long {
   background-image: repeating-linear-gradient(
     90deg,
-    var(--grid-line-color) 0 18px,
-    transparent 18px 28px
+    var(--grid-line-color) 0 var(--grid-dash-length),
+    transparent var(--grid-dash-length)
+      calc(var(--grid-dash-length) + var(--grid-gap-length))
   );
   background-size: 100% var(--grid-line-width);
   background-position: left bottom;
@@ -168,13 +221,15 @@
   background-image:
     repeating-linear-gradient(
       180deg,
-      var(--grid-line-color) 0 18px,
-      transparent 18px 28px
+      var(--grid-line-color) 0 var(--grid-dash-length),
+      transparent var(--grid-dash-length)
+        calc(var(--grid-dash-length) + var(--grid-gap-length))
     ),
     repeating-linear-gradient(
       180deg,
-      var(--grid-line-color) 0 18px,
-      transparent 18px 28px
+      var(--grid-line-color) 0 var(--grid-dash-length),
+      transparent var(--grid-dash-length)
+        calc(var(--grid-dash-length) + var(--grid-gap-length))
     );
   background-size:
     var(--grid-line-width) 100%,
@@ -190,8 +245,9 @@
   background-image:
     repeating-linear-gradient(
       90deg,
-      var(--grid-line-color) 0 18px,
-      transparent 18px 28px
+      var(--grid-line-color) 0 var(--grid-dash-length),
+      transparent var(--grid-dash-length)
+        calc(var(--grid-dash-length) + var(--grid-gap-length))
     ),
     radial-gradient(var(--grid-dot-color) 0.9px, transparent 0.9px);
   background-size:
@@ -212,13 +268,15 @@
   background-image:
     repeating-linear-gradient(
       180deg,
-      var(--grid-line-color) 0 18px,
-      transparent 18px 28px
+      var(--grid-line-color) 0 var(--grid-dash-length),
+      transparent var(--grid-dash-length)
+        calc(var(--grid-dash-length) + var(--grid-gap-length))
     ),
     repeating-linear-gradient(
       180deg,
-      var(--grid-line-color) 0 18px,
-      transparent 18px 28px
+      var(--grid-line-color) 0 var(--grid-dash-length),
+      transparent var(--grid-dash-length)
+        calc(var(--grid-dash-length) + var(--grid-gap-length))
     ),
     radial-gradient(var(--grid-dot-color) 0.9px, transparent 0.9px);
   background-size:
@@ -241,8 +299,9 @@
   background-image:
     repeating-linear-gradient(
       180deg,
-      var(--grid-line-color) 0 18px,
-      transparent 18px 28px
+      var(--grid-line-color) 0 var(--grid-dash-length),
+      transparent var(--grid-dash-length)
+        calc(var(--grid-dash-length) + var(--grid-gap-length))
     ),
     radial-gradient(var(--grid-dot-color) 0.9px, transparent 0.9px);
   background-size:
@@ -263,8 +322,9 @@
   background-image:
     repeating-linear-gradient(
       180deg,
-      var(--grid-line-color) 0 18px,
-      transparent 18px 28px
+      var(--grid-line-color) 0 var(--grid-dash-length),
+      transparent var(--grid-dash-length)
+        calc(var(--grid-dash-length) + var(--grid-gap-length))
     ),
     radial-gradient(var(--grid-dot-color) 0.9px, transparent 0.9px);
   background-size:
@@ -291,7 +351,9 @@
 
   --color-neutral-850: rgb(30, 30, 30);
 
-  --breakpoint-xs: 480px;
+  --breakpoint-xs: 30rem; /* 480px — small mobile tweaks */
+  --breakpoint-md: 52.5rem; /* 840px — hero column→row layout switch */
+  --breakpoint-lg: 67.5rem; /* 1080px — full desktop with side columns */
 }
 
 html,

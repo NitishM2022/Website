@@ -71,7 +71,10 @@
           src={images[0]}
           class="max-h-72 w-4/7 object-cover object-top-left"
         />
-        <img src={images[1]} class="max-h-72 w-3/7 object-cover object-top" />
+        <img
+          src={images[1]}
+          class="max-h-72 w-3/7 object-cover object-top-left"
+        />
       </div>
     {:else if images.length == 1}
       <img

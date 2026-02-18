@@ -5,6 +5,8 @@
   // variables
   let imageContainer;
   let imageElement;
+  let containerWidth = 0;
+  let containerHeight = 0;
   let easeFactor = 0.02;
   let scene, camera, renderer, planeMesh;
   let geometry;
@@ -19,6 +21,13 @@
   let isMounted = false;
   let sceneInitialized = false;
   let isVisible = true;
+
+  // Update renderer when container dimensions change
+  $: if (renderer && camera && containerWidth > 0 && containerHeight > 0) {
+    renderer.setSize(containerWidth, containerHeight);
+    camera.aspect = containerWidth / containerHeight;
+    camera.updateProjectionMatrix();
+  }
 
   // shaders
   const vertexShader = `
@@ -60,12 +69,10 @@
   function initializeScene(loadedTexture) {
     scene = new THREE.Scene();
 
-    camera = new THREE.PerspectiveCamera(
-      90,
-      imageElement.offsetWidth / imageElement.offsetHeight,
-      0.01,
-      10,
-    );
+    const width = containerWidth || imageElement.offsetWidth;
+    const height = containerHeight || imageElement.offsetHeight;
+
+    camera = new THREE.PerspectiveCamera(90, width / height, 0.01, 10);
     camera.position.z = 1;
 
     const shaderUniforms = {
@@ -87,7 +94,7 @@
     scene.add(planeMesh);
 
     renderer = new THREE.WebGLRenderer({ alpha: true }); // Added alpha: true for transparency
-    renderer.setSize(imageElement.offsetWidth, imageElement.offsetHeight);
+    renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.domElement.style.imageRendering = "pixelated";
 
@@ -252,8 +259,10 @@
 
 <div
   id="imageContainer"
-  class="rounded-tr-2xl rounded-bl-2xl"
+  class="rounded-tr-2xl rounded-bl-2xl bg-red-100"
   bind:this={imageContainer}
+  bind:clientWidth={containerWidth}
+  bind:clientHeight={containerHeight}
 >
   <img src="./n_med.jpeg" alt="Nitish" id="myImage" bind:this={imageElement} />
   <!-- <img src={nimg} /> -->
@@ -266,17 +275,18 @@
 
   #imageContainer {
     position: relative;
-    width: 100%;
     height: 100%;
+    aspect-ratio: 1 / 1;
     overflow: hidden;
-    max-width: 100%;
   }
 
   #imageContainer > * {
     position: absolute;
-    inset: 0;
+    left: 0;
+    top: 0;
     width: 100% !important;
     height: 100% !important;
-    object-fit: contain;
+    object-fit: cover;
+    object-position: left center;
   }
 </style>

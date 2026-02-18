@@ -79,7 +79,7 @@
   function distanceToCenter(x, y) {
     const dx = x - width / 2;
     const dy = y - height / 2;
-    return Math.sqrt(dx * dx + dy * dy) * 0.2;
+    return Math.sqrt(dx * dx + dy * dy) * 0.02;
   }
 
   function createPixels() {

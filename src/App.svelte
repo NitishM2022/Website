@@ -12,22 +12,22 @@
   import projects from "./lib/assets/projects.json";
 </script>
 
-<div class="flex">
-  <div aria-hidden="true" class="hidden min-[1080px]:block min-[1080px]:flex-1">
+<div class="flex items-stretch">
+  <div aria-hidden="true" class="hidden lg:flex lg:flex-1 lg:flex-col">
     <div class="grid-h h-10"></div>
-    <div class="grid-dash-b-long h-140 md:h-130"></div>
+    <div class="grid-dash-b-long flex-1"></div>
   </div>
-  <div
-    class="min-[840px]:grid-lr-b w-full p-3 pt-2.5 min-[1080px]:w-270 min-[1080px]:flex-none"
-  >
-    <div class="relative isolate overflow-hidden rounded-2xl bg-[#0041ba]">
+  <div class="md:grid-lr-b w-full p-3 pt-2.5 lg:w-270 lg:flex-none">
+    <div
+      class="relative isolate overflow-hidden rounded-2xl bg-[#0041ba] pl-3 md:pl-5"
+    >
       <HeroPixelHover alwaysOn={true} />
 
-      <div class="relative z-10 flex h-10 items-center justify-center px-5">
+      <div
+        class="relative z-10 flex h-10 items-center justify-center pr-3 md:pr-5"
+      >
         <h1 class="font-rope text-2xl font-extralight text-stone-100">
-          <span class="md:hidden">nitish</span><span class="hidden md:inline"
-            >nitish malluru</span
-          >
+          nitish malluru
         </h1>
         <div class="flex-grow"></div>
         <div class="mr-2 flex items-center gap-3 text-stone-100">
@@ -67,7 +67,7 @@
             <GithubIcon />
           </Link>
 
-          <Link
+          <!-- <Link
             href={"https://bitbucket.org/nitishethan/workspace/repositories/"}
           >
             <svg
@@ -81,7 +81,7 @@
                 fill="currentColor"
               /></svg
             >
-          </Link>
+          </Link> -->
 
           <Link href={"https://www.linkedin.com/in/nitishmalluru/"}>
             <svg
@@ -110,35 +110,29 @@
       </div>
 
       <section
-        class="grid-border-no-top-lines relative z-10 flex h-auto min-h-110 w-full flex-col overflow-visible md:h-124 md:flex-row md:overflow-hidden"
+        class="relative z-10 mt-1 flex h-auto w-full flex-col overflow-visible md:flex-row md:overflow-hidden"
       >
         <div
-          class="xs:h-72 h-64 w-full overflow-hidden rounded-b-3xl sm:h-80 md:aspect-square md:h-full md:w-auto md:flex-none md:rounded-br-none"
+          class="mb-1.5 box-border h-72 w-full overflow-hidden rounded-b-3xl pr-2 pb-2 md:mb-0 md:aspect-square md:h-auto md:w-[45%] md:flex-none md:self-start md:rounded-b-none md:rounded-bl-3xl md:pr-5 md:pb-0 md:pb-5"
         >
-          <div
-            class="xs:pl-4 xs:pb-4 box-border h-full pt-1 pb-3 pl-3 sm:pb-5 sm:pl-5"
-          >
-            <Shader />
-          </div>
+          <Shader />
         </div>
 
-        <div class="mt-5 flex flex-col items-start pr-5 pl-4 md:flex-1">
-          <AsciiText
-            text="howdy"
-            asciiFontSize={8}
-            textFontSize={220}
-            planeBaseHeight={8}
-          />
-          <div class="">
+        <div
+          class="mb-0 flex w-full flex-col justify-center pr-5 md:mb-5 md:h-auto md:flex-1"
+        >
+          <div
+            class="h-30 min-h-[8rem] w-full items-center pb-1 md:h-30 md:min-h-[10rem] lg:h-50"
+          >
             <HeroText />
           </div>
         </div>
       </section>
     </div>
   </div>
-  <div aria-hidden="true" class="hidden min-[1080px]:block min-[1080px]:flex-1">
+  <div aria-hidden="true" class="hidden lg:flex lg:flex-1 lg:flex-col">
     <div class="grid-h h-10"></div>
-    <div class="grid-dash-b-long h-130 md:h-130" s></div>
+    <div class="grid-dash-b-long flex-1"></div>
   </div>
 </div>
 
@@ -147,11 +141,11 @@
     <div class="mx-auto flex w-max flex-row justify-center">
       <div
         aria-hidden="true"
-        class="grid-dot-dash-l-long w-[120px] flex-none opacity-100"
+        class="md:grid-dot-dash-l-long w-[120px] flex-none opacity-100"
       ></div>
       <!-- Projects Section -->
       <main
-        class="font-rope grid-dash-lr-long flex w-screen max-w-[840px] flex-none flex-col"
+        class="font-rope md:grid-dash-lr-long flex w-screen max-w-[840px] flex-none flex-col"
       >
         <section class="" in:fade={{ duration: 800, delay: 100 }}>
           <h2
@@ -159,7 +153,7 @@
           >
             Projects
           </h2>
-          <div class="grid gap-10 min-[840px]:grid-cols-1">
+          <div class="grid gap-10 md:grid-cols-1">
             {#each projects as { name, description, link, date, tech, images }}
               <Project {name} {description} {link} {date} {tech} {images} />
             {/each}
@@ -183,7 +177,7 @@
 
 <footer class="grid-f-lr-lines h-10 bg-[#0041ba]">
   <div
-    class="min-[840px]:grid-f-lr-lines mx-auto flex h-full items-center bg-[#0041ba] px-5 min-[1080px]:w-270"
+    class="md:grid-f-lr-lines mx-auto flex h-full items-center bg-[#0041ba] px-5 lg:w-270"
     style="--grid-line-color: rgba(255, 255, 255, 0.15);"
   >
     <p class="text-base font-light text-stone-100">

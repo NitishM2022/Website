@@ -8,78 +8,18 @@
   export let textColor = "#fdf9f3";
   export let planeBaseHeight = 8;
   export let enableWaves = true;
-
-  // Optional explicit dimensions - if not provided, auto-calculate
-  export let width = 0;
-  export let height = 0;
+  export let skewAngle = -12;
 
   let container;
   let asciiInstance;
-  let computedWidth = 400;
-  let computedHeight = 200;
+  let containerWidth = 0;
+  let containerHeight = 0;
   let fontsLoaded = false;
 
-  // Calculate intrinsic size based on text and font
-  function calculateIntrinsicSize() {
-    // Use responsive font size for calculation
-    // But don't shrink aggressively on desktop
-    const currentFontSize =
-      typeof window !== "undefined" && window.innerWidth < 840
-        ? getResponsiveFontSize(asciiFontSize)
-        : asciiFontSize;
-
-    // Calculate true aspect ratio of the 3D content roughly
-    // Reduced from 15 to 12 to tighten horizontal space
-    const baseAspect = (text.length * 13) / 22;
-
-    // Base width determines the tight size of the text
-    const baseWidth = text.length * currentFontSize * 12;
-
-    // Constrain width by the actual available parent width when possible
-    let maxWidth = 2000;
-    if (typeof window !== "undefined") {
-      const parentWidth = container?.parentElement?.clientWidth ?? 0;
-      if (parentWidth > 0) {
-        maxWidth = parentWidth;
-      } else if (window.innerWidth >= 768) {
-        maxWidth = 460;
-      } else {
-        maxWidth = window.innerWidth * 0.9;
-      }
-    }
-
-    let availableWidth = maxWidth;
-
-    // Use baseWidth (tight fit) capped at availableWidth
-    const width = Math.round(Math.min(baseWidth, availableWidth));
-
-    // Height is DERIVED from width to preserve aspect ratio
-    // height = width / aspect
-    const idealHeight = width / baseAspect;
-
-    // No longer snapping to 40px grid.
-    // Allowing smooth resizing as constrained by parent container.
-    let height = Math.ceil(idealHeight);
-
-    // Ensure reasonable minimum
-    if (height < 40) height = 40;
-
-    return {
-      width: width,
-      height: height,
-    };
+  // Update ASCII instance when container dimensions change
+  $: if (asciiInstance && containerWidth > 0 && containerHeight > 0) {
+    asciiInstance.setSize(containerWidth, containerHeight);
   }
-
-  // Calculate responsive font size based on screen width
-  function getResponsiveFontSize(baseSize) {
-    if (typeof window === "undefined") return baseSize;
-    const width = window.innerWidth;
-    if (width < 400) return Math.max(4, baseSize - 2);
-    if (width < 500) return Math.max(5, baseSize - 1);
-    return baseSize;
-  }
-
-  let responsiveFontSize = asciiFontSize;
 
   const vertexShader = `
         varying vec2 vUv;
@@ -274,7 +214,12 @@
   class CanvasTxt {
     constructor(
       txt,
-      { fontSize = 200, fontFamily = "Arial", color = "#fdf9f3" } = {},
+      {
+        fontSize = 200,
+        fontFamily = "Arial",
+        color = "#fdf9f3",
+        skewAngle = 0,
+      } = {},
     ) {
       this.canvas = document.createElement("canvas");
       this.context = this.canvas.getContext("2d");
@@ -282,7 +227,8 @@
       this.fontSize = fontSize;
       this.fontFamily = fontFamily;
       this.color = color;
-      this.font = `600 ${this.fontSize}px ${this.fontFamily}`;
+      this.skewAngle = skewAngle; // degrees, negative = italic/right slant
+      this.font = `500 ${this.fontSize}px ${this.fontFamily}`;
       this.padLeft = 0;
       this.padRight = 2;
       this.padY = 10;
@@ -291,23 +237,37 @@
     resize() {
       this.context.font = this.font;
       const metrics = this.context.measureText(this.txt);
-      const textWidth = Math.ceil(metrics.width) + this.padLeft + this.padRight;
       const textHeight =
         Math.ceil(
           metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent,
         ) +
         this.padY * 2;
+      // Extra horizontal room to accommodate the skew
+      const skewOffset =
+        Math.abs(Math.tan((this.skewAngle * Math.PI) / 180)) * textHeight;
+      const textWidth =
+        Math.ceil(metrics.width) +
+        this.padLeft +
+        this.padRight +
+        Math.ceil(skewOffset);
       this.canvas.width = textWidth;
       this.canvas.height = textHeight;
     }
 
     render() {
       this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.context.save();
+      // Apply horizontal skew: [1, 0, tan(angle), 1, offsetX, 0]
+      const skewX = Math.tan((this.skewAngle * Math.PI) / 180);
+      // Shift right so skewed text doesn't clip on the left
+      const offsetX = skewX < 0 ? -skewX * this.canvas.height : 0;
+      this.context.transform(1, 0, skewX, 1, offsetX, 0);
       this.context.fillStyle = this.color;
       this.context.font = this.font;
       const metrics = this.context.measureText(this.txt);
       const yPos = this.padY + metrics.actualBoundingBoxAscent;
       this.context.fillText(this.txt, this.padLeft, yPos);
+      this.context.restore();
     }
 
     get width() {
@@ -330,6 +290,7 @@
         textColor,
         planeBaseHeight,
         enableWaves,
+        skewAngle,
       },
       containerElem,
       width,
@@ -340,13 +301,14 @@
       this.textFontSize = textFontSize;
       this.textColor = textColor;
       this.planeBaseHeight = planeBaseHeight;
+      this.skewAngle = skewAngle;
       this.container = containerElem;
       this.width = width;
       this.height = height;
       this.enableWaves = enableWaves;
 
       this.camera = new THREE.PerspectiveCamera(
-        45,
+        75,
         this.width / this.height,
         1,
         1000,
@@ -369,8 +331,9 @@
     setMesh() {
       this.textCanvas = new CanvasTxt(this.textString, {
         fontSize: this.textFontSize,
-        fontFamily: "IBM Plex Mono",
+        fontFamily: "Xenon",
         color: this.textColor,
+        skewAngle: this.skewAngle,
       });
       this.textCanvas.resize();
       this.textCanvas.render();
@@ -397,8 +360,6 @@
       });
 
       this.mesh = new THREE.Mesh(this.geometry, this.material);
-      // Offset mesh position for alignment
-      this.mesh.position.y = 0.5;
       this.alignMesh();
       this.scene.add(this.mesh);
     }
@@ -412,7 +373,7 @@
       this.renderer.setClearColor(0x000000, 0);
 
       this.filter = new AsciiFilter(this.renderer, {
-        fontFamily: "IBM Plex Mono",
+        fontFamily: "Krypton",
         fontSize: this.asciiFontSize,
         invert: true,
       });
@@ -439,23 +400,21 @@
     }
 
     alignMesh() {
-      // Calculate visible size at z=0 (camera at z=10, fov=45)
-      // h = 2 * tan(fov/2) * dist
-      const visibleHeight = 2 * Math.tan((Math.PI / 180) * 22.5) * 10;
+      // Calculate visible area at z=0 using current camera FOV
+      const fovRad = (this.camera.fov * Math.PI) / 180;
+      const dist = this.camera.position.z;
+      const visibleHeight = 2 * Math.tan(fovRad / 2) * dist;
       const visibleWidth = visibleHeight * this.camera.aspect;
+
       const meshWidth = this.geometry.parameters.width;
       const meshHeight = this.geometry.parameters.height;
 
-      // Horizontal: Shift to left edge of frustum
-      // Center is 0. Left edge is -visibleWidth/2.
-      // Left edge of mesh is x - meshWidth/2.
-      // x - meshWidth/2 = -visibleWidth/2 => x = (meshWidth - visibleWidth) / 2
-      const x = (meshWidth - visibleWidth) / 2;
+      // Scale mesh to fill the width of the visible area
+      const scale = (visibleWidth / meshWidth) * 0.95;
+      this.mesh.scale.set(scale, scale, 1);
 
-      // Vertical: Center tightly (original 0.5 offset)
-      const y = 0.5;
-
-      this.mesh.position.set(x, y, 0);
+      // Center the mesh
+      this.mesh.position.set(0, 0, 0);
     }
 
     load() {
@@ -523,7 +482,7 @@
       this.mouseVelocity *= 0.95;
 
       // Update wave intensity based on mouse velocity
-      const targetWave = 0.3 + this.mouseVelocity;
+      const targetWave = 0.08 + this.mouseVelocity * 0.3;
       const currentWave = this.mesh.material.uniforms.uEnableWaves.value;
       this.mesh.material.uniforms.uEnableWaves.value +=
         (targetWave - currentWave) * 0.1;
@@ -577,9 +536,9 @@
     if (typeof document === "undefined") return;
 
     try {
-      // Wait for the specific font we're using
+      // Wait for the specific fonts we're using
       await document.fonts.load('600 12px "IBM Plex Mono"');
-      await document.fonts.load(`600 ${textFontSize}px "IBM Plex Mono"`);
+      await document.fonts.load(`600 ${textFontSize}px "Xenon"`);
       fontsLoaded = true;
     } catch (e) {
       console.warn("Font loading check failed, proceeding anyway:", e);
@@ -592,32 +551,6 @@
 
     let isActive = true;
     let fontDelayTimeout;
-    let resizeTimeout;
-
-    // Calculate intrinsic size if not provided
-    function updateSize() {
-      if (width <= 0 || height <= 0) {
-        const intrinsic = calculateIntrinsicSize();
-        computedWidth = intrinsic.width;
-        computedHeight = intrinsic.height;
-      } else {
-        computedWidth = width;
-        computedHeight = height;
-      }
-
-      // Update the ASCII renderer if it exists
-      if (asciiInstance) {
-        asciiInstance.setSize(computedWidth, computedHeight);
-      }
-    }
-
-    const handleResize = () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(() => {
-        if (!isActive) return;
-        updateSize();
-      }, 150);
-    };
 
     (async () => {
       // Wait for fonts to be ready
@@ -630,35 +563,27 @@
       });
       if (!isActive) return;
 
-      // Get responsive font size based on current window width
-      responsiveFontSize = getResponsiveFontSize(asciiFontSize);
-      updateSize();
-
-      // Directly initialize with computed size
+      // Directly initialize with container dimensions
       asciiInstance = new CanvAscii(
         {
           text,
-          asciiFontSize: responsiveFontSize,
+          asciiFontSize,
           textFontSize,
           textColor,
           planeBaseHeight,
           enableWaves,
+          skewAngle,
         },
         container,
-        computedWidth,
-        computedHeight,
+        containerWidth || 400,
+        containerHeight || 200,
       );
       asciiInstance.load();
     })();
 
-    // Listen for resize to update dimensions
-    window.addEventListener("resize", handleResize);
-
     return () => {
       isActive = false;
       clearTimeout(fontDelayTimeout);
-      clearTimeout(resizeTimeout);
-      window.removeEventListener("resize", handleResize);
       if (asciiInstance) {
         asciiInstance.dispose();
         asciiInstance = undefined;
@@ -669,8 +594,9 @@
 
 <div
   bind:this={container}
+  bind:clientWidth={containerWidth}
+  bind:clientHeight={containerHeight}
   class="ascii-text-container"
-  style="width: {computedWidth}px; height: {computedHeight}px;"
 ></div>
 
 <style>
@@ -679,6 +605,8 @@
   .ascii-text-container {
     position: relative;
     overflow: hidden;
+    width: 100%;
+    height: 100%;
   }
 
   :global(.ascii-text-container canvas) {

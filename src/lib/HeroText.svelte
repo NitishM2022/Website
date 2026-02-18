@@ -3,10 +3,9 @@
   import DecryptedText from "./DecryptedText.svelte";
 
   const bioTexts = [
-    "studying Computer Science at Texas A&M",
-    "who engineered a cross-platform C++ visualization tool at Amazon",
-    "who developed an AI-powered BIOS debugger using Llama 3 at Dell",
-    "Eagle Scout, President's Scholar, and USACO Gold member",
+    "Honors CS & Embedded Student at Texas A&M",
+    "Founder and SDE Intern {Amazon Luna, Dell}",
+    "Eagle Scout, USACO Gold Recipient, and PES Scholar",
   ];
 
   let { maxLength = 64 } = $props();
@@ -25,14 +24,15 @@
 </script>
 
 <div
-  class="xs:text-3xl h-56 overflow-hidden text-2xl leading-[1.18] tracking-tight text-stone-100 uppercase transition-all duration-300 ease-in-out md:h-60 md:text-[2.5rem] md:leading-[1.2]"
-  style="font-family: 'Geist Mono', monospace;"
+  class="overflow-hidden text-[1.5rem] leading-[1.18] tracking-tight text-stone-100 uppercase transition-all duration-300 ease-in-out sm:text-[2rem] lg:text-[2.6rem]"
+  style="font-family: 'Krypton', monospace;"
 >
   I'm Nitish, a <a
     href="https://paulgraham.com/hp.html"
     target="_blank"
     class="hero-link underline decoration-2 underline-offset-4">builder</a
   >,
+
   <DecryptedText
     text={bioTexts[currentIndex]}
     animateOn="view"
