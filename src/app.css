@@ -70,7 +70,7 @@
     --grid-dot-color: rgba(0, 0, 0, 0.18);
     --grid-line-width: 1px;
     --grid-cell-size: 40px;
-    --grid-dash-length: 20px;
+    --grid-dash-length: 18px;
     --grid-gap-length: 10px;
   }
 

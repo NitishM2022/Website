@@ -16,7 +16,7 @@
       "github": "https://github.com/NitishM2022/DistributedTwitterClone/"
     },
     "date": "12/2025",
-    "tech": ["C++", "gRPC", "Protobuf", "RabbitMQ", "Docker"],
+    "tech": ["C++", "gRPC", "RabbitMQ", "Docker"],
     "images": ["./x/users.webp", "./x/rabbit.png"]
   },  
   {
