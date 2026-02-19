@@ -24,7 +24,7 @@
 </script>
 
 <div
-  class="overflow-hidden text-[1.5rem] leading-[1.18] tracking-tight text-stone-100 uppercase transition-all duration-300 ease-in-out sm:text-[2rem] lg:text-[2.6rem]"
+  class="overflow-hidden text-[1.5rem] leading-[1.18] tracking-tight text-stone-100 uppercase transition-all duration-300 ease-in-out sm:text-[1.9rem] lg:text-[2.5rem]"
   style="font-family: 'Krypton', monospace;"
 >
   I'm Nitish, a <a

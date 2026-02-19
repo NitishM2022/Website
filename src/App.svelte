@@ -113,7 +113,7 @@
         class="relative z-10 mt-1 flex h-auto w-full flex-col overflow-visible md:flex-row md:overflow-hidden"
       >
         <div
-          class="mb-1.5 box-border h-72 w-full overflow-hidden rounded-b-3xl pr-2 pb-2 md:mb-0 md:aspect-square md:h-auto md:w-[45%] md:flex-none md:self-start md:rounded-b-none md:rounded-bl-3xl md:pr-5 md:pb-0 md:pb-5"
+          class="mb-1.5 box-border h-72 w-full overflow-hidden rounded-b-3xl pr-2 pb-2 md:mb-5 md:mr-5 md:aspect-square md:h-auto md:w-[45%] md:flex-none md:self-start md:rounded-b-none md:rounded-bl-3xl md:pr-0 md:pb-0"
         >
           <Shader />
         </div>

@@ -79,7 +79,7 @@
   function distanceToCenter(x, y) {
     const dx = x - width / 2;
     const dy = y - height / 2;
-    return Math.sqrt(dx * dx + dy * dy) * 0.15;
+    return Math.sqrt(dx * dx + dy * dy) * 0.08;
   }
 
   function createPixels() {
@@ -106,8 +106,10 @@
   function setupCanvas() {
     if (!canvasEl || !hostEl) return;
     const rect = hostEl.getBoundingClientRect();
-    width = Math.max(1, Math.floor(rect.width));
-    height = Math.max(1, Math.floor(rect.height));
+    // Use ceil so the canvas fully covers the host; Safari reports fractional rect dimensions
+    // and floor() leaves a visible gap on the right and bottom.
+    width = Math.max(1, Math.ceil(rect.width));
+    height = Math.max(1, Math.ceil(rect.height));
 
     const dpr = window.devicePixelRatio || 1;
     canvasEl.width = Math.floor(width * dpr);
