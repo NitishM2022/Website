@@ -212,9 +212,9 @@
     transparent var(--grid-dash-length)
       calc(var(--grid-dash-length) + var(--grid-gap-length))
   );
-  background-size: 100% var(--grid-line-width);
-  background-position: left bottom;
-  background-repeat: no-repeat;
+  background-size: calc(var(--grid-dash-length) + var(--grid-gap-length)) var(--grid-line-width);
+  background-position: center bottom;
+  background-repeat: repeat-x;
 }
 
 @utility grid-dash-lr-long {
@@ -232,12 +232,12 @@
         calc(var(--grid-dash-length) + var(--grid-gap-length))
     );
   background-size:
-    var(--grid-line-width) 100%,
-    var(--grid-line-width) 100%;
+    var(--grid-line-width) calc(var(--grid-dash-length) + var(--grid-gap-length)),
+    var(--grid-line-width) calc(var(--grid-dash-length) + var(--grid-gap-length));
   background-position:
-    left top,
-    right top;
-  background-repeat: no-repeat, no-repeat;
+    left center,
+    right center;
+  background-repeat: repeat-y, repeat-y;
 }
 
 @utility grid-dot-dash-b-long {
@@ -251,12 +251,12 @@
     ),
     radial-gradient(var(--grid-dot-color) 0.9px, transparent 0.9px);
   background-size:
-    100% var(--grid-line-width),
+    calc(var(--grid-dash-length) + var(--grid-gap-length)) var(--grid-line-width),
     20px 20px;
   background-position:
-    left bottom,
+    center bottom,
     center calc(var(--grid-line-width));
-  background-repeat: no-repeat, repeat;
+  background-repeat: repeat-x, repeat;
   background-origin: border-box, content-box;
   background-clip: border-box, content-box;
   padding-left: var(--grid-line-width);
@@ -280,14 +280,14 @@
     ),
     radial-gradient(var(--grid-dot-color) 0.9px, transparent 0.9px);
   background-size:
-    var(--grid-line-width) 100%,
-    var(--grid-line-width) 100%,
+    var(--grid-line-width) calc(var(--grid-dash-length) + var(--grid-gap-length)),
+    var(--grid-line-width) calc(var(--grid-dash-length) + var(--grid-gap-length)),
     20px 20px;
   background-position:
-    left top,
-    right top,
+    left center,
+    right center,
     center calc(var(--grid-line-width));
-  background-repeat: no-repeat, no-repeat, repeat;
+  background-repeat: repeat-y, repeat-y, repeat;
   background-origin: border-box, border-box, content-box;
   background-clip: border-box, border-box, content-box;
   padding-left: var(--grid-line-width);
@@ -305,12 +305,12 @@
     ),
     radial-gradient(var(--grid-dot-color) 0.9px, transparent 0.9px);
   background-size:
-    var(--grid-line-width) 100%,
+    var(--grid-line-width) calc(var(--grid-dash-length) + var(--grid-gap-length)),
     20px 20px;
   background-position:
-    left top,
+    left center,
     center calc(var(--grid-line-width));
-  background-repeat: no-repeat, repeat;
+  background-repeat: repeat-y, repeat;
   background-origin: border-box, content-box;
   background-clip: border-box, content-box;
   padding-left: var(--grid-line-width);
@@ -328,12 +328,12 @@
     ),
     radial-gradient(var(--grid-dot-color) 0.9px, transparent 0.9px);
   background-size:
-    var(--grid-line-width) 100%,
+    var(--grid-line-width) calc(var(--grid-dash-length) + var(--grid-gap-length)),
     20px 20px;
   background-position:
-    right top,
+    right center,
     center calc(var(--grid-line-width));
-  background-repeat: no-repeat, repeat;
+  background-repeat: repeat-y, repeat;
   background-origin: border-box, content-box;
   background-clip: border-box, content-box;
   padding-left: var(--grid-line-width);

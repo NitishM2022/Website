@@ -1,13 +1,23 @@
 [
   {
-    "name": "Optimizing Compiler",
+    "name": "Mocha Optimizing Compiler",
     "description": "Compiler that parses and type-checks a custom language, lowers it to CFG/TAC IR, converts to SSA, runs optimization passes (CF, CP, CPP, DCE, CSE, OFE), performs SSA elimination + register allocation, and emits executable DLX machine code.",
     "link": {
-      "github": "https://github.com/NitishM2022/MochaCompiler/tree/"
+      "github": "https://github.com/NitishM2022/MochaCompiler/"
     },
     "date": "12/2025",
     "tech": ["Java", "DLX Assembly"],
     "images": ["./mocha/graph.png", "./mocha/reduction.png"]
+  },  
+  {
+    "name": "Distributed X Clone",
+    "description": "A fault-tolerant distributed X clone with heartbeat-based leader election via a Coordinator, master/follower server pairs per cluster, and RabbitMQ+synchronizers replicating users, follows, and timelines across clusters. gRPC powers client APIs and bidirectional timeline streaming.",
+    "link": {
+      "github": "https://github.com/NitishM2022/DistributedTwitterClone/"
+    },
+    "date": "12/2025",
+    "tech": ["C++", "gRPC", "Protobuf", "RabbitMQ", "Docker"],
+    "images": ["./x/users.webp", "./x/rabbit.png"]
   },  
   {
     "name": "TCP over UDP",

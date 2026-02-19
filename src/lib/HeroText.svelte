@@ -5,7 +5,7 @@
   const bioTexts = [
     "Honors CS & Embedded Student at Texas A&M",
     "Founder and SDE Intern {Amazon Luna, Dell}",
-    "Eagle Scout, USACO Gold Recipient, and PES Scholar",
+    "Eagle Scout, USACO Gold Recipient, and PE Scholar",
   ];
 
   let { maxLength = 64 } = $props();
