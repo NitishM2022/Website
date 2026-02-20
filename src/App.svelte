@@ -26,7 +26,7 @@
       <div
         class="relative z-10 flex h-10 items-center justify-center pr-3 md:pr-5"
       >
-        <h1 class="font-rope text-2xl font-extralight text-stone-100">
+        <h1 class="font-rope text-2xl font-light text-stone-100">
           nitish malluru
         </h1>
         <div class="flex-grow"></div>
