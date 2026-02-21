@@ -15,7 +15,7 @@
 <div class="flex items-stretch">
   <div aria-hidden="true" class="hidden lg:flex lg:flex-1 lg:flex-col">
     <div class="grid-h h-10"></div>
-    <div class="grid-dash-b-long flex-1"></div>
+    <div class="grid-dash-b-long-right flex-1"></div>
   </div>
   <div class="md:grid-lr-b w-full p-3 pt-2.5 lg:w-270 lg:flex-none">
     <div
@@ -113,7 +113,7 @@
         class="relative z-10 mt-1 flex h-auto w-full flex-col overflow-visible md:flex-row md:overflow-hidden"
       >
         <div
-          class="mb-1.5 box-border h-72 w-full overflow-hidden rounded-b-3xl pr-2 pb-2 md:mb-5 md:mr-5 md:aspect-square md:h-auto md:w-[45%] md:flex-none md:self-start md:rounded-b-none md:rounded-bl-3xl md:pr-0 md:pb-0"
+          class="mb-1.5 box-border h-72 w-full overflow-hidden rounded-b-3xl pr-2 pb-2 md:mr-5 md:mb-5 md:aspect-square md:h-auto md:w-[45%] md:flex-none md:self-start md:rounded-b-none md:rounded-bl-3xl md:pr-0 md:pb-0"
         >
           <Shader />
         </div>
