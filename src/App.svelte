@@ -19,7 +19,7 @@
   </div>
   <div class="md:grid-lr-b relative w-full lg:w-270 lg:flex-none">
     <div
-      class="relative isolate z-10 mx-[1px] mb-[1px] overflow-hidden bg-[#0041ba]"
+      class="relative isolate z-10 mb-[1px] overflow-hidden bg-[#0041ba] sm:mx-[1px]"
     >
       <HeroPixelHover alwaysOn={true} />
 
