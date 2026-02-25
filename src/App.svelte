@@ -1,5 +1,5 @@
 <script>
-  import { fade } from "svelte/transition";
+  import { fade, fly } from "svelte/transition";
   import Project from "./lib/Project.svelte";
   import HeroText from "./lib/HeroText.svelte";
   import Toggle from "./lib/Toggle.svelte";
@@ -17,14 +17,14 @@
     <div class="grid-h h-10"></div>
     <div class="grid-dash-b-long-right flex-1"></div>
   </div>
-  <div class="md:grid-lr-b w-full p-3 pt-2.5 lg:w-270 lg:flex-none">
+  <div class="md:grid-lr-b relative w-full lg:w-270 lg:flex-none">
     <div
-      class="relative isolate overflow-hidden rounded-2xl bg-[#0041ba] pl-3 md:pl-5"
+      class="relative isolate z-10 mx-[1px] mb-[1px] overflow-hidden bg-[#0041ba]"
     >
       <HeroPixelHover alwaysOn={true} />
 
       <div
-        class="relative z-10 flex h-10 items-center justify-center pr-3 md:pr-5"
+        class="relative z-10 flex h-10 items-center justify-center px-3 md:px-5"
       >
         <h1 class="font-rope text-2xl font-light text-stone-100">
           nitish malluru
@@ -113,7 +113,7 @@
         class="relative z-10 mt-1 flex h-auto w-full flex-col overflow-visible md:flex-row md:overflow-hidden"
       >
         <div
-          class="mb-1.5 box-border h-72 w-full overflow-hidden rounded-b-3xl pr-2 pb-2 md:mr-5 md:mb-5 md:aspect-square md:h-auto md:w-[45%] md:flex-none md:self-start md:rounded-b-none md:rounded-bl-3xl md:pr-0 md:pb-0"
+          class="mb-1.5 box-border h-72 w-full overflow-hidden rounded-tr-3xl rounded-bl-3xl pr-2 pb-2 pl-3 md:mr-5 md:mb-5 md:aspect-square md:h-auto md:w-[45%] md:flex-none md:self-start md:pr-0 md:pb-0 md:pl-5"
         >
           <Shader />
         </div>
@@ -122,7 +122,7 @@
           class="mb-0 flex w-full flex-col justify-center pr-5 md:mb-5 md:h-auto md:flex-1"
         >
           <div
-            class="h-30 min-h-[8rem] w-full items-center pb-1 md:h-30 md:min-h-[10rem] lg:h-50"
+            class="h-30 min-h-[8rem] w-full items-center pb-1 pl-3 md:h-30 md:min-h-[10rem] md:pl-0 lg:h-50"
           >
             <HeroText />
           </div>
@@ -147,7 +147,7 @@
       <main
         class="font-rope md:grid-dash-lr-long flex w-screen max-w-[840px] flex-none flex-col"
       >
-        <section class="" in:fade={{ duration: 800, delay: 100 }}>
+        <section class="" in:fly={{ y: 50, duration: 800, delay: 100 }}>
           <h2
             class="mt-5 mb-5 px-4 text-2xl leading-10 font-medium text-stone-950 dark:text-stone-100"
           >
@@ -161,7 +161,7 @@
         </section>
 
         <!-- Reading List -->
-        <div in:fade={{ duration: 800, delay: 200 }} class="">
+        <div in:fly={{ y: 50, duration: 800, delay: 200 }} class="">
           <BooksSection />
         </div>
       </main>

@@ -62,12 +62,14 @@
 
 @layer base {
   :root {
+    --grid-contrast-light: 0.2;
+    --grid-contrast-dark: 0.2;
     --font-sans:
       ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --grid-bg: rgb(250, 250, 249);
-    --grid-line-color: rgba(0, 0, 0, 0.15);
-    --grid-dot-color: rgba(0, 0, 0, 0.18);
+    --grid-line-color: rgba(0, 0, 0, var(--grid-contrast-light));
+    --grid-dot-color: rgba(0, 0, 0, var(--grid-contrast-light));
     --grid-line-width: 1px;
     --grid-cell-size: 40px;
     --grid-dash-length: 20px;
@@ -76,8 +78,8 @@
 
   .dark {
     --grid-bg: rgb(23, 23, 23);
-    --grid-line-color: rgba(255, 255, 255, 0.15);
-    --grid-dot-color: rgba(255, 255, 255, 0.17);
+    --grid-line-color: rgba(255, 255, 255, var(--grid-contrast-dark));
+    --grid-dot-color: rgba(255, 255, 255, var(--grid-contrast-dark));
   }
 
   *,
