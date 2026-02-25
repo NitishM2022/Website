@@ -1,7 +1,4 @@
 <script lang="ts">
-  import moon from "./assets/moon.svg";
-  import sun from "./assets/sun.svg";
-
   let spinDirection: "left" | "right" = "right";
   let spin = false;
 
@@ -38,7 +35,7 @@
 
 <button
   on:click={toggleDarkMode}
-  class="cursor-pointer border-0 bg-transparent p-0 outline-none"
+  class="cursor-pointer border-0 bg-transparent p-0 text-stone-950 outline-none dark:text-stone-100"
 >
   <div
     class="icon"
@@ -46,18 +43,14 @@
     class:spin-left={spinDirection === "left"}
     class:spin-right={spinDirection === "right"}
   >
-    <img
-      loading="lazy"
-      src={moon}
-      alt="Enable Light Mode"
-      class="icon-moon w-4.5"
-    />
-    <img
-      loading="lazy"
-      src={sun}
-      alt="Enable Dark Mode"
-      class="icon-sun w-4.5"
-    />
+    <i
+      class="icon-moon ri-moon-fill align-middle text-xl text-stone-100"
+      aria-label="Enable Light Mode"
+    ></i>
+    <i
+      class="icon-sun ri-sun-fill align-middle text-xl text-stone-100"
+      aria-label="Enable Dark Mode"
+    ></i>
   </div>
 </button>
 
@@ -88,7 +81,7 @@
     }
   }
 
-  img {
+  i {
     display: none;
   }
 
